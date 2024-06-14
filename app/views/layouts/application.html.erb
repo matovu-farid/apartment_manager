@@ -3,7 +3,7 @@
   <head>
     <title>ApartmentManager</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-   
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
@@ -20,7 +20,6 @@
     https://vite-ruby.netlify.app/guide/rails -->
     <%= vite_client_tag %>
     <%= vite_javascript_tag "application" %>
-
     <!-- If using a TypeScript entrypoint file: vite_typescript_tag
     'application' If using a .jsx or .tsx entrypoint, add the extension:
     vite_javascript_tag 'application.jsx' Visit the guide for more information:
@@ -28,9 +27,15 @@
   </head>
 
   <body>
-    <!--TODO: be improved later-->
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+
+    <% if notice.present? %>
+      <p class="notice alert alert-success"><%= notice %></p>
+    <% end %>
+
+    <% if alert.present? %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
+
     <div id='root'></div>
     <%= yield %>
   </body>

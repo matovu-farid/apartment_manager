@@ -14,9 +14,21 @@
           <%= link_to "Rent Sessions", rent_sessions_path, class: "nav-link" %>
         </li>
       </ul>
+      <!--Show the name of the user if signed in-->
+      <span class="d-flex gap-2">
+        <% if user_signed_in? %>
+          <span class="navbar-text">
+            <%= current_user.email %>
+          </span>
+          <span class="d-flex">
+            <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-primary" %>
+          </span>
+        <% else %>
       <span class="d-flex">
         <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-primary" %>
       </span>
+        <% end %>
+    
     </div>
 
   </div>
