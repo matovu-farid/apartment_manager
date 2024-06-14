@@ -81,3 +81,5 @@ gem "erb-formatter", "~> 0.7.2"
 gem "vite_rails", "~> 3.0"
 
 gem "factory_bot", "~> 6.4"
+
+gem "table-for", "~> 3.7"

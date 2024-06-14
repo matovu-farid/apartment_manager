@@ -1,17 +1,25 @@
-<div id="<%= dom_id apartment %>" >
-  <p class="my-5 flex">
-    <strong class="block font-medium mb-1">Price:</strong>
+<div id="<%= dom_id apartment, class:'flex flex-row inline' %>">
+  <td
+    class="
+      whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
+    "
+  >
     <%= apartment.price %>
-  </p>
+  </td>
 
-  <p class="my-5 flex">
-    <strong class="block font-medium mb-1">Floor:</strong>
+  <td
+    class="
+      whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
+    "
+  >
     <%= apartment.floor %>
-  </p>
+  </td>
 
-  <p class="my-5 flex">
-    <strong class="block font-medium mb-1">Apartmentnumber:</strong>
+  <td
+    class="
+      whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
+    "
+  >
     <%= apartment.apartmentnumber %>
-  </p>
-
+  </td>
 </div>

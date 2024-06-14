@@ -12,21 +12,21 @@
   <% end %>
 
   <div class="my-5">
-    <%= form.label :price %>
-    <%= form.number_field :price,step: 100, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.label  :price , class:"form-label"%>
+    <%= form.number_field :price,step: 100, class: "block form-control shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :floor %>
-    <%= form.text_field :floor, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.label :floor , class:"form-label"%>
+    <%= form.text_field :floor, class: "block form-control shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :apartmentnumber %>
-    <%= form.number_field :apartmentnumber, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.label :apartmentnumber , class:"form-label"%>
+    <%= form.number_field :apartmentnumber, class: "block form-control shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
