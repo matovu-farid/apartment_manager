@@ -5,7 +5,12 @@ class BlocksController < ApplicationController
   load_and_authorize_resource
   # GET /blocks or /blocks.json
   def index
-    @blocks = Block.all
+    @blocks = Block.filter_by_admin current_user
+
+    # redirect to create block if no blocks exist
+    if @blocks.empty?
+      redirect_to new_block_path
+    end
   end
 
   # GET /blocks/1 or /blocks/1.json
@@ -15,7 +20,6 @@ class BlocksController < ApplicationController
   # GET /blocks/new
   def new
     @block = Block.new
-    @block.user = current_user
   end
 
   # GET /blocks/1/edit
@@ -25,7 +29,7 @@ class BlocksController < ApplicationController
   # POST /blocks or /blocks.json
   def create
     @block = Block.new(block_params)
-
+    BlockAdmin.create(user: current_user, block: @block)
     respond_to do |format|
       if @block.save
         format.html { redirect_to block_url(@block), notice: "Block was successfully created." }

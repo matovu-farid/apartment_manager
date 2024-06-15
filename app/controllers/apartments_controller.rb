@@ -5,8 +5,11 @@ class ApartmentsController < ApplicationController
   load_and_authorize_resource
   # GET /apartments or /apartments.json
   def index
-    puts "isAdmin: #{@isAdmin}"
-    @apartments = Apartment.all
+    @apartments = Apartment.accessible_by(current_ability)
+    if @apartments.empty?
+      redirect_to new_apartment_path
+    end
+
   end
 
   # GET /apartments/1 or /apartments/1.json
