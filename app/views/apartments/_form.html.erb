@@ -25,6 +25,13 @@
     <%= form.label :apartmentnumber, class: "form-label" %>
     <%= form.number_field :apartmentnumber, class: "form-control " %>
 
+    <%= form.label :block_id, class: "block" %>
+    <%= form.collection_select :block_id,
+                           Block.all,
+                           :id,
+                           :name,
+                           class:
+                             "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
   <div class="inline">
     <%= form.submit class: "btn btn-primary" %>
