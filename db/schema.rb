@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_13_223708) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_15_003238) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,25 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_13_223708) do
     t.integer "apartmentnumber"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "block_id", null: false
+    t.index ["block_id"], name: "index_apartments_on_block_id"
+  end
+
+  create_table "block_admins", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "block_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["block_id"], name: "index_block_admins_on_block_id"
+    t.index ["user_id"], name: "index_block_admins_on_user_id"
+  end
+
+  create_table "blocks", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_blocks_on_user_id"
   end
 
   create_table "rent_sessions", force: :cascade do |t|
@@ -52,6 +71,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_13_223708) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "apartments", "blocks"
+  add_foreign_key "block_admins", "blocks"
+  add_foreign_key "block_admins", "users"
+  add_foreign_key "blocks", "users"
   add_foreign_key "rent_sessions", "apartments"
   add_foreign_key "rent_sessions", "residents"
 end

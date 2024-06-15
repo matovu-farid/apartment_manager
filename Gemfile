@@ -87,4 +87,4 @@ gem "table-for", "~> 3.7"
 gem 'dartsass-sprockets'
 gem 'bootstrap', '~> 5.3.3'
 gem 'jquery-rails'
-
+gem 'cancancan'
