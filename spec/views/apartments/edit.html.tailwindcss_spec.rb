@@ -5,7 +5,7 @@ RSpec.describe "apartments/edit", type: :view do
     Apartment.create!(
       price: 1,
       floor: "MyString",
-      apartmentnumber: 1
+      name: 1
     )
   }
 
@@ -22,7 +22,7 @@ RSpec.describe "apartments/edit", type: :view do
 
       assert_select "input[name=?]", "apartment[floor]"
 
-      assert_select "input[name=?]", "apartment[apartmentnumber]"
+      assert_select "input[name=?]", "apartment[name]"
     end
   end
 end

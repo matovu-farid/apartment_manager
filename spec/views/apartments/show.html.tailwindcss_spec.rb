@@ -5,7 +5,7 @@ RSpec.describe "apartments/show", type: :view do
     assign(:apartment, Apartment.create!(
       price: 2,
       floor: "Floor",
-      apartmentnumber: 3
+      name: 3
     ))
   end
 
