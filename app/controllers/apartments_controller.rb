@@ -1,9 +1,12 @@
 class ApartmentsController < ApplicationController
+
   before_action :authenticate_user!
   before_action :set_apartment, only: %i[ show edit update destroy ]
   load_and_authorize_resource
   # GET /apartments or /apartments.json
   def index
+    puts "isAdmin: #{@isAdmin}"
+    @apartments = Apartment.all
   end
 
   # GET /apartments/1 or /apartments/1.json

@@ -10,9 +10,13 @@ class Ability
     #   can :read, :all
     #   return unless user.admin?
     #   can :manage, :all
+    can [:create], Apartment
     return unless user.present?
-    can :read, Apartment, user: user
-    
+
+    can :manage, Apartment do |apartment|    
+      apartment.admins.include?(user)
+      true
+    end
     # The first argument to `can` is the action you are giving the user
     # permission to do.
     # If you pass :manage it will apply to every action. Other common actions

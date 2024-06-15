@@ -2,9 +2,10 @@ class ResidentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_resident, only: %i[ show edit update destroy ]
 
+  load_and_authorize_resource
   # GET /residents or /residents.json
   def index
-    @residents = Resident.all
+    @residents = Resident.accessible_by(current_ability)
   end
 
   # GET /residents/1 or /residents/1.json

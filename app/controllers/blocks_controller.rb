@@ -1,6 +1,8 @@
 class BlocksController < ApplicationController
   before_action :set_block, only: %i[ show edit update destroy ]
 
+  before_action :authenticate_user!
+  load_and_authorize_resource
   # GET /blocks or /blocks.json
   def index
     @blocks = Block.all
