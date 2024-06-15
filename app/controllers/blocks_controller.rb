@@ -13,6 +13,7 @@ class BlocksController < ApplicationController
   # GET /blocks/new
   def new
     @block = Block.new
+    @block.user = current_user
   end
 
   # GET /blocks/1/edit
@@ -65,6 +66,6 @@ class BlocksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def block_params
-      params.require(:block).permit(:name, :apartment_id, :user_id)
+      params.require(:block).permit(:name, :user_id)
     end
 end
