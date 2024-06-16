@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   resources :blocks
-  resources :rent_sessions
   resources :apartments
   resources :residents
   get 'home/index'

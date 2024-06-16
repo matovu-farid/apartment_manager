@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_15_174055) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_16_194903) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,7 +42,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_15_174055) do
 
   create_table "rent_sessions", force: :cascade do |t|
     t.datetime "startdate"
-    t.string "paymentDueDate"
     t.bigint "resident_id", null: false
     t.bigint "apartment_id", null: false
     t.datetime "created_at", null: false
@@ -57,6 +56,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_15_174055) do
     t.string "phonenumber"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "apartment_id", null: false
+    t.datetime "startdate"
+    t.index ["apartment_id"], name: "index_residents_on_apartment_id"
     t.index ["name"], name: "index_residents_on_name"
   end
 
@@ -75,4 +77,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_15_174055) do
   add_foreign_key "block_admins", "users"
   add_foreign_key "rent_sessions", "apartments"
   add_foreign_key "rent_sessions", "residents"
+  add_foreign_key "residents", "apartments"
 end

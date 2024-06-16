@@ -1,14 +1,14 @@
 class ResidentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_resident, only: %i[ show edit update destroy ]
-  around_action :set_timezone, if: :user_signed_in?
+  include Payable
 
 
 
   load_and_authorize_resource
   # GET /residents or /residents.json
   def index
-    @residents = Resident.all
+    @residents = Resident.filter_by_admin current_user
   end
 
   # GET /residents/1 or /residents/1.json
@@ -26,12 +26,10 @@ class ResidentsController < ApplicationController
 
   # POST /residents or /residents.json
   def create
+
+ 
     @resident = Resident.new(resident_params)
-    @apartment = Apartment.find(resident_params.apartment_id)
-    @rent_session = RentSession.new(resident: @resident, apartment: @apartment)
-    @rent_session.startdate = Time.zone.now
-    @rent_session.paymentDueDate = Time.zone.now + 1.month
-    
+    @resident.startdate = Time.zone.now
 
     respond_to do |format|
       if @resident.save
@@ -75,10 +73,7 @@ class ResidentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def resident_params
-      params.require(:resident).permit(:name, :physicalId, :phonenumber, :apartment_id)
+      params.require(:resident).permit(:name, :physicalId, :phonenumber,:apartment_id)
     end
-  def set_timezone(&action)
-    Time.use_zone(current_user.time_zone, &action)
-  end
 
 end

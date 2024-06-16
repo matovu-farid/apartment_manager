@@ -3,6 +3,16 @@ module Payable
 
   included do
     require 'date'
+    def payment_due_date_from_start_date(start_date)
+      current_day = Date.today
+      projected_date = nil
+      begin
+        projected_date =  Date.new(current_day.year, current_day.month, start_date.day)
+      rescue Date::Error
+        projected_date =  Date.new(current_day.year, current_day.month, -1)
+      end
+      payment_due_date(projected_date)
+    end
 
     def payment_due_date(date)
       # Get the next month
