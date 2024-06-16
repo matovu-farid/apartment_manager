@@ -6,7 +6,9 @@ class ApartmentsController < ApplicationController
   # GET /apartments or /apartments.json
   def index
     @apartments = Apartment.filter_by_admin current_user
-    if @apartments.empty?
+    if Block.filter_by_admin(current_user).empty?
+      redirect_to new_block_path
+    elsif @apartments.empty?
       redirect_to new_apartment_path
     end
 
@@ -28,10 +30,6 @@ class ApartmentsController < ApplicationController
   # POST /apartments or /apartments.json
   def create
     @apartment = Apartment.new(apartment_params)
-    puts "----------------"
-    puts @apartment.inspect
-    puts "----------------"
-
 
     respond_to do |format|
       if @apartment.save

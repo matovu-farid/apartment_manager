@@ -10,19 +10,14 @@
     <% end %>
 
     <%= render @block %>
+    <%= link_to "Add Apartments", new_apartment_path, class: "btn btn-primary" %>
+    <%= link_to "Edit this block", edit_block_path(@block), class: "btn btn-primary" %>
+    <%= link_to "Back to blocks", blocks_path, class: "btn btn-primary" %>
+
     <%= render "apartments/apartment_table", apartments: @block.apartments %>
 
-    <%= link_to "Edit this block",
-    edit_block_path(@block),
-    class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Back to blocks",
-    blocks_path,
-    class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <div class="inline-block ml-2">
-      <%= button_to "Destroy this block",
-      @block,
-      method: :delete,
-      class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+      <%= button_to "Delete block", @block, method: :delete, class: "btn btn-danger" %>
     </div>
   </div>
 </div>
