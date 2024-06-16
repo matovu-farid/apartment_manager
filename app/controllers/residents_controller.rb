@@ -9,6 +9,10 @@ class ResidentsController < ApplicationController
   # GET /residents or /residents.json
   def index
     @residents = Resident.filter_by_admin current_user
+    if @residents.empty?
+      redirect_to new_resident_path
+    end
+
   end
 
   # GET /residents/1 or /residents/1.json
