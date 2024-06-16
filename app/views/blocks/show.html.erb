@@ -10,9 +10,11 @@
     <% end %>
 
     <%= render @block %>
-    <%= link_to "Add Apartments", new_apartment_path, class: "btn btn-primary" %>
-    <%= link_to "Edit this block", edit_block_path(@block), class: "btn btn-primary" %>
-    <%= link_to "Back to blocks", blocks_path, class: "btn btn-primary" %>
+    <%= link_to "Add Apartments", new_apartment_path, class: "btn btn-outline-primary" %>
+    <%= link_to "Edit this block",
+    edit_block_path(@block),
+    class: "btn btn-outline-primary" %>
+    <%= link_to "Back to blocks", blocks_path, class: "btn btn-outline-primary" %>
 
     <%= render "apartments/apartment_table", apartments: @block.apartments %>
 
