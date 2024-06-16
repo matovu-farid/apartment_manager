@@ -1,0 +1,41 @@
+<% if apartments.any? %>
+  <table id="apartments" class="min-w-full table table-auto min-w-full divide-y divide-gray-300">
+    <thead>
+      <tr>
+        <th 
+          scope="col"
+          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
+        >Price</th>
+        <th
+                    scope="col"
+          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
+
+        >Floor</th>
+        <th
+                    scope="col"
+          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
+
+        >Apartmentnumber</th>
+        <th
+                    scope="col"
+          class="relative py-3 pl-3 pr-4 sm:pr-0"
+
+          > 
+          <span class="sr-only">Show</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 bg-white">
+      <% apartments.each do |apartment| %>
+        <tr>
+          <%= render apartment %>
+          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+          <%= link_to "Show this apartment", apartment, class: "text-indigo-600 hover:text-indigo-900" %>
+          </td>
+        <% end %>
+        </tr>
+
+    </tbody>
+
+  </table>
+<% end %>
