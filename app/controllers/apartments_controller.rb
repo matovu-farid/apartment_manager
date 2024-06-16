@@ -5,7 +5,7 @@ class ApartmentsController < ApplicationController
   load_and_authorize_resource
   # GET /apartments or /apartments.json
   def index
-    @apartments = Apartment.accessible_by(current_ability)
+    @apartments = Apartment.filter_by_admin current_user
     if @apartments.empty?
       redirect_to new_apartment_path
     end
@@ -28,6 +28,10 @@ class ApartmentsController < ApplicationController
   # POST /apartments or /apartments.json
   def create
     @apartment = Apartment.new(apartment_params)
+    puts "----------------"
+    puts @apartment.inspect
+    puts "----------------"
+
 
     respond_to do |format|
       if @apartment.save
@@ -71,6 +75,6 @@ class ApartmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def apartment_params
-      params.require(:apartment).permit(:price, :floor, :name)
+      params.require(:apartment).permit(:price, :floor, :name, :block_id)
     end
 end

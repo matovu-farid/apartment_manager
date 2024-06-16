@@ -27,7 +27,7 @@
 
     <%= form.label :block_id, class: "block" %>
     <%= form.collection_select :block_id,
-                           Block.all,
+                           Block.filter_by_admin(current_user),
                            :id,
                            :name,
                            class:
