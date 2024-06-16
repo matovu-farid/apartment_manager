@@ -15,28 +15,30 @@
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :name %>
-    <%= form.text_field :name,
-                    class:
-                      "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="py-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+
+    <%= form.label :physicalId, class: "form-label" %>
+    <%= form.text_field :physicalId, class: "form-control" %>
+
+    <%= form.label :phonenumber, class: "form-label" %>
+    <%= form.text_field :phonenumber, class: "form-control" %>
+
+    <div>
+      <%= form.label :apartment_id, class: "form-label" %>
+      <%= form.collection_select :apartment_id,
+                             Apartment.filter_by_admin(current_user),
+                             :id,
+                             :name,
+                             class: "form-control" %>
+    </div>
+    <%= form.label :paymentDueDate, class: "form-label" %>
+    <%= form.number_field :paymentDueDate, value: 30, class: "form-control" %>
+
   </div>
 
-  <div class="my-5">
-    <%= form.label :physicalId %>
-    <%= form.text_field :physicalId,
-                    class:
-                      "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :phonenumber %>
-    <%= form.text_field :phonenumber,
-                    class:
-                      "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="inline">
+  <div class="inline py-3">
     <%= form.submit class:
                   "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
   </div>

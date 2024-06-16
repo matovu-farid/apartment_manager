@@ -55,6 +55,7 @@ group :development, :test do
   gem 'capybara'
   gem 'rubocop', require: false
   gem 'solargraph', require: false
+  gem "factory_bot_rails", "~> 6.4"
 end
 # Authentication
 gem 'devise'
@@ -81,7 +82,6 @@ gem "erb-formatter", "~> 0.7.2"
 
 gem "vite_rails", "~> 3.0"
 
-gem "factory_bot", "~> 6.4"
 
 gem "table-for", "~> 3.7"
 gem 'dartsass-sprockets'
