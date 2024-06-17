@@ -1,17 +1,25 @@
-<div id="<%= dom_id resident %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
+<div id="<%= dom_id resident, class:'flex flex-row inline' %>">
+  <td
+    class="
+      whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
+    "
+  >
     <%= resident.name %>
-  </p>
+  </td>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Physicalid:</strong>
+  <td
+    class="
+      whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
+    "
+  >
     <%= resident.physicalId %>
-  </p>
+  </td>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Phonenumber:</strong>
+  <td
+    class="
+      whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
+    "
+  >
     <%= resident.phonenumber %>
-  </p>
-
+  </td>
 </div>

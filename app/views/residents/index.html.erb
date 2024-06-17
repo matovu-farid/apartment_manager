@@ -20,15 +20,6 @@
     new_resident_path,
     class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
+  <%= render "resident_table", residents: @residents, show: true %>
 
-  <div id="residents" class="min-w-full">
-    <% @residents.each do |resident| %>
-      <%= render resident %>
-      <p>
-        <%= link_to "Show this resident",
-        resident,
-        class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      </p>
-    <% end %>
-  </div>
 </div>

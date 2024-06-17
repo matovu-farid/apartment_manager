@@ -1,0 +1,45 @@
+<% if residents.any? %>
+  <table id="residents" class="min-w-full table table-auto min-w-full divide-y divide-gray-300">
+    <thead>
+      <tr>
+        <th 
+          scope="col"
+          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
+        >Name</th>
+        <th
+                    scope="col"
+          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
+
+        >PhysicalId</th>
+        <th
+          scope="col"
+          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
+
+          >Phonenumber</th>
+        <%if show ||=false%>
+          <th
+            scope="col"
+            class="relative py-3 pl-3 pr-4 sm:pr-0"
+
+            > 
+            <span class="sr-only">Show</span>
+          </th>
+        <% end%>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 bg-white">
+      <% residents.each do |resident| %>
+        <tr>
+          <%= render resident %>
+          <%if show ||=false%>
+            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+              <%= link_to "Show this resident", resident, class: "text-indigo-600 hover:text-indigo-900" %>
+            </td>
+          <% end %>
+        <% end %>
+        </tr>
+
+    </tbody>
+
+  </table>
+<% end %>
