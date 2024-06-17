@@ -16,22 +16,29 @@
           class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
 
         >Apartmentnumber</th>
-        <th
-                    scope="col"
-          class="relative py-3 pl-3 pr-4 sm:pr-0"
+        <% if show ||=false %>
 
-          > 
-          <span class="sr-only">Show</span>
-        </th>
+          <th
+            scope="col"
+            class="relative py-3 pl-3 pr-4 sm:pr-0"
+
+            > 
+            <span class="sr-only">Show</span>
+          </th>
+        <% end %>
+
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200 bg-white">
       <% apartments.each do |apartment| %>
         <tr>
           <%= render apartment %>
-          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-          <%= link_to "Show this apartment", apartment, class: "text-indigo-600 hover:text-indigo-900" %>
-          </td>
+          <% if show||=false %>
+
+            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+              <%= link_to "Show this apartment", apartment, class: "btn btn-outline-dark" %>
+            </td>
+          <% end %>
         <% end %>
         </tr>
 

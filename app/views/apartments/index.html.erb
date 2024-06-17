@@ -12,10 +12,11 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Apartments</h1>
-    <%= link_to "Back to Home", home_index_path, class: "btn btn-secondary" %>
-
-    <%= link_to "New apartment", new_apartment_path, class: "btn btn-outline-primary" %>
+    <div>
+      <%= link_to "Back to Home", home_index_path, class: "btn btn-outline-secondary" %>
+      <%= link_to "New apartment", new_apartment_path, class: "btn btn-outline-primary" %>
+    </div>
   </div>
-  <%= render "apartment_table", apartments: @apartments %>
+  <%= render "apartment_table", apartments: @apartments, show: true %>
 
 </div>

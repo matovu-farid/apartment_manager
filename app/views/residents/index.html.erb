@@ -14,11 +14,11 @@
     <h1 class="font-bold text-4xl">Residents</h1>
     <%= link_to "Back to Home",
     home_index_path,
-    class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    class: "btn btn-outline-secondary" %>
 
     <%= link_to "New resident",
     new_resident_path,
-    class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    class: "btn btn-outline-primary" %>
   </div>
   <%= render "resident_table", residents: @residents, show: true %>
 
