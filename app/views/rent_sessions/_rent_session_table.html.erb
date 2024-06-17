@@ -1,0 +1,53 @@
+<% if rent_sessions.any? %>
+  <table id="rent_sessions" class="min-w-full table table-auto min-w-full divide-y divide-gray-300">
+    <thead>
+      <tr>
+        <th 
+          scope="col"
+          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
+        >Resident</th>
+        <th
+                    scope="col"
+          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
+
+        >Apartment</th>
+        <th
+                    scope="col"
+          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
+
+        >Payment Due Date</th>
+               <th
+                    scope="col"
+          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
+
+        >Is Paid</th>
+        <% if show ||=false %>
+
+          <th
+            scope="col"
+            class="relative py-3 pl-3 pr-4 sm:pr-0"
+
+            > 
+            <span class="sr-only">Show</span>
+          </th>
+        <% end %>
+
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 bg-white">
+      <% rent_sessions.each do |rent_session| %>
+        <tr>
+          <%= render rent_session %>
+          <% if show||=false %>
+
+            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+              <%= link_to "Show this rent_session", rent_session, class: "btn btn-outline-dark" %>
+            </td>
+          <% end %>
+        <% end %>
+        </tr>
+
+    </tbody>
+
+  </table>
+<% end %>

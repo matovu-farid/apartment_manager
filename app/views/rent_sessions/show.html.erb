@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @rent_session %>
+<%= render "rent_session_table", rent_sessions: [@rent_session] %>
 
 <div>
   <%= link_to "Edit this rent session",
