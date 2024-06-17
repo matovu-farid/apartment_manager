@@ -61,7 +61,7 @@ end
 gem 'devise'
 
 # Frontend
-gem 'tailwindcss-rails'
+# gem 'tailwindcss-rails'
 
 # TypeScript and React
 

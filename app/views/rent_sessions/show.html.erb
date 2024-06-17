@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @rent_session %>
+
+<div>
+  <%= link_to "Edit this rent session", edit_rent_session_path(@rent_session) %> |
+  <%= link_to "Back to rent sessions", rent_sessions_path %>
+
+  <%= button_to "Destroy this rent session", @rent_session, method: :delete %>
+</div>

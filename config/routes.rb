@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   resources :blocks
   resources :apartments
-  resources :residents
+  resources :residents do
+    resources :rent_sessions
+    resources :payments
+  end
+
   get 'home/index'
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

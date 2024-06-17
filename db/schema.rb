@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_16_194903) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_17_102519) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,10 +40,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_16_194903) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.bigint "rent_session_id", null: false
+    t.datetime "date"
+    t.bigint "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["rent_session_id"], name: "index_payments_on_rent_session_id"
+  end
+
   create_table "rent_sessions", force: :cascade do |t|
-    t.datetime "startdate"
+    t.datetime "paymentDueDate"
     t.bigint "resident_id", null: false
     t.bigint "apartment_id", null: false
+    t.boolean "isPaid", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["apartment_id"], name: "index_rent_sessions_on_apartment_id"
@@ -75,6 +85,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_16_194903) do
   add_foreign_key "apartments", "blocks"
   add_foreign_key "block_admins", "blocks"
   add_foreign_key "block_admins", "users"
+  add_foreign_key "payments", "rent_sessions"
   add_foreign_key "rent_sessions", "apartments"
   add_foreign_key "rent_sessions", "residents"
   add_foreign_key "residents", "apartments"
