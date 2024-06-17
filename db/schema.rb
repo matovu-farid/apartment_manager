@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_17_102519) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_17_124541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,7 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_17_102519) do
     t.datetime "paymentDueDate"
     t.bigint "resident_id", null: false
     t.bigint "apartment_id", null: false
-    t.boolean "isPaid", default: false
+    t.boolean "isPaid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["apartment_id"], name: "index_rent_sessions_on_apartment_id"

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :rent_session do
-    paymentDueDate { "2024-06-17 13:19:24" }
+    paymentDueDate { "2024-06-17 15:45:07" }
     resident { nil }
     apartment { nil }
     isPaid { false }

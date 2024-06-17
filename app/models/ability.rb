@@ -11,6 +11,7 @@ class Ability
     #   return unless user.admin?
     #   can :manage, :all
     return unless user.present?
+    can :manage, [RentSession, Payment]
     can [:create], :all
 
     can :manage, :all do |model|    

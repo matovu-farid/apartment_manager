@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
+  resources :payments
+  resources :rent_sessions
   resources :blocks
   resources :apartments
-  resources :residents do
-    resources :rent_sessions
-    resources :payments
-  end
+  resources :residents
 
   get 'home/index'
   devise_for :users
