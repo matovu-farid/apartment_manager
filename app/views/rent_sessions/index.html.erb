@@ -3,12 +3,10 @@
 <h1>Rent sessions</h1>
 
 <div id="rent_sessions">
-  <% @rent_sessions.each do |rent_session| %>
-    <%= render rent_session %>
-    <p>
-      <%= link_to "Show this rent session", rent_session %>
-    </p>
-  <% end %>
+  <%= render "rent_session_table", rent_sessions: @rent_sessions %>
+
 </div>
 
-<%= link_to "New rent session", new_rent_session_path %>
+<%= link_to "New rent session",
+new_rent_session_path,
+class: "btn btn-outline-primary" %>

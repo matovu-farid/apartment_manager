@@ -1,10 +1,19 @@
-<h1>Editing rent session</h1>
+<div class='w-full d-flex justify-content-center'>
+  <div class='w-25'>
+    <h1>Editing rent session</h1>
 
-<%= render "form", rent_session: @rent_session %>
+    <%= render "form", rent_session: @rent_session %>
 
-<br>
+    <br>
 
-<div>
-  <%= link_to "Show this rent session", @rent_session %> |
-  <%= link_to "Back to rent sessions", rent_sessions_path %>
+    <div>
+      <%= link_to "Show this rent session",
+      @rent_session,
+      class: "btn btn-outline-secondary" %>
+      
+      <%= link_to "Back to rent sessions",
+      rent_sessions_path,
+      class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
 </div>
