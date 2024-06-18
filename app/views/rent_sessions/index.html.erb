@@ -3,10 +3,11 @@
 <h1>Rent sessions</h1>
 
 <div id="rent_sessions">
-  <%= render "rent_session_table", rent_sessions: @rent_sessions %>
+  <%= render "rent_session_table", rent_sessions: @rent_sessions, show: true %>
 
 </div>
 
+<%= link_to "Back to Home", home_index_path, class: "btn btn-outline-primary" %>
 <%= link_to "New rent session",
 new_rent_session_path,
 class: "btn btn-outline-primary" %>

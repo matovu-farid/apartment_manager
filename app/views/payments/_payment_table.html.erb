@@ -1,5 +1,24 @@
-<% if rent_sessions.any? %>
-  <table id="rent_sessions" class="min-w-full table table-auto min-w-full divide-y divide-gray-300">
+<div id="<%= dom_id payment %>">
+  <p>
+    <strong>Rent session:</strong>
+    <%= payment.rent_session_id %>
+  </p>
+
+  <p>
+    <strong>Date:</strong>
+    <%= payment.date %>
+  </p>
+
+  <p>
+    <strong>Amount:</strong>
+    <%= payment.amount %>
+  </p>
+
+</div>
+
+
+<% if payments.any? %>
+  <table id="payments" class="min-w-full table table-auto min-w-full divide-y divide-gray-300">
     <thead>
       <tr>
         <th 
@@ -35,14 +54,13 @@
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200 bg-white">
-      <% rent_sessions.each do |rent_session| %>
+      <% payments.each do |payment| %>
         <tr>
-          <%= render rent_session %>
+          <%= render payment %>
           <% if show||=false %>
 
             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-              <%= link_to "Details", rent_session, class: "btn btn-outline-dark" %>
-              <%= link_to "Payments", rent_session_payments_path(rent_session), class: "btn btn-outline-dark" %>
+              <%= link_to "Show this rent_session", payment, class: "btn btn-outline-dark" %>
             </td>
           <% end %>
         <% end %>

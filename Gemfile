@@ -56,6 +56,7 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'solargraph', require: false
   gem "factory_bot_rails", "~> 6.4"
+  gem "standard"
 end
 # Authentication
 gem 'devise'

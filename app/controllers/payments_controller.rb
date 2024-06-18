@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
-  before_action :set_payment, only: %i[ show edit update destroy ]
+  before_action :set_rent_session
+  before_action :set_payment, only: %i[show edit update destroy]
 
   # GET /payments or /payments.json
   def index
@@ -25,11 +26,11 @@ class PaymentsController < ApplicationController
 
     respond_to do |format|
       if @payment.save
-        format.html { redirect_to payment_url(@payment), notice: "Payment was successfully created." }
-        format.json { render :show, status: :created, location: @payment }
+        format.html { redirect_to(payment_url(@payment), notice: "Payment was successfully created.") }
+        format.json { render(:show, status: :created, location: @payment) }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @payment.errors, status: :unprocessable_entity }
+        format.html { render(:new, status: :unprocessable_entity) }
+        format.json { render(json: @payment.errors, status: :unprocessable_entity) }
       end
     end
   end
@@ -38,11 +39,11 @@ class PaymentsController < ApplicationController
   def update
     respond_to do |format|
       if @payment.update(payment_params)
-        format.html { redirect_to payment_url(@payment), notice: "Payment was successfully updated." }
-        format.json { render :show, status: :ok, location: @payment }
+        format.html { redirect_to(payment_url(@payment), notice: "Payment was successfully updated.") }
+        format.json { render(:show, status: :ok, location: @payment) }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @payment.errors, status: :unprocessable_entity }
+        format.html { render(:edit, status: :unprocessable_entity) }
+        format.json { render(json: @payment.errors, status: :unprocessable_entity) }
       end
     end
   end
@@ -52,19 +53,23 @@ class PaymentsController < ApplicationController
     @payment.destroy
 
     respond_to do |format|
-      format.html { redirect_to payments_url, notice: "Payment was successfully destroyed." }
-      format.json { head :no_content }
+      format.html { redirect_to(payments_url, notice: "Payment was successfully destroyed.") }
+      format.json { head(:no_content) }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_payment
-      @payment = Payment.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_rent_session
+    @rent_session = RentSession.find(params[:rent_session_id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def payment_params
-      params.require(:payment).permit(:rent_session_id, :date, :amount)
-    end
+  def set_payment
+    @payment = Payment.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def payment_params
+    params.require(:payment).permit(:date, :amount)
+  end
 end
