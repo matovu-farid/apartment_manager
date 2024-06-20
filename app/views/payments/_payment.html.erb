@@ -1,17 +1,24 @@
-<div id="<%= dom_id payment %>">
-  <p>
-    <strong>Rent session:</strong>
-    <%= payment.rent_session_id %>
-  </p>
-
-  <p>
-    <strong>Date:</strong>
-    <%= payment.date %>
-  </p>
-
-  <p>
-    <strong>Amount:</strong>
-    <%= payment.amount %>
-  </p>
-
+<div id="<%= dom_id payment, class:'flex flex-row inline' %>">
+  <td
+    class="
+      whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
+    "
+  >
+    <%= payment.rent_session.resident.name %>
+  </td>
+  <td
+    class="
+      whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
+    "
+  >
+    <%= payment.date.strftime("%m/%d/%Y") %>
+  </td>
+  <td
+    class="
+      whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
+    "
+  >
+    <%= format_currency(payment.amount) %>
+  </td>
+</td>
 </div>

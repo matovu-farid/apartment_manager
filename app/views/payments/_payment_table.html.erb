@@ -1,22 +1,3 @@
-<div id="<%= dom_id payment %>">
-  <p>
-    <strong>Rent session:</strong>
-    <%= payment.rent_session_id %>
-  </p>
-
-  <p>
-    <strong>Date:</strong>
-    <%= payment.date %>
-  </p>
-
-  <p>
-    <strong>Amount:</strong>
-    <%= payment.amount %>
-  </p>
-
-</div>
-
-
 <% if payments.any? %>
   <table id="payments" class="min-w-full table table-auto min-w-full divide-y divide-gray-300">
     <thead>
@@ -29,28 +10,21 @@
                     scope="col"
           class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
 
-        >Apartment</th>
+        >Payment date</th>
         <th
                     scope="col"
           class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
 
-        >Payment Due Date</th>
-               <th
-                    scope="col"
-          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
-
-        >Is Paid</th>
+        >Amount</th>
         <% if show ||=false %>
-
           <th
             scope="col"
             class="relative py-3 pl-3 pr-4 sm:pr-0"
 
-            > 
+            >
             <span class="sr-only">Show</span>
           </th>
         <% end %>
-
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200 bg-white">
@@ -58,15 +32,12 @@
         <tr>
           <%= render payment %>
           <% if show||=false %>
-
             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-              <%= link_to "Show this rent_session", payment, class: "btn btn-outline-dark" %>
+              <%= link_to "Show this payment", [rent_session,payment], class: "btn btn-outline-dark" %>
             </td>
           <% end %>
         <% end %>
-        </tr>
-
+      </tr>
     </tbody>
-
   </table>
 <% end %>
