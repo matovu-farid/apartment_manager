@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <!--Add link to the create apartment page-->
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to "Apartments", apartments_path, class: "nav-link" %>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to "Residents", residents_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Blocks", blocks_path, class: "nav-link" %>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to "Rent Session", rent_sessions_path, class: "nav-link" %>
+        </li>
+      </ul>
+      <!--Show the name of the user if signed in-->
+      <span class="d-flex gap-2">
+        <% if user_signed_in? %>
+          <span class="navbar-text">
+            <%= current_user.email %>
+          </span>
+          <span class="d-flex">
+            <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-primary" %>
+          </span>
+        <% else %>
+          <span class="d-flex">
+            <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-primary" %>
+          </span>
+        <% end %>
+
+    </div>
+
+  </div>
+</nav>
