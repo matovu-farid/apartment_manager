@@ -16,7 +16,7 @@
   </div>
   <div>
     <%= form.label :amount, class: "form-label" %>
-    <%= form.number_field :amount, class: "form-control", max: maxPayment(rent_session, current = payment.amount ||= 0)%>
+    <%= form.number_field :amount, class: "form-control", data: { controller: "number-field", number_field_target: "input", max: maxPayment(rent_session, current = payment.amount ||= 0) } %>
   </div>
   <div class='pt-3'>
     <%= form.submit class: "btn btn-primary" %>

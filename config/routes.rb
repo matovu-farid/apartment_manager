@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   resources(:rent_sessions) do
-    resources(:payments, only: %i[new create index])
+    resources(:payments)
   end
 
-  resources(:payments, only: %i[show edit index update destroy])
+  # resources(:payments, only: %i[show update destroy])
 
   resources(:blocks)
   resources(:apartments)

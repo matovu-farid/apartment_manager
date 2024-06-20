@@ -1,5 +1,5 @@
 class PaymentsController < ApplicationController
-  before_action :set_rent_session, only: %i[new create index]
+  before_action :set_rent_session
   before_action :set_payment, only: %i[show edit update destroy]
 
   # GET /payments or /payments.json
@@ -21,6 +21,7 @@ class PaymentsController < ApplicationController
 
   # GET /payments/1/edit
   def edit
+    @rent_session = @payment.rent_session
   end
 
   # POST /payments or /payments.json
@@ -29,7 +30,9 @@ class PaymentsController < ApplicationController
     @payment.rent_session = @rent_session
     respond_to do |format|
       if @payment.save
-        format.html { redirect_to(payment_url(@payment), notice: "Payment was successfully created.") }
+        format.html {
+          redirect_to(rent_session_payment_url([@rent_session, @payment]), notice: "Payment was successfully created.")
+        }
         format.json { render(:show, status: :created, location: @payment) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -42,7 +45,9 @@ class PaymentsController < ApplicationController
   def update
     respond_to do |format|
       if @payment.update(payment_params)
-        format.html { redirect_to(payment_url(@payment), notice: "Payment was successfully updated.") }
+        format.html {
+          redirect_to(rent_session_payment_url([@rent_session, @payment]), notice: "Payment was successfully updated.")
+        }
         format.json { render(:show, status: :ok, location: @payment) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -56,7 +61,7 @@ class PaymentsController < ApplicationController
     @payment.destroy
 
     respond_to do |format|
-      format.html { redirect_to(payments_url, notice: "Payment was successfully destroyed.") }
+      format.html { redirect_to(rent_session_payments_url, notice: "Payment was successfully destroyed.") }
       format.json { head(:no_content) }
     end
   end

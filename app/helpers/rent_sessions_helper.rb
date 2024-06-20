@@ -12,7 +12,7 @@ module RentSessionsHelper
   end
 
   def fullyPaid?(rent_session)
-    rentLeft(rent_session) == 0 ? "Yes" : "No"
+    rentLeft(rent_session) <= 0 ? "Yes" : "No"
   end
 
 end

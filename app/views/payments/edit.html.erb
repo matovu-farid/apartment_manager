@@ -1,11 +1,7 @@
 <h1>Editing payment</h1>
-
-<%= render "form", payment: @payment, rent_session: nil %>
-
+<%= render "form", payment: @payment, rent_session: @rent_session %>
 <br>
-
 <div>
-  <%= link_to "Show this payment", @payment %>
-  |
-  <%= link_to "Back to payments", payments_path %>
+  <%= link_to "Show this payment", [@rent_session,@payment] %>
+  <%= link_to "Back to payments", rent_session_payments_path %>
 </div>

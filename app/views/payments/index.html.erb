@@ -1,17 +1,14 @@
 <p style="color: green"><%= notice %></p>
-
 <h1>Payments</h1>
-
 <div id="payments">
   <% @payments.each do |payment| %>
     <%= render payment %>
     <p>
-      <%= link_to "Show this payment", payment %>
+      <%= link_to "Show this payment", [@rent_session,payment] %>
     </p>
   <% end %>
 </div>
 <% if @rent_session != nil %>
-
   <%= link_to "New payment",
   new_rent_session_payment_path,
   class: "btn btn-outline-primary" %>

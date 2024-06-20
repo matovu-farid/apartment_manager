@@ -4,16 +4,13 @@
   <div class='d-flex gap-2 py-2'>
     <%= link_to "Rent Sessions", rent_sessions_path, class: "btn btn-outline-secondary" %>
     <%= link_to "Edit this payment",
-    edit_payment_path(@payment),
+   edit_rent_session_payment_path(@payment.rent_session,@payment ),
     class: "btn btn-outline-secondary" %>
-    <%= link_to "Payments", payments_path, class: "btn btn-outline-secondary" %>
+    <%= link_to "Payments", rent_session_payments_path(@payment.rent_session), class: "btn btn-outline-secondary" %>
   </div>
   <%= button_to "Destroy this payment",
-  @payment,
+  [@rent_session,@payment],
   method: :delete,
-  data: {
-    turbo_method: :delete,
-    turbo_confirm: "Are you sure?",
-  },
+ 
   class: "btn btn-danger" %>
 </div>
