@@ -5,6 +5,9 @@ class PaymentsController < ApplicationController
   # GET /payments or /payments.json
   def index
     @payments = Payment.all
+    if @payments.empty?
+      redirect_to(rent_sessions_url)
+    end
   end
 
   # GET /payments/1 or /payments/1.json
