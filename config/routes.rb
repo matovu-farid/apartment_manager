@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources(:rent_sessions) do
-    resources(:payments)
+    resources(:payments, only: [:new, :create])
   end
 
   resources(:payments, only: [:index, :show, :edit])

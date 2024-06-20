@@ -1,5 +1,5 @@
 class PaymentsController < ApplicationController
-  before_action :set_rent_session
+  before_action :set_rent_session, only: %i[new create]
   before_action :set_payment, only: %i[show edit update destroy]
 
   # GET /payments or /payments.json
@@ -23,7 +23,7 @@ class PaymentsController < ApplicationController
   # POST /payments or /payments.json
   def create
     @payment = Payment.new(payment_params)
-
+    @payment.rent_session = @rent_session
     respond_to do |format|
       if @payment.save
         format.html { redirect_to(payment_url(@payment), notice: "Payment was successfully created.") }

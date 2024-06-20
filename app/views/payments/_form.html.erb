@@ -1,7 +1,8 @@
-<%= form_with(model: payment) do |form| %>
+<%= form_with(model: payment, url: [rent_session, payment]) do |form| %>
   <% if payment.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(payment.errors.count, "error") %> prohibited this payment from being saved:</h2>
+      <h2><%= pluralize(payment.errors.count, "error") %>
+        prohibited this payment from being saved:</h2>
 
       <ul>
         <% payment.errors.each do |error| %>
@@ -12,21 +13,16 @@
   <% end %>
 
   <div>
-    <%= form.label :rent_session_id, style: "display: block" %>
-    <%= form.text_field :rent_session_id %>
+    <%= form.label :date, class: "form-label" %>
+    <%= form.datetime_field :date, class: "form-control", required: true %>
   </div>
 
   <div>
-    <%= form.label :date, style: "display: block" %>
-    <%= form.datetime_field :date %>
+    <%= form.label :amount, class: "form-label" %>
+    <%= form.text_field :amount, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :amount, style: "display: block" %>
-    <%= form.text_field :amount %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class='pt-3'>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
