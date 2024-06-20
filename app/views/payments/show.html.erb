@@ -1,16 +1,13 @@
 <p style="color: green"><%= notice %></p>
-
 <%= render @payment %>
-
 <div>
   <div class='d-flex gap-2 py-2'>
+    <%= link_to "Rent Sessions", rent_sessions_path, class: "btn btn-outline-secondary" %>
     <%= link_to "Edit this payment",
     edit_payment_path(@payment),
     class: "btn btn-outline-secondary" %>
-
-    <%= link_to "Back to payments", payments_path, class: "btn btn-outline-secondary" %>
+    <%= link_to "Payments", payments_path, class: "btn btn-outline-secondary" %>
   </div>
-
   <%= button_to "Destroy this payment",
   @payment,
   method: :delete,

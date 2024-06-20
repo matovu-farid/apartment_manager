@@ -37,7 +37,7 @@ gem "redis", "~> 4.0"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -50,16 +50,16 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  gem 'rspec-rails'
-  gem 'capybara'
-  gem 'rubocop', require: false
-  gem 'solargraph', require: false
+  gem "debug", platforms: %i[mri mingw x64_mingw]
+  gem "rspec-rails"
+  gem "capybara"
+  gem "rubocop", require: false
+  gem "solargraph", require: false
   gem "factory_bot_rails", "~> 6.4"
   gem "standard"
 end
 # Authentication
-gem 'devise'
+gem "devise"
 
 # Frontend
 # gem 'tailwindcss-rails'
@@ -70,6 +70,7 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
+  gem "erb-formatter", "~> 0.7.2"
   gem "letter_opener"
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -78,14 +79,10 @@ group :development do
   # gem "spring"
 end
 
-
-gem "erb-formatter", "~> 0.7.2"
-
 gem "vite_rails", "~> 3.0"
 
-
 gem "table-for", "~> 3.7"
-gem 'dartsass-sprockets'
-gem 'bootstrap', '~> 5.3.3'
-gem 'jquery-rails'
-gem 'cancancan'
+gem "dartsass-sprockets"
+gem "bootstrap", "~> 5.3.3"
+gem "jquery-rails"
+gem "cancancan"
