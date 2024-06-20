@@ -1,5 +1,5 @@
 class PaymentsController < ApplicationController
-  before_action :set_rent_session, only: %i[new create]
+  before_action :set_rent_session, only: %i[new create index]
   before_action :set_payment, only: %i[show edit update destroy]
 
   # GET /payments or /payments.json
@@ -61,7 +61,10 @@ class PaymentsController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_rent_session
-    @rent_session = RentSession.find(params[:rent_session_id])
+    @rent_session = nil
+    if params[:rent_session_id]
+      @rent_session = RentSession.find(params[:rent_session_id])
+    end
   end
 
   def set_payment

@@ -1,4 +1,4 @@
-<%= form_with(model: payment, url: [rent_session, payment]) do |form| %>
+<%= form_with(model: [rent_session, payment]) do |form| %>
   <% if payment.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(payment.errors.count, "error") %>
