@@ -4,7 +4,8 @@ module ApplicationHelper
       amount,
       unit: unit,
       separator: separator,
-      delimiter: delimiter
+      delimiter: delimiter,
+      precision: 0
     )
   end
 end

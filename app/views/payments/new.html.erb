@@ -1,6 +1,7 @@
 <div class='d-flex justify-content-center'>
   <div class='w-25'>
-    <h1 class='h3'>New payment for <%=@rent_session.resident.name%></h1>
+    <h1 class='h3 fw-bold'>New payment for <%=@rent_session.resident.name%></h1>
+    <p>(Balance: <%=format_currency rentLeft @rent_session %>)</p>
     <%= render "form", payment: @payment, rent_session: @rent_session %>
     <br>
     <div>
