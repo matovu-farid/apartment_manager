@@ -2,15 +2,24 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["payment"]
+  static targets = ["payment", "balance"]
 
   connect() {
     console.log('Connected');
     this.paymentTarget.addEventListener('input', this.validate.bind(this));
   }
 
-  log() {
-    console.log('Logging');
+  onEditPayment() {
+    this.validate()
+    const payment = parseFloat(this.paymentTarget.value);
+    const balance = parseFloat(this.balanceTarget.dataset.balance);
+    if (!payment) return balance
+    const left = balance - payment
+    this.balanceTarget.textContent = `UGX ${left}`;
+    const max = parseFloat(this.paymentTarget.dataset.max);
+    if (parseFloat(this.paymentTarget.value) > max) {
+      this.paymentTarget.value = max;
+    }
   }
 
   /**
@@ -19,9 +28,7 @@ export default class extends Controller {
     * @return {void}
     */
   validate(event) {
-    console.log('Event', event);
     const max = parseFloat(this.paymentTarget.dataset.max);
-    console.log('Max', max);
     if (parseFloat(this.paymentTarget.value) > max) {
       this.paymentTarget.value = max;
     }
