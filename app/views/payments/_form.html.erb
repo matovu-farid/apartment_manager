@@ -1,24 +1,27 @@
-<%= form_with(model: [rent_session, payment]) do |form| %>
-  <% if payment.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(payment.errors.count, "error") %>
-        prohibited this payment from being saved:</h2>
-      <ul>
-        <% payment.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<div data-controller='payment'>
+  <%= form_with(model: [rent_session, payment]) do |form| %>
+    <% if payment.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(payment.errors.count, "error") %>
+          prohibited this payment from being saved:</h2>
+        <ul>
+          <% payment.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <p>(Balance: <span data-payment-target='balance'><%=format_currency rentLeft @rent_session %></span>)</p>
+    <div>
+      <%= form.label :date, class: "form-label" %>
+      <%= form.datetime_field :date, class: "form-control", required: true %>
+    </div>
+    <div >
+      <%= form.label :amount, class: "form-label" %>
+      <%= form.number_field :amount, class: "form-control",  data: {  payment_target: "payment", action: 'input->payment#log',max: maxPayment(rent_session, current = payment.amount ||= 0) }, step: 100 %>
+    </div>
+    <div class='pt-3'>
+      <%= form.submit class: "btn btn-primary" %>
     </div>
   <% end %>
-  <div>
-    <%= form.label :date, class: "form-label" %>
-    <%= form.datetime_field :date, class: "form-control", required: true %>
-  </div>
-  <div data-controller='payment'>
-    <%= form.label :amount, class: "form-label" %>
-    <%= form.number_field :amount, class: "form-control",  data: {  payment_target: "payment", action: 'input->payment#log',max: maxPayment(rent_session, current = payment.amount ||= 0) }, step: 100 %>
-  </div>
-  <div class='pt-3'>
-    <%= form.submit class: "btn btn-primary" %>
-  </div>
-<% end %>
+</div>
