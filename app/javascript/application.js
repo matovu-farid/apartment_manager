@@ -4,6 +4,8 @@ import "controllers"
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
 $(document).on('turbolinks:load', function () {
   $('.datepicker').datepicker();
 });

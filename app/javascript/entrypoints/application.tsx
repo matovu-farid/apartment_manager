@@ -11,5 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Root element found')
     const root = createRoot(rootElement)
     root.render(<div><MyApp /></div>)
-  }})
+  }
+})
 

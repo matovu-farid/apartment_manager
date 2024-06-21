@@ -14,9 +14,9 @@
     <%= form.label :date, class: "form-label" %>
     <%= form.datetime_field :date, class: "form-control", required: true %>
   </div>
-  <div>
+  <div data-controller='payment'>
     <%= form.label :amount, class: "form-label" %>
-    <%= form.number_field :amount, class: "form-control", data: { controller: "number-field", number_field_target: "input", max: maxPayment(rent_session, current = payment.amount ||= 0) } %>
+    <%= form.number_field :amount, class: "form-control",  data: {  payment_target: "payment", action: 'input->payment#log',max: maxPayment(rent_session, current = payment.amount ||= 0) }, step: 1000 %>
   </div>
   <div class='pt-3'>
     <%= form.submit class: "btn btn-primary" %>
