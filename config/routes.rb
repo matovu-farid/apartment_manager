@@ -3,8 +3,6 @@ Rails.application.routes.draw do
     resources(:payments)
   end
 
-  # resources(:payments, only: %i[show update destroy])
-
   resources(:blocks)
   resources(:apartments)
   resources(:residents)

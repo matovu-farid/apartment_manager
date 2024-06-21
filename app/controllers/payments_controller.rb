@@ -31,7 +31,7 @@ class PaymentsController < ApplicationController
     respond_to do |format|
       if @payment.save
         format.html {
-          redirect_to(rent_session_payment_url([@rent_session, @payment]), notice: "Payment was successfully created.")
+          redirect_to(rent_session_payment_url(@rent_session, @payment), notice: "Payment was successfully created.")
         }
         format.json { render(:show, status: :created, location: @payment) }
       else
@@ -46,7 +46,7 @@ class PaymentsController < ApplicationController
     respond_to do |format|
       if @payment.update(payment_params)
         format.html {
-          redirect_to(rent_session_payment_url([@rent_session, @payment]), notice: "Payment was successfully updated.")
+          redirect_to(rent_session_payment_url(@rent_session, @payment), notice: "Payment was successfully updated.")
         }
         format.json { render(:show, status: :ok, location: @payment) }
       else

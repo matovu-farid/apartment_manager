@@ -1,5 +1,5 @@
 <p style="color: green"><%= notice %></p>
-<% render 'payment_table', [@rent_session,[@payment]] %>
+<%= render 'payment_table', rent_session:@rent_session,payments:[@payment] %>
 <div>
   <div class='d-flex gap-2 py-2'>
     <%= link_to "Rent Sessions", rent_sessions_path, class: "btn btn-outline-secondary" %>
