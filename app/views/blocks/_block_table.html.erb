@@ -4,7 +4,9 @@
       <ul class="">
         <% blocks.each do |block| %>
           <li>
-            <p  class= 'fw-bold h3' ><%= block.name%></p>
+            <p  class= 'fw-bold h3' ><%= block.name%>
+              <%= link_to "Edit", edit_block_path(block),class: 'btn btn-outline-secondary' %>
+            </p>
             <%= render "apartments/apartment_table", apartments: block.apartments %>
             <% if block.apartments.empty? %>
               <p class='text-secondary fst-italic'>Apartments attached to this block will be added here</p>
@@ -12,7 +14,6 @@
           </li>
         <% end %>
       </ul>
-
     </div>
   </div>
 <% end %>
