@@ -6,7 +6,6 @@
     >
       <h2><%= pluralize(resident.errors.count, "error") %>
         prohibited this resident from being saved:</h2>
-
       <ul>
         <% resident.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -14,17 +13,13 @@
       </ul>
     </div>
   <% end %>
-
   <div class="py-3">
     <%= form.label :name, class: "form-label" %>
     <%= form.text_field :name, class: "form-control" %>
-
     <%= form.label :physicalId, class: "form-label" %>
     <%= form.text_field :physicalId, class: "form-control" %>
-
     <%= form.label :phonenumber, class: "form-label" %>
     <%= form.text_field :phonenumber, class: "form-control" %>
-
     <div>
       <%= form.label :apartment_id, class: "form-label" %>
       <%= form.collection_select :apartment_id,
@@ -33,11 +28,9 @@
                              :name,
                              class: "form-control" %>
     </div>
-
   </div>
-
   <div class="inline py-3">
     <%= form.submit class:
-                  "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+                  "btn btn-outline-primary" %>
   </div>
 <% end %>

@@ -8,15 +8,10 @@
         id="notice"
       ><%= notice %></p>
     <% end %>
-
     <%= render "resident_table", residents: [@resident] %>
-
     <%= link_to "Edit this resident",
     edit_resident_path(@resident),
     class: "btn btn-outline-primary" %>
-    <%= link_to "View Rent Session",
-    resident_rent_sessions_path(@resident),
-    class: "btn btn-outline-secondary" %>
     <%= link_to "Back to residents", residents_path, class: "btn btn-secondary" %>
     <div class="inline-block ml-2">
       <%= button_to "Delete resident", @resident, method: :delete, class: "btn btn-danger" %>
