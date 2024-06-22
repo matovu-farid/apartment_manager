@@ -65,6 +65,6 @@ class RentSessionsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def rent_session_params
-    params.require(:rent_session).permit(:paymentDueDate, :resident_id, :apartment_id, :isPaid)
+    params.require(:rent_session).permit(:paymentDueDate, :resident_id, :apartment_id)
   end
 end
