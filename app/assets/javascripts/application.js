@@ -1,1 +1,1 @@
-
+//= require select2

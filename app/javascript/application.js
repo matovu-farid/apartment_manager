@@ -6,6 +6,7 @@ import "controllers"
 //= require bootstrap-sprockets
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
+//= require select2
 $(document).on('turbolinks:load', function () {
   $('.datepicker').datepicker();
 });

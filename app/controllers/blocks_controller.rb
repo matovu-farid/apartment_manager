@@ -1,15 +1,15 @@
 class BlocksController < ApplicationController
-  before_action :set_block, only: %i[ show edit update destroy ]
+  before_action :set_block, only: %i[show edit update destroy]
 
   before_action :authenticate_user!
   load_and_authorize_resource
   # GET /blocks or /blocks.json
   def index
-    @blocks = Block.filter_by_admin current_user
+    @blocks = Block.filter_by_admin(current_user)
 
     # redirect to create block if no blocks exist
     if @blocks.empty?
-      redirect_to new_block_path
+      redirect_to(new_block_path)
     end
   end
 
@@ -27,29 +27,51 @@ class BlocksController < ApplicationController
   end
 
   # POST /blocks or /blocks.json
+  # def create
+  #   @block = Block.new(block_params)
+  #   @block_admin = BlockAdmin.new(user: current_user, block: @block)
+  #   @block_key = BlockKey.new(block: @block)
+  #   respond_to do |format|
+  #     if @block.save && @block_admin.save && @block_key.save
+  #       format.html { redirect_to(block_url(@block), notice: "Block was successfully created.") }
+  #       format.json { render(:show, status: :created, location: @block) }
+  #     else
+  #       format.html { render(:new, status: :unprocessable_entity) }
+  #       format.json { render(json: @block.errors, status: :unprocessable_entity) }
+  #     end
+  #   end
+  # end
+
   def create
     @block = Block.new(block_params)
-    BlockAdmin.create(user: current_user, block: @block)
+    @block_admin = BlockAdmin.new(user: current_user, block: @block)
+    @block_key = BlockKey.new(block: @block)
+
     respond_to do |format|
-      if @block.save
-        format.html { redirect_to block_url(@block), notice: "Block was successfully created." }
-        format.json { render :show, status: :created, location: @block }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @block.errors, status: :unprocessable_entity }
+      begin
+        ActiveRecord::Base.transaction do
+          @block.save!
+          @block_admin.save!
+          @block_key.save!
+          format.html { redirect_to(block_url(@block), notice: "Block was successfully created.") }
+          format.json { render(:show, status: :created, location: @block) }
+        end
+
+      rescue ActiveRecord::RecordInvalid => e
+        format.html { render(:new, status: :unprocessable_entity) }
+        format.json { render(json: e.record.errors, status: :unprocessable_entity) }
       end
     end
   end
-
   # PATCH/PUT /blocks/1 or /blocks/1.json
   def update
     respond_to do |format|
       if @block.update(block_params)
-        format.html { redirect_to block_url(@block), notice: "Block was successfully updated." }
-        format.json { render :show, status: :ok, location: @block }
+        format.html { redirect_to(block_url(@block), notice: "Block was successfully updated.") }
+        format.json { render(:show, status: :ok, location: @block) }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @block.errors, status: :unprocessable_entity }
+        format.html { render(:edit, status: :unprocessable_entity) }
+        format.json { render(json: @block.errors, status: :unprocessable_entity) }
       end
     end
   end
@@ -59,19 +81,19 @@ class BlocksController < ApplicationController
     @block.destroy
 
     respond_to do |format|
-      format.html { redirect_to blocks_url, notice: "Block was successfully destroyed." }
-      format.json { head :no_content }
+      format.html { redirect_to(blocks_url, notice: "Block was successfully destroyed.") }
+      format.json { head(:no_content) }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_block
-      @block = Block.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_block
+    @block = Block.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def block_params
-      params.require(:block).permit(:name, :user_id)
-    end
+  # Only allow a list of trusted parameters through.
+  def block_params
+    params.require(:block).permit(:name, :user_id)
+  end
 end

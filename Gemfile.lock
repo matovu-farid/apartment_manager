@@ -292,6 +292,7 @@ GEM
       google-protobuf (>= 3.25, < 5.0)
     sassc-embedded (1.76.0)
       sass-embedded (~> 1.76)
+    select2-rails (4.0.13)
     solargraph (0.50.0)
       backport (~> 1.2)
       benchmark
@@ -394,6 +395,7 @@ DEPENDENCIES
   redis (~> 4.0)
   rspec-rails
   rubocop
+  select2-rails
   solargraph
   sprockets-rails
   standard

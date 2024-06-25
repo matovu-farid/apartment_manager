@@ -1,14 +1,15 @@
 <div
   class='w-full d-flex flex-column justify-content-center align-items-center'
 >
+  <script>
+    $(document).ready(function() { $("#block_user_id").select2(); });
+  </script>
   <div class='w-25'>
-
     <%= form_with(model: block, class: "contents") do |form| %>
       <% if block.errors.any? %>
         <div id="error_explanation" class="alert alert-danger">
           <h2 class='h5'><%= pluralize(block.errors.count, "error") %>
             prohibited this block from being saved:</h2>
-
           <ul>
             <% block.errors.each do |error| %>
               <li><%= error.full_message %></li>
@@ -16,12 +17,18 @@
           </ul>
         </div>
       <% end %>
-
       <div class="">
         <%= form.label :name, class: "form-label" %>
         <%= form.text_field :name, class: "form-control" %>
       </div>
-
+      <div class='d-flex flex-column'>
+        <%= form.label :user_id, class: "form-label" %>
+        <%= form.collection_select :user_id,
+                           User.all,
+                           :id,
+                           :email,
+                           class: "form-control p-3" %>
+      </div>
       <div class="py-3">
         <%= form.submit class: "btn btn-outline-primary" %>
       </div>
