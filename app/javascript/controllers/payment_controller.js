@@ -5,7 +5,7 @@ export default class extends Controller {
   static targets = ["payment", "balance"]
 
   connect() {
-    console.log('Connected');
+    console.log('Connected payments');
     this.paymentTarget.addEventListener('input', this.validate.bind(this));
   }
 

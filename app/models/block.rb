@@ -1,6 +1,7 @@
 class Block < ApplicationRecord
   has_many :apartments, dependent: :destroy
   has_many :block_admins, dependent: :destroy
+  has_one :block_key, dependent: :destroy
   has_many :users, through: :block_admins
   alias_attribute :admins, :users
 

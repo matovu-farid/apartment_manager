@@ -1,7 +1,16 @@
 <div id="<%= dom_id block %>">
-  <p class="my-5">
+  <p class="">
     <strong class="block font-medium mb-1">Name:</strong>
     <%= block.name %>
   </p>
-
+  <p class="" data-controller="key">
+    <strong class="block font-medium mb-1">Key: </strong>
+    <span data-key-target="key"
+      data-key="<%= block.block_key.key %>"
+      data-hidden="<%= '*' * 20 %>"
+      data-key-attribute="hidden">
+      <%= '*' * 20 %>
+    </span>
+    <button data-action="click->key#toggle" class='btn btn-outline-primary'>Show/Hide Key</button>
+  </p>
 </div>
