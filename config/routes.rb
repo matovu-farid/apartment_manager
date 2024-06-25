@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources(:residents)
 
   get("home/index")
+  post("block/pull/:key", to: "blocks#pull", as: "block_pull")
   devise_for(:users)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   authenticated(:user) do

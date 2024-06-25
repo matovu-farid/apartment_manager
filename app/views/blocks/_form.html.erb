@@ -1,9 +1,6 @@
 <div
   class='w-full'
 >
-  <script>
-    $(document).ready(function() { $("#block_user_id").select2(); });
-  </script>
   <div class=''>
     <%= form_with(model: block, class: "contents") do |form| %>
       <% if block.errors.any? %>
@@ -26,4 +23,6 @@
       </div>
     <% end %>
   </div>
+  <p class='font-bold text-xl'>OR Pull block</p>
+  <p class='italic text-secondary text-sm'>Pulling a block means becoming an admin for a block created by another user. You need to enter the key the from block admin</p>
 </div>

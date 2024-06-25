@@ -86,6 +86,19 @@ class BlocksController < ApplicationController
     end
   end
 
+  def pull
+    @block_key = BlockKey.find_by(key: params[:key])
+    @block = @block_key.block
+    @block_admin = BlockAdmin.new(user: current_user, block: @block)
+    if @block_admin.save do
+        redirect_to(block_url(@block), notice: "You are now an admin for #{block.name}")
+      else
+
+        redirect_to(blocks_url, notice: "Block was not successfully pulled.")
+      end
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_block
