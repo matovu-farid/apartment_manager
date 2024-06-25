@@ -1,10 +1,10 @@
 <div
-  class='w-full d-flex flex-column justify-content-center align-items-center'
+  class='w-full'
 >
   <script>
     $(document).ready(function() { $("#block_user_id").select2(); });
   </script>
-  <div class='w-25'>
+  <div class=''>
     <%= form_with(model: block, class: "contents") do |form| %>
       <% if block.errors.any? %>
         <div id="error_explanation" class="alert alert-danger">
