@@ -87,3 +87,6 @@ gem "bootstrap", "~> 5.3.3"
 gem "jquery-rails"
 gem "cancancan"
 gem "select2-rails"
+gem "font-awesome-sass"
+
+gem "tailwindcss-rails", "~> 2.6"

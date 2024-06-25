@@ -5,12 +5,15 @@
   </p>
   <p class="" data-controller="key">
     <strong class="block font-medium mb-1">Key: </strong>
+    <% hidden = '*' * block.block_key.key.length %>
     <span data-key-target="key"
       data-key="<%= block.block_key.key %>"
-      data-hidden="<%= '*' * 20 %>"
+      data-hidden="<%= hidden%>"
       data-key-attribute="hidden">
-      <%= '*' * 20 %>
+      <%= hidden %>
     </span>
-    <button data-action="click->key#toggle" class='btn btn-outline-primary'>Show/Hide Key</button>
+    <i class="fa-solid fa-eye-slash pointer" data-key-target='show' data-bs-toggle="tooltip" data-bs-placement="show" data-action="click->key#toggle"></i>
+    <i class="fa-solid fa-copy pointer"  data-key-target='copy'  data-bs-toggle="tooltip" data-bs-placement="copy" data-action="click->key#copy"></i>
   </p>
+  <p class='text-secondary fst-italic'>Share this key with any admins you would like to add to this block</p>
 </div>
