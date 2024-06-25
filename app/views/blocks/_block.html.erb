@@ -1,9 +1,9 @@
 <div id="<%= dom_id block %>">
-  <p class="">
+  <p class="flex gap-2">
     <strong class="block font-medium mb-1">Name:</strong>
     <%= block.name %>
   </p>
-  <p class="" data-controller="key">
+  <p class="flex gap-2" data-controller="key">
     <strong class="block font-medium mb-1">Key: </strong>
     <% hidden = '*' * block.block_key.key.length %>
     <span data-key-target="key"

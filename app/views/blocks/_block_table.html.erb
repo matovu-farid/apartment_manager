@@ -5,7 +5,12 @@
         <% blocks.each do |block| %>
           <li>
             <p  class= 'fw-bold h3' ><%= block.name%>
-              <%= link_to "Edit", edit_block_path(block),class: 'btn btn-outline-secondary' %>
+              <%= link_to edit_block_path(block),class: 'btn ' do %>
+                <i class="fa-solid fa-pen-to-square"></i>
+              <% end %>
+              <%= link_to block do %>
+                <i class="fa-solid fa-bars"></i>
+              <% end %>
               <%= button_to "Delete block",block,  method: :delete,class: "btn btn-danger" %>
             </p>
             <%= render "apartments/apartment_table", apartments: block.apartments %>
