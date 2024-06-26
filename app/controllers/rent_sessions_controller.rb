@@ -6,6 +6,9 @@ class RentSessionsController < ApplicationController
   # GET /rent_sessions or /rent_sessions.json
   def index
     @rent_sessions = RentSession.filter_by_admin(current_user)
+    if @rent_sessions.empty?
+      redirect_to(new_rent_session_path)
+    end
   end
 
   # GET /rent_sessions/1 or /rent_sessions/1.json
@@ -15,6 +18,14 @@ class RentSessionsController < ApplicationController
   # GET /rent_sessions/new
   def new
     @rent_session = RentSession.new
+    if Resident.filter_by_admin(current_user).empty?
+      redirect_to(new_resident_path)
+      return
+    end
+
+    if Apartment.filter_by_admin(current_user).empty?
+      redirect_to(new_apartment_path)
+    end
   end
 
   # GET /rent_sessions/1/edit

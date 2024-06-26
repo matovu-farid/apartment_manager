@@ -1,18 +1,15 @@
 class ResidentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_resident, only: %i[ show edit update destroy ]
+  before_action :set_resident, only: %i[show edit update destroy]
   include Payable
-
-
 
   load_and_authorize_resource
   # GET /residents or /residents.json
   def index
-    @residents = Resident.filter_by_admin current_user
+    @residents = Resident.filter_by_admin(current_user)
     if @residents.empty?
-      redirect_to new_resident_path
+      redirect_to(new_resident_path)
     end
-
   end
 
   # GET /residents/1 or /residents/1.json
@@ -22,6 +19,9 @@ class ResidentsController < ApplicationController
   # GET /residents/new
   def new
     @resident = Resident.new
+    if Apartment.filter_by_admin(current_user).empty?
+      redirect_to(new_apartment_path)
+    end
   end
 
   # GET /residents/1/edit
@@ -31,17 +31,16 @@ class ResidentsController < ApplicationController
   # POST /residents or /residents.json
   def create
 
- 
     @resident = Resident.new(resident_params)
     @resident.startdate = Time.zone.now
 
     respond_to do |format|
       if @resident.save
-        format.html { redirect_to resident_url(@resident), notice: "Resident was successfully created." }
-        format.json { render :show, status: :created, location: @resident }
+        format.html { redirect_to(resident_url(@resident), notice: "Resident was successfully created.") }
+        format.json { render(:show, status: :created, location: @resident) }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @resident.errors, status: :unprocessable_entity }
+        format.html { render(:new, status: :unprocessable_entity) }
+        format.json { render(json: @resident.errors, status: :unprocessable_entity) }
       end
     end
   end
@@ -50,11 +49,11 @@ class ResidentsController < ApplicationController
   def update
     respond_to do |format|
       if @resident.update(resident_params)
-        format.html { redirect_to resident_url(@resident), notice: "Resident was successfully updated." }
-        format.json { render :show, status: :ok, location: @resident }
+        format.html { redirect_to(resident_url(@resident), notice: "Resident was successfully updated.") }
+        format.json { render(:show, status: :ok, location: @resident) }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @resident.errors, status: :unprocessable_entity }
+        format.html { render(:edit, status: :unprocessable_entity) }
+        format.json { render(json: @resident.errors, status: :unprocessable_entity) }
       end
     end
   end
@@ -64,20 +63,20 @@ class ResidentsController < ApplicationController
     @resident.destroy
 
     respond_to do |format|
-      format.html { redirect_to residents_url, notice: "Resident was successfully destroyed." }
-      format.json { head :no_content }
+      format.html { redirect_to(residents_url, notice: "Resident was successfully destroyed.") }
+      format.json { head(:no_content) }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_resident
-      @resident = Resident.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_resident
+    @resident = Resident.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def resident_params
-      params.require(:resident).permit(:name, :physicalId, :phonenumber,:apartment_id)
-    end
+  # Only allow a list of trusted parameters through.
+  def resident_params
+    params.require(:resident).permit(:name, :physicalId, :phonenumber, :apartment_id)
+  end
 
 end
