@@ -1,9 +1,11 @@
 class RentSessionsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_rent_session, only: %i[show edit update destroy]
+  load_and_authorize_resource
 
   # GET /rent_sessions or /rent_sessions.json
   def index
-    @rent_sessions = RentSession.all
+    @rent_sessions = RentSession.filter_by_admin(current_user)
   end
 
   # GET /rent_sessions/1 or /rent_sessions/1.json

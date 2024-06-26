@@ -26,22 +26,6 @@ class BlocksController < ApplicationController
   def edit
   end
 
-  # POST /blocks or /blocks.json
-  # def create
-  #   @block = Block.new(block_params)
-  #   @block_admin = BlockAdmin.new(user: current_user, block: @block)
-  #   @block_key = BlockKey.new(block: @block)
-  #   respond_to do |format|
-  #     if @block.save && @block_admin.save && @block_key.save
-  #       format.html { redirect_to(block_url(@block), notice: "Block was successfully created.") }
-  #       format.json { render(:show, status: :created, location: @block) }
-  #     else
-  #       format.html { render(:new, status: :unprocessable_entity) }
-  #       format.json { render(json: @block.errors, status: :unprocessable_entity) }
-  #     end
-  #   end
-  # end
-
   def create
     @block = Block.new(block_params)
     @block_admin = BlockAdmin.new(user: current_user, block: @block)
@@ -89,12 +73,16 @@ class BlocksController < ApplicationController
   def pull
     @block_key = BlockKey.find_by(key: params[:key])
     @block = @block_key.block
-    @block_admin = BlockAdmin.new(user: current_user, block: @block)
-    if @block_admin.save do
-        redirect_to(block_url(@block), notice: "You are now an admin for #{block.name}")
-      else
 
-        redirect_to(blocks_url, notice: "Block was not successfully pulled.")
+    @block_admin = BlockAdmin.new(user: current_user, block: @block)
+
+    respond_to do |format|
+      if @block_admin.save
+        format.html { redirect_to(block_url(@block), notice: "You are now an admin for #{@block.name}") }
+        format.json { render(:show, status: :created, location: @block) }
+      else
+        format.html { redirect_to(blocks_url, notice: "Block was not successfully pulled.") }
+        format.json { render(json: @block.errors, status: :unprocessable_entity) }
       end
     end
   end

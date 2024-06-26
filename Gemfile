@@ -67,7 +67,7 @@ gem "devise"
 # TypeScript and React
 
 group :development do
-  attr_writer(:attr_names)
+  # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
   gem "erb-formatter", "~> 0.7.2"

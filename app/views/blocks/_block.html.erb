@@ -16,4 +16,14 @@
     <i class="fa-solid fa-copy pointer"  data-key-target='copy'  data-bs-toggle="tooltip" data-bs-placement="copy" data-action="click->key#copy"></i>
   </p>
   <p class='text-secondary fst-italic'>Share this key with any admins you would like to add to this block</p>
+  <div>
+    <h3 class="font-bold text-3xl">Admins</h3>
+    <ul>
+      <% block.block_admins.each do |admin| %>
+        <li>
+          <p><%= admin.user.email %></p>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
