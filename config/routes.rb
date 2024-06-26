@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get("home/index")
   post("block/pull", to: "blocks#pull", as: "block_pull")
+  get("rent_session/renew", to: "rent_sessions#renew_rent", as: "renew_rent")
   devise_for(:users)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   authenticated(:user) do

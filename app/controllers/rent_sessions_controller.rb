@@ -1,4 +1,5 @@
 class RentSessionsController < ApplicationController
+  include Payable
   before_action :authenticate_user!
   before_action :set_rent_session, only: %i[show edit update destroy]
   load_and_authorize_resource
@@ -9,6 +10,20 @@ class RentSessionsController < ApplicationController
     if @rent_sessions.empty?
       redirect_to(new_rent_session_path)
     end
+  end
+
+  def renew_rent
+    @rent_sessions = RentSession.filter_by_admin(current_user)
+    prev_month_start = (Date.today.beginning_of_month - 1.month).beginning_of_month
+    prev_month_end = prev_month_start.end_of_month
+    prev_month_sessions = @rent_sessions.where(paymentDueDate: prev_month_start..prev_month_start.end_of_month)
+    prev_month_sessions.each do |rent_session|
+      new_rent_session = rent_session.dup
+      new_rent_session.paymentDueDate += 1.month
+      new_rent_session.save
+    end
+
+    redirect_back(fallback_location: root_path)
   end
 
   # GET /rent_sessions/1 or /rent_sessions/1.json
