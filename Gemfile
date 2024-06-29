@@ -57,6 +57,7 @@ group :development, :test do
   gem "solargraph", require: false
   gem "factory_bot_rails", "~> 6.4"
   gem "standard"
+  gem "dotenv-rails"
 end
 # Authentication
 gem "devise"
