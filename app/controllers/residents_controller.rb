@@ -26,16 +26,20 @@ class ResidentsController < ApplicationController
 
   # GET /residents/1/edit
   def edit
+    puts("-" * 100)
+    puts("params: #{params}")
+    puts("-" * 100)
   end
 
   # POST /residents or /residents.json
   def create
 
     @resident = Resident.new(resident_params)
-    @resident.startdate = Time.zone.now
+    apartment = Apartment.find(@resident.apartment_id)
+    rent_session = RentSession.new(paymentDueDate: @resident.startdate, resident: @resident, apartment: apartment)
 
     respond_to do |format|
-      if @resident.save
+      if @resident.save && rent_session.save
         format.html { redirect_to(resident_url(@resident), notice: "Resident was successfully created.") }
         format.json { render(:show, status: :created, location: @resident) }
       else
@@ -76,7 +80,13 @@ class ResidentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def resident_params
-    params.require(:resident).permit(:name, :physicalId, :phonenumber, :apartment_id)
+    params.require(:resident).permit(
+      :name,
+      :physicalId,
+      :phonenumber,
+      :apartment_id,
+      :startdate
+    )
   end
 
 end

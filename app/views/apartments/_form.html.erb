@@ -6,7 +6,6 @@
     >
       <h2><%= pluralize(apartment.errors.count, "error") %>
         prohibited this apartment from being saved:</h2>
-
       <ul>
         <% apartment.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -14,17 +13,13 @@
       </ul>
     </div>
   <% end %>
-
   <div class=" py-3">
-    <%= form.label :price, class: "form-label" %>
-    <%= form.number_field :price, step: 100, class: "form-control" %>
-
-    <%= form.label :floor, class: "form-label" %>
-    <%= form.text_field :floor, class: "form-control " %>
-
     <%= form.label :name, class: "form-label" %>
     <%= form.text_field :name, class: "form-control " %>
-
+    <%= form.label :price, class: "form-label" %>
+    <%= form.number_field :price, step: 100, class: "form-control" %>
+    <%= form.label :floor, class: "form-label" %>
+    <%= form.text_field :floor, class: "form-control " %>
     <%= form.label :block_id, class: "block" %>
     <%= form.collection_select :block_id,
                            Block.filter_by_admin(current_user),

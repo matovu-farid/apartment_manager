@@ -7,6 +7,7 @@ class Resident < ApplicationRecord
   alias_attribute :admins, :users
   has_many :rent_sessions, dependent: :destroy
   has_many :payments, through: :rent_sessions
+  accepts_nested_attributes_for :rent_sessions
 
   scope(
     :filter_by_admin,
