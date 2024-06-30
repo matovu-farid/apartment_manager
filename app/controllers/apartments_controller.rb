@@ -31,6 +31,9 @@ class ApartmentsController < ApplicationController
 
   # POST /apartments or /apartments.json
   def create
+    # replace non numberic
+    apartment_params[:price].gsub!(/[^0-9]/, "")
+
     @apartment = Apartment.new(apartment_params)
 
     respond_to do |format|

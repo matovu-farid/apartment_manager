@@ -9,6 +9,9 @@ import { application } from "./application"
 import PaymentController from "./payment_controller"
 application.register("payment", PaymentController)
 
+import CurrencyController from "./currency_controller"
+application.register("currency", CurrencyController)
+
 import KeyController from "./key_controller"
 application.register("key", KeyController)
 

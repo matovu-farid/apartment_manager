@@ -18,4 +18,20 @@ class Resident < ApplicationRecord
         .where({users: {id: user.id}})
     }
   )
+
+  def current_rent_session
+    rent_sessions.with_in_current_month.first
+  end
+
+  def current_month_payment
+    current_rent_session.payment_total
+  end
+
+  def current_month_due
+    apartment.price
+  end
+
+  def has_paid_current_month?
+    current_month_payment >= current_month_due
+  end
 end

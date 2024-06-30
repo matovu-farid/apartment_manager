@@ -11,7 +11,8 @@ export default class extends Controller {
 
   onEditPayment() {
     this.validate()
-    const payment = parseFloat(this.paymentTarget.value);
+    const payment = parseFloat(this.paymentTarget.value.replace(/[^0-9]/g, ''));
+    console.log('payment', payment)
     const balance = parseFloat(this.balanceTarget.dataset.balance);
     if (!payment) return balance
     const left = balance - payment

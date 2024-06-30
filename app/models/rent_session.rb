@@ -20,4 +20,8 @@ class RentSession < ApplicationRecord
     -> { RentSession.where(paymentDueDate: current_month_start..current_month_start.end_of_month) }
   )
 
+  def payment_total
+    payments.sum(:amount)
+  end
+
 end
