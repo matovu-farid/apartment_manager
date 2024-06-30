@@ -1,16 +1,7 @@
 <p style="color: green"><%= notice %></p>
-<%= render 'payment_table', rent_session:@rent_session,payments:[@payment] %>
+<%= render 'payment_table', rent_session:@rent_session,payments:[@payment], resident: @resident %>
 <div>
   <div class='d-flex gap-2 py-2'>
-    <%= link_to "Rent Sessions", rent_sessions_path, class: "btn btn-outline-secondary" %>
-    <%= link_to "Edit this payment",
-   edit_rent_session_payment_path(@payment.rent_session,@payment ),
-    class: "btn btn-outline-secondary" %>
-    <%= link_to "Payments", rent_session_payments_path(@payment.rent_session), class: "btn btn-outline-secondary" %>
+    <%= link_to "Payments",resident_payments_path(@resident), class: "btn btn-outline-secondary" %>
   </div>
-  <%= button_to "Destroy this payment",
-  [@rent_session,@payment],
-  method: :delete,
- 
-  class: "btn btn-danger" %>
 </div>

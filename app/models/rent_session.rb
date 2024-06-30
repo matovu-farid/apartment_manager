@@ -13,5 +13,11 @@ class RentSession < ApplicationRecord
         .where({users: {id: user.id}})
     }
   )
+  current_month_start = (Date.today.beginning_of_month).beginning_of_month
+
+  scope(
+    :with_in_current_month,
+    -> { RentSession.where(paymentDueDate: current_month_start..current_month_start.end_of_month) }
+  )
 
 end

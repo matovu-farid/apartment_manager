@@ -1,7 +1,7 @@
-<h1>Editing payment</h1>
-<%= render "form", payment: @payment, rent_session: @rent_session %>
-<br>
-<div>
-  <%= link_to "Show this payment", [@rent_session,@payment] %>
-  <%= link_to "Back to payments", rent_session_payments_path %>
+<div class='d-flex justify-content-center'>
+  <div class='w-25'>
+    <h1 class='h3 fw-bold'>Editing payment for <%=@resident.name%></h1>
+    <%= render "payments/form", payment: @payment, resident: @resident, rent_session: @rent_session %>
+    <br>
+  </div>
 </div>

@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
-  resources(:rent_sessions) do
-    resources(:payments)
-  end
-
+  resources(:rent_sessions)
   resources(:blocks)
   resources(:apartments)
-  resources(:residents)
+  resources(:residents) do
+    get("setup_payment", to: "residents#setup_payment", as: :setup_resident_payment)
+    post("add_payment", to: "residents#add_payment", as: :add_resident_payment)
+    resources(:payments)
+  end
 
   get("home/index")
   post("block/pull", to: "blocks#pull", as: "block_pull")

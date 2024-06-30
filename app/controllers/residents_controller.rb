@@ -26,9 +26,6 @@ class ResidentsController < ApplicationController
 
   # GET /residents/1/edit
   def edit
-    puts("-" * 100)
-    puts("params: #{params}")
-    puts("-" * 100)
   end
 
   # POST /residents or /residents.json
@@ -49,6 +46,33 @@ class ResidentsController < ApplicationController
     end
   end
 
+  def setup_payment
+    @resident = Resident.find(params[:resident_id])
+    redirect_to(resident_payments_path(@resident))
+  end
+
+  def add_payment
+
+    @resident = Resident.find(params[:resident_id])
+
+    @payment = Payment.new({date: params[:date], amount: params[:amount]})
+
+    @rent_session = create_rent_session(@resident)
+
+    @payment.rent_session = @rent_session
+
+    respond_to do |format|
+      if @payment.save
+        format.html {
+          redirect_to(residents_path, notice: "Payment was successfully created.")
+        }
+        format.json { render(:show, status: :created, location: @payment) }
+      else
+        format.html { render(:new, status: :unprocessable_entity) }
+        format.json { render(json: @payment.errors, status: :unprocessable_entity) }
+      end
+    end
+  end
   # PATCH/PUT /residents/1 or /residents/1.json
   def update
     respond_to do |format|
@@ -73,6 +97,24 @@ class ResidentsController < ApplicationController
   end
 
   private
+
+  def create_rent_session(resident)
+    rent_sessions = RentSession.filter_by_admin(current_user).with_in_current_month
+    paymentDueDate = Date.today.change(day: resident.startdate.day)
+    paymentDueDate = paymentDueDate + 1.month if paymentDueDate < Date.today
+    rent_session = nil
+    if rent_sessions.empty?
+      rent_session = RentSession.create(
+        paymentDueDate: paymentDueDate,
+        resident: resident,
+        apartment: resident.apartment
+      )
+    else
+      rent_session = rent_sessions.first
+    end
+
+    rent_session
+  end
   # Use callbacks to share common setup or constraints between actions.
   def set_resident
     @resident = Resident.find(params[:id])
@@ -87,6 +129,10 @@ class ResidentsController < ApplicationController
       :apartment_id,
       :startdate
     )
+  end
+
+  def payment_params
+    params.require(:payment).permit(:date, :amount)
   end
 
 end

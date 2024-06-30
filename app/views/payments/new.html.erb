@@ -1,12 +1,7 @@
 <div class='d-flex justify-content-center'>
   <div class='w-25'>
-    <h1 class='h3 fw-bold'>New payment for <%=@rent_session.resident.name%></h1>
-    <%= render "form", payment: @payment, rent_session: @rent_session %>
+    <h1 class='h3 fw-bold'>New payment for <%=@resident.name%></h1>
+    <%= render "payments/form", payment: @payment, resident: @resident, rent_session: @rent_session %>
     <br>
-    <div>
-      <%= link_to "Back to payments",
-      rent_session_payments_path,
-      class: "btn btn-outline-secondary" %>
-    </div>
   </div>
 </div>

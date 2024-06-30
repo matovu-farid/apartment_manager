@@ -3,10 +3,10 @@
 <% if !fullyPaid?(@rent_session)%>
   <div class='d-flex justify-content-end'>
     <%= link_to "New payment",
-  new_rent_session_payment_path,
+  new_resident_payment_path(@resident), 
   class: "btn btn-outline-primary" %>
   </div>
 <% end %>
 <div id="payments">
-  <%= render 'payment_table', rent_session: @rent_session, payments: @payments %>
+  <%= render 'payment_table', rent_session: @rent_session, payments: @payments ,resident: @resident %>
 </div>

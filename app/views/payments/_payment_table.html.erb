@@ -16,26 +16,32 @@
           class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
 
         >Amount</th>
-        <% if show ||=false %>
-          <th
+        <th
             scope="col"
-            class="relative py-3 pl-3 pr-4 sm:pr-0"
+            class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
 
             >
-            <span class="sr-only">Show</span>
-          </th>
-        <% end %>
+          <span >Actions</span>
+        </th>
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200 bg-white">
       <% payments.each do |payment| %>
         <tr>
-          <%= render payment %>
-          <% if show||=false %>
-            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-              <%= link_to "Show this payment", [rent_session,payment], class: "btn btn-outline-dark" %>
-            </td>
-          <% end %>
+          <%= render "payment",payment: payment ,resident: resident %>
+          <td class="">
+            <div class='flex gap-2 text-lg text-blue-500'>
+              <%= link_to [resident,payment] ,class: '' do %>
+                <i class="fa-solid fa-bars"></i>
+              <% end %>
+              <%= link_to edit_resident_payment_path(resident, payment),class: '' do %>
+                <i class="fa-solid fa-pen-to-square"></i>
+              <% end %>
+              <%= button_to [resident,payment],method: :delete ,class: '' do %>
+                <i class="fa-solid fa-trash text-red-500"></i>
+              <% end %>
+            </div>
+          </td>
         <% end %>
       </tr>
     </tbody>
