@@ -8,21 +8,22 @@
         id="notice"
       ><%= notice %></p>
     <% end %>
-
     <%= render "apartment_table", apartments: [@apartment] %>
-
-    <%= link_to "Edit this apartment",
-    edit_apartment_path(@apartment),
-    class: "btn btn-outline-primary" %>
     <%= link_to "Back to apartments",
     apartments_path,
     class: "btn btn-outline-secondary" %>
-
-    <div class="inline-block ml-2">
-      <%= button_to "Delete apartment",
+    <% if can? :edit, @apartment %>
+      <%= link_to "Edit this apartment",
+    edit_apartment_path(@apartment),
+    class: "btn btn-outline-primary" %>
+    <% end %>
+    <% if can? :destroy, @apartment %>
+      <div class="inline-block ml-2">
+        <%= button_to "Delete apartment",
       @apartment,
       method: :delete,
       class: "btn btn-danger" %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>

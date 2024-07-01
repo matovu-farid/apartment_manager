@@ -26,8 +26,10 @@
               <%= link_to apartment ,class: '' do %>
                 <i class="fa-solid fa-bars"></i>
               <% end %>
-              <%= button_to apartment,method: :delete ,class: '' do %>
-                <i class="fa-solid fa-trash text-red-500"></i>
+              <% if can? :destroy, apartment %>
+                <%= button_to apartment,method: :delete ,class: '' do %>
+                  <i class="fa-solid fa-trash text-red-500"></i>
+                <% end %>
               <% end %>
             </td>
           <% end %>
