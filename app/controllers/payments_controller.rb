@@ -6,7 +6,7 @@ class PaymentsController < ApplicationController
 
   # GET /payments or /payments.json
   def index
-    @payments = @resident.payments.filter_by_admin(current_user)
+    @payments = @resident.payments.accessible_by(current_ability)
     # if @payments.empty?
     #   redirect_to(residents_url)
     # end

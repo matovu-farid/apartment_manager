@@ -3,10 +3,9 @@ class Resident < ApplicationRecord
   validates :physicalId, presence: true
   validates :phonenumber, presence: true
   belongs_to :apartment
-  has_many :users, through: :apartment
+  has_many :admins, through: :apartment
 
   has_many :viewers, through: :apartment
-  alias_attribute :admins, :users
   has_many :rent_sessions, dependent: :destroy
   has_many :payments, through: :rent_sessions
   accepts_nested_attributes_for :rent_sessions

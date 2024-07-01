@@ -1,10 +1,9 @@
 class Payment < ApplicationRecord
   belongs_to :rent_session
 
-  has_many :users, through: :rent_session
+  has_many :admins, through: :rent_session
   has_many :viewers, through: :rent_session
 
-  alias_attribute :admins, :users
   scope(
     :filter_by_admin,
     -> (user) {

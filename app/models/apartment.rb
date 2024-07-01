@@ -4,9 +4,8 @@ class Apartment < ApplicationRecord
   validates :floor, presence: true
   validates :name, presence: true
   belongs_to :block
-  has_many :users, through: :block
+  has_many :admins, through: :block
   has_many :viewers, through: :block
-  alias_attribute :admins, :users
   scope(
     :filter_by_admin,
     -> (user) {

@@ -7,9 +7,8 @@ class RentSession < ApplicationRecord
     end
   end
 
-  has_many :users, through: :resident
+  has_many :admins, through: :resident
   has_many :viewers, through: :resident
-  alias_attribute :admins, :users
   scope(
     :filter_by_admin,
     -> (user) {

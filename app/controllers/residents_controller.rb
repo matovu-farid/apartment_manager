@@ -6,7 +6,7 @@ class ResidentsController < ApplicationController
   load_and_authorize_resource
   # GET /residents or /residents.json
   def index
-    @residents = Resident.filter_by_admin(current_user)
+    @residents = Resident.accessible_by(current_ability)
     if @residents.empty?
       redirect_to(new_resident_path)
     end

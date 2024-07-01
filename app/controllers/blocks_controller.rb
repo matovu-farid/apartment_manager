@@ -1,11 +1,12 @@
 class BlocksController < ApplicationController
+  load_and_authorize_resource
+
   before_action :set_block, only: %i[show edit update destroy]
 
   before_action :authenticate_user!
-  load_and_authorize_resource
   # GET /blocks or /blocks.json
   def index
-    @blocks = Block.filter_by_admin(current_user)
+    @blocks = Block.accessible_by(current_ability)
 
     # redirect to create block if no blocks exist
     if @blocks.empty?
@@ -19,7 +20,7 @@ class BlocksController < ApplicationController
 
   # GET /blocks/new
   def new
-    @block = Block.new
+    # @block = Block.new
   end
 
   # GET /blocks/1/edit
@@ -27,7 +28,7 @@ class BlocksController < ApplicationController
   end
 
   def create
-    @block = Block.new(block_params)
+    # @block.create
     @block_admin = BlockAdmin.new(user: current_user, block: @block)
     @block_key = BlockKey.new(block: @block)
 
@@ -105,6 +106,10 @@ class BlocksController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_block
     @block = Block.find(params[:id])
+  end
+
+  def initialize_block
+    @block = Block.new
   end
 
   # Only allow a list of trusted parameters through.
