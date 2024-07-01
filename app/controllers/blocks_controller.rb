@@ -71,13 +71,27 @@ class BlocksController < ApplicationController
   end
 
   def pull
-    @block_key = BlockKey.find_by(key: params[:key])
-    @block = @block_key.block
 
-    @block_admin = BlockAdmin.new(user: current_user, block: @block)
+    admin_key = BlockKey.find_by(key: params[:key])
+    view_key = BlockKey.find_by(viewkey: params[:key])
+    if admin_key.nil? && view_key.nil?
+      respond_to do |format|
+        format.html { redirect_to(blocks_url, notice: "Block was not successfully pulled.") }
+        format.json { render(json: {error: "Block was not successfully pulled."}, status: :unprocessable_entity) }
+      end
+
+      return
+    end
+
+    @block = admin_key.present? ? admin_key.block : view_key.block
+
+    block_manager = admin_key.present? ? BlockAdmin.new(user: current_user, block: @block) : BlockViewer.new(
+      user: current_user,
+      block: @block
+    )
 
     respond_to do |format|
-      if @block_admin.save
+      if block_manager.save
         format.html { redirect_to(block_url(@block), notice: "You are now an admin for #{@block.name}") }
         format.json { render(:show, status: :created, location: @block) }
       else

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_25_172008) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_01_190321) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -41,8 +41,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_25_172008) do
     t.string "key", default: -> { "gen_random_uuid()" }, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "viewkey", default: -> { "gen_random_uuid()" }, null: false
     t.index ["block_id"], name: "index_block_keys_on_block_id"
     t.index ["key"], name: "index_block_keys_on_key", unique: true
+    t.index ["viewkey"], name: "index_block_keys_on_viewkey", unique: true
+  end
+
+  create_table "block_viewers", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "block_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["block_id"], name: "index_block_viewers_on_block_id"
+    t.index ["user_id", "block_id"], name: "index_block_viewers_on_user_id_and_block_id", unique: true
+    t.index ["user_id"], name: "index_block_viewers_on_user_id"
   end
 
   create_table "blocks", force: :cascade do |t|
@@ -96,6 +108,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_25_172008) do
   add_foreign_key "block_admins", "blocks"
   add_foreign_key "block_admins", "users"
   add_foreign_key "block_keys", "blocks"
+  add_foreign_key "block_viewers", "blocks"
+  add_foreign_key "block_viewers", "users"
   add_foreign_key "payments", "rent_sessions"
   add_foreign_key "rent_sessions", "apartments"
   add_foreign_key "rent_sessions", "residents"

@@ -17,6 +17,10 @@ class Ability
       model.admins.include?(user)
     end
 
+    can(:read, :all) do |model|
+      model.viewers.include?(user)
+    end
+
     puts("-" * 100)
     puts(user.inspect)
     puts("-" * 100)

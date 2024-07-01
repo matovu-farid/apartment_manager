@@ -8,6 +8,7 @@ class RentSession < ApplicationRecord
   end
 
   has_many :users, through: :resident
+  has_many :viewers, through: :resident
   alias_attribute :admins, :users
   scope(
     :filter_by_admin,
@@ -17,7 +18,14 @@ class RentSession < ApplicationRecord
         .where({users: {id: user.id}})
     }
   )
-
+  scope(
+    :filter_by_viewer,
+    -> (user) {
+      joins(resident: {apartment: {block: {block_viewers: :user}}})
+        .includes(resident: {apartment: {block: {block_viewers: :user}}})
+        .where({users: {id: user.id}})
+    }
+  )
   scope(
     :payment_total,
     -> { joins(:payments).sum(:amount) }

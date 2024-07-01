@@ -4,6 +4,8 @@ class Resident < ApplicationRecord
   validates :phonenumber, presence: true
   belongs_to :apartment
   has_many :users, through: :apartment
+
+  has_many :viewers, through: :apartment
   alias_attribute :admins, :users
   has_many :rent_sessions, dependent: :destroy
   has_many :payments, through: :rent_sessions
@@ -13,6 +15,13 @@ class Resident < ApplicationRecord
     :filter_by_admin,
     -> (user) {
       includes(apartment: {block: {block_admins: :user}})
+        .where({users: {id: user.id}})
+    }
+  )
+  scope(
+    :filter_by_viewer,
+    -> (user) {
+      includes(apartment: {block: {block_viewers: :user}})
         .where({users: {id: user.id}})
     }
   )
