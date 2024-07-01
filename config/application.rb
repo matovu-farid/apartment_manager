@@ -37,6 +37,5 @@ module ApartmentManager
     config.generators.system_tests = nil
 
     # config/application.rb
-    config.action_view.default_form_builder = CustomFormBuilder
   end
 end

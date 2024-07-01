@@ -12,8 +12,8 @@ class Resident < ApplicationRecord
   scope(
     :filter_by_admin,
     -> (user) {
-      Resident
-        .joins(apartment: {block: {block_admins: :user}})
+
+      joins(apartment: {block: {block_admins: :user}})
         .includes(apartment: {block: {block_admins: :user}})
         .where({users: {id: user.id}})
     }
@@ -27,8 +27,20 @@ class Resident < ApplicationRecord
     current_rent_session.payment_total
   end
 
+  def payment_total
+    rent_sessions.payment_total
+  end
+
   def current_month_due
     apartment.price
+  end
+
+  def total_due
+    rent_sessions.total_due
+  end
+
+  def has_paid_total_due?
+    payment_total >= total_due
   end
 
   def has_paid_current_month?

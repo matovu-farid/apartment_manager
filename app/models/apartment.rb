@@ -9,7 +9,7 @@ class Apartment < ApplicationRecord
   scope(
     :filter_by_admin,
     -> (user) {
-      Apartment.joins(block: {block_admins: :user}).includes(block: {block_admins: :user}).where(
+      joins(block: {block_admins: :user}).includes(block: {block_admins: :user}).where(
         {users: {id: user.id}}
       )
     }
