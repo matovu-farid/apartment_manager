@@ -12,15 +12,29 @@ class Resident < ApplicationRecord
   scope(
     :filter_by_admin,
     -> (user) {
-
-      joins(apartment: {block: {block_admins: :user}})
-        .includes(apartment: {block: {block_admins: :user}})
+      includes(apartment: {block: {block_admins: :user}})
         .where({users: {id: user.id}})
     }
   )
 
+  def rent
+    apartment.price
+  end
+
   def current_rent_session
-    rent_sessions.with_in_current_month.first
+    rent_session = rent_sessions.with_in_current_month.first
+    if rent_session.nil?
+
+      paymentDueDate = Date.today.change(day: startdate.day)
+      paymentDueDate = paymentDueDate + 1.month if paymentDueDate < Date.today
+      rent_session = RentSession.create(
+        paymentDueDate: paymentDueDate,
+        resident: self,
+        apartment: apartment
+      )
+    end
+
+    rent_session
   end
 
   def current_month_payment
@@ -37,6 +51,10 @@ class Resident < ApplicationRecord
 
   def total_due
     rent_sessions.total_due
+  end
+
+  def rent_balance
+    total_due - payment_total
   end
 
   def has_paid_total_due?

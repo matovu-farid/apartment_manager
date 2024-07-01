@@ -16,6 +16,9 @@
     <%= resident.startdate.strftime("%B %d, %Y") %>
   </td>
   <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0 ">
-    <%= resident.has_paid_total_due? ? "Yes": "No" %>
+    <%= format_currency resident.total_due %>
+  </td>
+  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0 ">
+    <%= format_currency resident.payment_total%>
   </td>
 </div>

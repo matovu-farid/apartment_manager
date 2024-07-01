@@ -6,8 +6,8 @@ class Payment < ApplicationRecord
   scope(
     :filter_by_admin,
     -> (user) {
-      Payment
-        .joins(rent_session: {resident: {apartment: {block: {block_admins: :user}}}})
+
+      joins(rent_session: {resident: {apartment: {block: {block_admins: :user}}}})
         .includes(rent_session: {resident: {apartment: {block: {block_admins: :user}}}})
         .where({users: {id: user.id}})
     }

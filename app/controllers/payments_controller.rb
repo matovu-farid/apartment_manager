@@ -6,12 +6,12 @@ class PaymentsController < ApplicationController
 
   # GET /payments or /payments.json
   def index
-    @payments = Payment.filter_by_admin(current_user)
-    if @payments.empty?
-      redirect_to(residents_url)
-    end
+    @payments = @resident.payments.filter_by_admin(current_user)
+    # if @payments.empty?
+    #   redirect_to(residents_url)
+    # end
 
-    @rent_session = create_rent_session(@resident)
+    @rent_session = @resident.current_rent_session
   end
 
   # GET /payments/1 or /payments/1.json
@@ -22,14 +22,14 @@ class PaymentsController < ApplicationController
   def new
 
     @payment = Payment.new
-    @rent_session = create_rent_session(@resident)
+    @rent_session = @resident.current_rent_session
   end
 
   # GET /payments/1/edit
   def edit
 
     @resident = Resident.find(params[:resident_id])
-    @rent_session = create_rent_session(@resident)
+    @rent_session = @resident.current_rent_session
   end
 
   # POST /payments or /payments.json
@@ -38,7 +38,7 @@ class PaymentsController < ApplicationController
 
     @payment = Payment.new(payment_params)
 
-    @rent_session = create_rent_session(@resident)
+    @rent_session = @resident.current_rent_session
 
     @payment.rent_session = @rent_session
 
@@ -99,21 +99,4 @@ class PaymentsController < ApplicationController
     params.require(:payment).permit(:date, :amount)
   end
 
-  def create_rent_session(resident)
-    rent_sessions = RentSession.filter_by_admin(current_user).with_in_current_month
-    paymentDueDate = Date.today.change(day: resident.startdate.day)
-    paymentDueDate = paymentDueDate + 1.month if paymentDueDate < Date.today
-    rent_session = nil
-    if rent_sessions.empty?
-      rent_session = RentSession.create(
-        paymentDueDate: paymentDueDate,
-        resident: resident,
-        apartment: resident.apartment
-      )
-    else
-      rent_session = rent_sessions.first
-    end
-
-    rent_session
-  end
 end
