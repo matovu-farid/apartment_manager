@@ -49,6 +49,9 @@ class ApartmentsController < ApplicationController
 
   # PATCH/PUT /apartments/1 or /apartments/1.json
   def update
+
+    apartment_params[:price].gsub!(/[^0-9]/, "")
+
     respond_to do |format|
       if @apartment.update(apartment_params)
         format.html { redirect_to(apartment_url(@apartment), notice: "Apartment was successfully updated.") }

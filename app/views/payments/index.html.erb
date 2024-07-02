@@ -1,14 +1,18 @@
-<p style="color: green"><%= notice %></p>
-<h1>Payments</h1>
-<div class='d-flex justify-content-end'>
-  <%= link_to "New payment",
-  new_resident_payment_path(@resident), 
-  class: "btn btn-outline-primary" %>
+<div>
+  <p style="color: green"><%= notice %></p>
+  <h1>Payments</h1>
+
+  
+  <% if Ability.new(current_user).can? :manage, @resident %>
+    <div class='d-flex justify-content-end'>
+      <%= link_to "New payment",new_resident_payment_path(@resident), class: "btn btn-outline-primary" %>
+    </div>
+  <% end %>
+  <% if @payments.empty? %>
+    <p class="text-secondary fst-italic fwt-bold">No payments have been made yet.</p>
+  <% else %>
+    <div id="payments">
+      <%= render 'payment_table', rent_session: @rent_session, payments: @payments ,resident: @resident %>
+    </div>
+  <% end %>
 </div>
-<% if @payments.empty? %>
-  <p class="text-secondary fst-italic fwt-bold">No payments have been made yet.</p>
-<% else %>
-  <div id="payments">
-    <%= render 'payment_table', rent_session: @rent_session, payments: @payments ,resident: @resident %>
-  </div>
-<% end %>

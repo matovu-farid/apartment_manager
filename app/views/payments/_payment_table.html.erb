@@ -34,11 +34,15 @@
               <%= link_to [resident,payment] ,class: '' do %>
                 <i class="fa-solid fa-bars"></i>
               <% end %>
-              <%= link_to edit_resident_payment_path(resident, payment),class: '' do %>
-                <i class="fa-solid fa-pen-to-square"></i>
+              <% if can? :edit,payment %>
+                <%= link_to edit_resident_payment_path(resident, payment),class: '' do %>
+                  <i class="fa-solid fa-pen-to-square"></i>
+                <% end %>
               <% end %>
-              <%= button_to [resident,payment],method: :delete ,class: '' do %>
-                <i class="fa-solid fa-trash text-red-500"></i>
+              <% if can? :destroy, payment %>
+                <%= button_to [resident,payment],method: :delete ,class: '' do %>
+                  <i class="fa-solid fa-trash text-red-500"></i>
+                <% end %>
               <% end %>
             </div>
           </td>

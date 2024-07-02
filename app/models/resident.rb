@@ -4,7 +4,6 @@ class Resident < ApplicationRecord
   validates :phonenumber, presence: true
   belongs_to :apartment
   has_many :admins, through: :apartment
-
   has_many :viewers, through: :apartment
   has_many :rent_sessions, dependent: :destroy
   has_many :payments, through: :rent_sessions

@@ -33,11 +33,13 @@
               <%= link_to resident ,class: '' do %>
                 <i class="fa-solid fa-bars"></i>
               <% end %>
-              <%= button_to resident,method: :delete ,class: '' do %>
-                <i class="fa-solid fa-trash text-red-500"></i>
-              <% end %>
               <%= link_to resident_setup_resident_payment_path(resident),class: '' do %>
                 <i class="fa-solid fa-money-bill text-blue-500"></i>
+              <% end %>
+              <% if can? :destroy, resident %>
+                <%= button_to resident,method: :delete ,class: '' do %>
+                  <i class="fa-solid fa-trash text-red-500"></i>
+                <% end %>
               <% end %>
             </td>
           <% end %>
