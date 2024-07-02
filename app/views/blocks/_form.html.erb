@@ -1,8 +1,6 @@
-<div
-  class='w-full'
->
-  <div class=''>
-    <%= form_with(model: block, class: "contents") do |form| %>
+
+  <div class='w-full'>
+    <%= form_with(model: block,) do |form| %>
       <% if block.errors.any? %>
         <div id="error_explanation" class="alert alert-danger">
           <h2 class='h5'><%= pluralize(block.errors.count, "error") %>
@@ -14,7 +12,7 @@
           </ul>
         </div>
       <% end %>
-      <div class="">
+      <div class="w-full">
         <%= form.label :name, class: "form-label" %>
         <%= form.text_field :name, class: "form-control" %>
       </div>
@@ -23,17 +21,3 @@
       </div>
     <% end %>
   </div>
-  <p class='font-bold text-xl'>OR Pull block</p>
-  <p class='italic text-secondary text-sm'>Pulling a block means becoming an admin for a block created by another user. You need to enter the key the from block admin</p>
-  <div>
-    <%= form_with url: block_pull_url	 do |form| %>
-      <div class="">
-        <%= form.label :key, class: "form-label" %>
-        <%= form.text_field :key, class: "form-control" %>
-      </div>
-      <div class="py-3">
-        <%= form.submit class: "btn btn-outline-primary" %>
-      </div>
-    <% end %>
-  </div>
-</div>

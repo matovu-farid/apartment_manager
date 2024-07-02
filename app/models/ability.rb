@@ -8,8 +8,16 @@ class Ability
     return unless user.present?
     can([:create], :all)
 
-    can(:manage, :all, admins: {id: user.id})
-    can(:read, :all, viewers: {id: user.id})
+    can(:manage, Block, admins: {id: user.id})
+    can(:manage, Apartment, admins: {id: user.id})
+    can(:manage, Payment, admins: {id: user.id})
+    can(:manage, Resident, admins: {id: user.id})
+    can(:manage, RentSession, admins: {id: user.id})
+    can(:read, Block, viewers: {id: user.id})
+    can(:read, Apartment,viewers: {id: user.id})
+    can(:read, Payment, viewers: {id: user.id})
+    can(:read, Resident, viewers: {id: user.id})
+    can(:read, RentSession, viewers: {id: user.id})
   end
 
   # The first argument to `can` is the action you are giving the user
