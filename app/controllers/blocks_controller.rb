@@ -62,14 +62,34 @@ class BlocksController < ApplicationController
   end
 
   # DELETE /blocks/1 or /blocks/1.json
-  def destroy
-    @block.destroy
 
+def destroy
+  if can?(:destroy, @block)
+    begin
+      ActiveRecord::Base.transaction do
+        @block.remove_admin(current_user)
+        admin_count = @block.admins.count
+        @block.destroy if admin_count == 0
+      end
+
+      respond_to do |format|
+        format.html { redirect_to(blocks_url, notice: "Block was successfully destroyed.") }
+        format.json { head(:no_content) }
+      end
+    rescue StandardError => e
+      respond_to do |format|
+        format.html { redirect_to(blocks_url, alert: "Failed to destroy Block: #{e.message}") }
+        format.json { render json: { error: "Failed to destroy Block: #{e.message}" }, status: :unprocessable_entity }
+      end
+    end
+  else
     respond_to do |format|
-      format.html { redirect_to(blocks_url, notice: "Block was successfully destroyed.") }
-      format.json { head(:no_content) }
+      format.html { redirect_to(blocks_url, alert: "You are not authorized to perform this action.") }
+      format.json { render json: { error: "You are not authorized to perform this action." }, status: :forbidden }
     end
   end
+end
+
 
   def pull
 

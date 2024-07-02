@@ -9,7 +9,10 @@ class Block < ApplicationRecord
 
   scope :filter_by_admin, -> (user) { includes(:block_admins).where(block_admins: {user: user}) }
   scope :filter_by_viewer, -> (user) { includes(:block_viewers).where(block_viewers: {user: user}) }
-  def adim?(user)
-    admins.include?(user)
+
+  def remove_admin(user)
+    if admins.include?(user)
+      block_admins.find_by(user: user).destroy
+    end
   end
 end
