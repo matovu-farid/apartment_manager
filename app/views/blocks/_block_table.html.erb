@@ -6,14 +6,19 @@
           <li>
             <div  class= 'fw-bold h3 flex gap-2' ><%= block.name%>
               <div class='flex gap-2 text-base items-center'>
-                <%= link_to edit_block_path(block),class: '' do %>
-                  <i class="fa-solid fa-pen-to-square"></i>
+                <% if can? :edit,block %>
+
+                  <%= link_to edit_block_path(block),class: '' do %>
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  <% end %>
                 <% end %>
                 <%= link_to block ,class: '' do %>
                   <i class="fa-solid fa-bars"></i>
                 <% end %>
-                <%= button_to block,method: :delete ,class: '' do %>
-                  <i class="fa-solid fa-trash text-red-500"></i>
+                <% if can? :destroy, block %>
+                  <%= button_to block,method: :delete ,class: '' do %>
+                    <i class="fa-solid fa-trash text-red-500"></i>
+                  <% end %>
                 <% end %>
               </div>
             </div>
