@@ -8,13 +8,22 @@
     "postcss-preset-env": "^9.5.14",
     "tailwindcss": "^3.4.4",
     "vite": "^5.2.13",
-    "vite-plugin-ruby": "^5.0.0"
+    "vite-plugin-full-reload": "^1.1.0",
+    "vite-plugin-ruby": "^5.0.0",
+    "vite-plugin-stimulus-hmr": "^3.0.0"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo": "^8.0.4",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-switch": "^1.1.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.400.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sweetalert": "^2.1.2"
+    "sweetalert": "^2.1.2",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7"
   }
 }

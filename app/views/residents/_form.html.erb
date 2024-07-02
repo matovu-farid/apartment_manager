@@ -23,7 +23,7 @@
     <div class="py-2  flex flex-col">
       <%= form.label :apartment_id, class: "form-label" %>
       <%= form.collection_select :apartment_id,
-                             Apartment.filter_by_admin(current_user),
+                             Apartment.accessible_by(current_ability).where(isOccupied: false),
                              :id,
                              :name,
                              class: "form-control" %>

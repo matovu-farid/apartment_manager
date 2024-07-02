@@ -23,6 +23,9 @@ class Apartment < ApplicationRecord
     }
   )
 
+ 
+
   has_one :resident, dependent: :destroy
+
 
 end

@@ -15,6 +15,7 @@
     https://vite-ruby.netlify.app/guide/rails -->
     <%= vite_client_tag %>
     <%= vite_javascript_tag "application" %>
+    <%= vite_typescript_tag "application.tsx" %>
     <!-- If using a TypeScript entrypoint file: vite_typescript_tag
     'application' If using a .jsx or .tsx entrypoint, add the extension:
     vite_javascript_tag 'application.jsx' Visit the guide for more information:
@@ -28,8 +29,8 @@
     <% if alert.present? %>
       <p class="alert alert-danger"><%= alert %></p>
     <% end %>
-    <div id='root'></div>
-    <%= render "layouts/navbar" %>
-    <%= yield %>
+      <%= render "layouts/navbar" %>
+      <%= yield %>
+
   </body>
 </html>

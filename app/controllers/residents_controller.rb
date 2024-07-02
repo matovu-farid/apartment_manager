@@ -19,7 +19,7 @@ class ResidentsController < ApplicationController
   # GET /residents/new
   def new
     @resident = Resident.new
-    if Apartment.filter_by_admin(current_user).empty?
+    if Apartment.accessible_by(current_ability).where(isOccupied: false).empty?
       redirect_to(new_apartment_path)
     end
   end
@@ -33,7 +33,9 @@ class ResidentsController < ApplicationController
 
     @resident = Resident.new(resident_params)
     apartment = Apartment.find(@resident.apartment_id)
+    apartment.isOccupied = true
     rent_session = RentSession.new(paymentDueDate: @resident.startdate, resident: @resident, apartment: apartment)
+
 
     respond_to do |format|
       if @resident.save && rent_session.save
