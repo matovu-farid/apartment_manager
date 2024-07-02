@@ -1,20 +1,18 @@
 <div class="mx-auto md:w-2/3 w-full flex">
   <div class="mx-auto">
     <% if notice.present? %>
-      <p
-        class="
-          py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block
-        "
-        id="notice"
-      ><%= notice %></p>
+      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
     <%= render "resident_table", residents: [@resident] %>
-    <%= link_to "Edit this resident",
-    edit_resident_path(@resident),
-    class: "btn btn-outline-primary" %>
     <%= link_to "Back to residents", residents_path, class: "btn btn-secondary" %>
-    <div class="inline-block ml-2">
-      <%= button_to "Delete resident", @resident, method: :delete, class: "btn btn-danger" %>
-    </div>
+    <% if can? :edit, @resident %>
+      <%= link_to "Edit this resident", edit_resident_path(@resident),    class: "btn btn-outline-primary" %>
+    <% end %>
+    <% if can? :destroy, @resident %>
+
+      <div class="inline-block ml-2">
+        <%= button_to "Delete resident", @resident, method: :delete, class: "btn btn-danger" %>
+      </div>
+    <% end %>
   </div>
 </div>
