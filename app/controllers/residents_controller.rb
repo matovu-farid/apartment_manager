@@ -30,27 +30,15 @@ class ResidentsController < ApplicationController
 
   # POST /residents or /residents.json
   def create
-
     @resident = Resident.new(resident_params)
-    apartment = Apartment.find(@resident.apartment_id)
-    apartment.isOccupied = true
-    rent_session = RentSession.new(paymentDueDate: @resident.startdate, resident: @resident, apartment: apartment)
-
-    begin
-      ActiveRecord::Base.transaction do
-        @resident.save!
-        rent_session.save!
-        apartment.save!
-      end
-
-      respond_to do |format|
+    respond_to do |format|
+      if @resident.occupy
         format.html { redirect_to(resident_url(@resident), notice: "Resident was successfully created.") }
         format.json { render(:show, status: :created, location: @resident) }
+      else
+        format.html { render(:new, status: :unprocessable_entity) }
+        format.json { render(json: @resident.errors, status: :unprocessable_entity) }
       end
-
-    rescue ActiveRecord::RecordInvalid => e
-      format.html { render(:new, status: :unprocessable_entity) }
-      format.json { render(json: @resident.errors, status: :unprocessable_entity) }
     end
   end
 

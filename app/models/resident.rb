@@ -24,6 +24,22 @@ class Resident < ApplicationRecord
     }
   )
 
+  def occupy
+    apartment.isOccupied = true
+    rent_session = RentSession.new(paymentDueDate: startdate, resident: self, apartment: apartment)
+    begin
+      Resident.transaction do
+        save!
+        rent_session.save!
+        apartment.save!
+      end
+
+      return true
+    rescue Resident::RecordInvalid => e
+      return false
+    end
+  end
+
   def rent
     apartment.price
   end
