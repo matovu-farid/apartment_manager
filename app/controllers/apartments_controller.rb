@@ -49,12 +49,13 @@ class ApartmentsController < ApplicationController
 
   # PATCH/PUT /apartments/1 or /apartments/1.json
   def update
-
-    apartment_params[:price].gsub!(/[^0-9]/, "")
+    if apartment_params[:price].present?
+      apartment_params[:price].gsub!(/[^0-9]/, "")
+    end
 
     respond_to do |format|
       if @apartment.update(apartment_params)
-        format.html { redirect_to(apartment_url(@apartment), notice: "Apartment was successfully updated.") }
+        format.html { redirect_to(apartments_url, notice: "#{@apartment.name} was successfully updated.") }
         format.json { render(:show, status: :ok, location: @apartment) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -81,6 +82,6 @@ class ApartmentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def apartment_params
-    params.require(:apartment).permit(:price, :floor, :name, :block_id)
+    params.require(:apartment).permit(:price, :floor, :name, :block_id, :isOccupied)
   end
 end

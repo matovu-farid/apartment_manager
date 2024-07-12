@@ -1,23 +1,15 @@
 <div id="<%= dom_id apartment, class:'flex flex-row inline' %>">
-  <td
-    class="
-      whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
-    "
-  >
+  <% td_class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0" %>
+  <td class="<%=td_class%>">
     <%= format_currency apartment.price %>
   </td>
-  <td
-    class="
-      whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
-    "
-  >
+  <td class="<%=td_class%>">
     <%= apartment.floor %>
   </td>
-  <td
-    class="
-      whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
-    "
-  >
+  <td class="<%=td_class%>">
     <%= apartment.name %>
+  </td>
+  <td class="<%=td_class%>">
+    <%= apartment.isOccupied ? "Yes": "No" %>
   </td>
 </div>
