@@ -3,9 +3,6 @@ module Adminable
 
   included do
     def isAdmin?(user)
-      puts "-------------------"
-      puts 'In module isAdmin?'
-      puts "-------------------"
      self.admins.include?(user)
     end
 
