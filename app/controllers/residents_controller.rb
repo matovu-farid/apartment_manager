@@ -50,11 +50,8 @@ class ResidentsController < ApplicationController
   def add_payment
 
     @resident = Resident.find(params[:resident_id])
-
     @payment = Payment.new({date: params[:date], amount: params[:amount]})
-
     @rent_session = create_rent_session(@resident)
-
     @payment.rent_session = @rent_session
 
     respond_to do |format|
