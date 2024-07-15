@@ -55,6 +55,18 @@ class PaymentsController < ApplicationController
     end
   end
 
+  def receipt
+    @payment = Payment.find(params[:payment_id])
+    @resident = Resident.find(params[:resident_id])
+    @rent_session = @resident.current_rent_session
+    @block = @resident.apartment.block
+    @apartment = @resident.apartment
+    @user = current_user
+    respond_to do |format|
+      format.html { render(layout: false) }
+    end
+  end
+
   # PATCH/PUT /payments/1 or /payments/1.json
   def update
     respond_to do |format|
