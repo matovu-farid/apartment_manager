@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PaymentsController < ApplicationController
   before_action :set_resident, only: %i[show edit update destroy new create index]
   before_action :set_payment, only: %i[show edit update destroy]
@@ -20,33 +22,22 @@ class PaymentsController < ApplicationController
 
   # GET /payments/new
   def new
-
     @payment = Payment.new
     @rent_session = @resident.current_rent_session
   end
 
   # GET /payments/1/edit
   def edit
-
     @resident = Resident.find(params[:resident_id])
     @rent_session = @resident.current_rent_session
   end
 
   # POST /payments or /payments.json
   def create
-    @resident = Resident.find(params[:resident_id])
-
-    @payment = Payment.new(payment_params)
-
-    @rent_session = @resident.current_rent_session
-
-    @payment.rent_session = @rent_session
-
+    @payment = init_payment
     respond_to do |format|
       if @payment.save
-        format.html {
-          redirect_to(residents_path, notice: "Payment was successfully created.")
-        }
+        format.html { redirect_to(resident_payments_path(@resident, notice: 'Payment was successfully created.')) }
         format.json { render(:show, status: :created, location: @payment) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -71,9 +62,7 @@ class PaymentsController < ApplicationController
   def update
     respond_to do |format|
       if @payment.update(payment_params)
-        format.html {
-          redirect_to(resident_payments_url(@resident), notice: "Payment was successfully updated.")
-        }
+        format.html { redirect_to(resident_payments_url(@resident), notice: 'Payment was successfully updated.') }
         format.json { render(:show, status: :ok, location: @payment) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -87,19 +76,20 @@ class PaymentsController < ApplicationController
     @payment.destroy
 
     respond_to do |format|
-      format.html { redirect_to(resident_payments_url, notice: "Payment was successfully destroyed.") }
+      format.html { redirect_to(resident_payments_url, notice: 'Payment was successfully destroyed.') }
       format.json { head(:no_content) }
     end
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
 
   def set_resident
     @resident = nil
-    if params[:resident_id]
-      @resident = Resident.find(params[:resident_id])
-    end
+    return unless params[:resident_id]
+
+    @resident = Resident.find(params[:resident_id])
   end
 
   def set_payment
@@ -111,4 +101,11 @@ class PaymentsController < ApplicationController
     params.require(:payment).permit(:date, :amount)
   end
 
+  def init_payment
+    resident = Resident.find(params[:resident_id])
+    payment = Payment.new(payment_params)
+    rent_session = resident.current_rent_session
+    payment.rent_session = rent_session
+    payment
+  end
 end
