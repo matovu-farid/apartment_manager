@@ -9,9 +9,6 @@ class PaymentsController < ApplicationController
   # GET /payments or /payments.json
   def index
     @payments = @resident.payments.accessible_by(current_ability)
-    # if @payments.empty?
-    #   redirect_to(residents_url)
-    # end
 
     @rent_session = @resident.current_rent_session
   end
