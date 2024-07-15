@@ -30,7 +30,8 @@
         <tr>
           <%= render "payment",payment: payment ,resident: resident %>
           <td class="">
-            <div class='flex gap-2 text-lg text-blue-500'>
+            <div class='flex gap-2 text-lg text-blue-500 items-center'>
+              <i class="fa-solid fa-receipt"></i>
               <%= link_to [resident,payment] ,class: '' do %>
                 <i class="fa-solid fa-bars"></i>
               <% end %>
