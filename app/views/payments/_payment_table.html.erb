@@ -2,53 +2,16 @@
   <table id="payments" class="min-w-full table table-auto min-w-full divide-y divide-gray-300">
     <thead>
       <tr>
-        <th 
+        <%['Resident', 'Payment date', 'Amount', 'Actions'].each do |name|%>
+          <th 
           scope="col"
           class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
-        >Resident</th>
-        <th
-                    scope="col"
-          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
-
-        >Payment date</th>
-        <th
-                    scope="col"
-          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
-
-        >Amount</th>
-        <th
-            scope="col"
-            class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
-
-            >
-          <span >Actions</span>
-        </th>
+        ><%= name %></th>
+        <% end %>
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200 bg-white">
-      <% payments.each do |payment| %>
-        <tr>
-          <%= render "payment",payment: payment ,resident: resident %>
-          <td class="">
-            <div class='flex gap-2 text-lg text-blue-500 items-center'>
-              <i class="fa-solid fa-receipt"></i>
-              <%= link_to [resident,payment] ,class: '' do %>
-                <i class="fa-solid fa-bars"></i>
-              <% end %>
-              <% if can? :edit,payment %>
-                <%= link_to edit_resident_payment_path(resident, payment),class: '' do %>
-                  <i class="fa-solid fa-pen-to-square"></i>
-                <% end %>
-              <% end %>
-              <% if can? :destroy, payment %>
-                <%= button_to [resident,payment],method: :delete ,class: '' do %>
-                  <i class="fa-solid fa-trash text-red-500"></i>
-                <% end %>
-              <% end %>
-            </div>
-          </td>
-        <% end %>
-      </tr>
+      <%= render partial: 'payment', collection: resident.payments %>
     </tbody>
   </table>
 <% end %>

@@ -1,0 +1,15 @@
+<!--Receipt for the payment-->
+<div class='grid place-items-center h-[80vh]'>
+  <!--@payment = Payment.find(params[:payment_id])-->
+  <!--@resident = Resident.find(params[:resident_id])-->
+  <!--@rent_session = @resident.current_rent_session-->
+  <!--@block = @resident.apartment.block-->
+  <!--@apartment = @resident.apartment-->
+  <!--@user = current_user-->
+  <% [{name: "Name", value: @resident.name}].each do %>
+    <p>
+      <span >Name:</span>
+      <span><%= @resident.name %></span>
+    </p>
+  <% end %>
+</div>

@@ -34,7 +34,7 @@ class PaymentsController < ApplicationController
     @payment = init_payment
     respond_to do |format|
       if @payment.save
-        format.html { redirect_to(resident_payments_path(@resident, notice: 'Payment was successfully created.')) }
+        format.html { redirect_to(resident_payments_path(@resident, notice: "Payment was successfully created.")) }
         format.json { render(:show, status: :created, location: @payment) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -45,13 +45,13 @@ class PaymentsController < ApplicationController
 
   def receipt
     @payment = Payment.find(params[:payment_id])
-    @resident = Resident.find(params[:resident_id])
+    @resident = @payment.resident
     @rent_session = @resident.current_rent_session
     @block = @resident.apartment.block
     @apartment = @resident.apartment
     @user = current_user
     respond_to do |format|
-      format.html { render(layout: false) }
+      format.html { render("payments/receipt", status: :ok) }
     end
   end
 
@@ -59,7 +59,7 @@ class PaymentsController < ApplicationController
   def update
     respond_to do |format|
       if @payment.update(payment_params)
-        format.html { redirect_to(resident_payments_url(@resident), notice: 'Payment was successfully updated.') }
+        format.html { redirect_to(resident_payments_url(@resident), notice: "Payment was successfully updated.") }
         format.json { render(:show, status: :ok, location: @payment) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -73,7 +73,7 @@ class PaymentsController < ApplicationController
     @payment.destroy
 
     respond_to do |format|
-      format.html { redirect_to(resident_payments_url, notice: 'Payment was successfully destroyed.') }
+      format.html { redirect_to(resident_payments_url, notice: "Payment was successfully destroyed.") }
       format.json { head(:no_content) }
     end
   end

@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 
 # spec/controllers/concerns/payable_spec.rb
 require 'rails_helper'
 
-RSpec.describe DummyController, type: :controller do
+RSpec.describe DummyController do
   controller do
     include Payable
   end
@@ -33,15 +34,13 @@ RSpec.describe DummyController, type: :controller do
       expect(controller.payment_due_date(date)).to eq(Date.new(2024, 1, 31))
     end
   end
+
   describe '#payment_due_date_from_start_date' do
     it 'returns the same day of the next month for regular dates from start date' do
       start_date = Date.new(2022, 1, 1)
-      expectedDate = Date.today.change(day: 1, month: Date.today.month + 1)
+      expectedDate = Time.zone.today.change(day: 1, month: Time.zone.today.month + 1)
 
       expect(controller.payment_due_date_from_start_date(start_date)).to eq(expectedDate)
     end
-
-
   end
 end
-

@@ -1,26 +1,46 @@
-<div id="<%= dom_id payment, class:'flex flex-row inline' %>">
-  <td
+<tr>
+  <% resident = payment.resident %>
+  <div id="<%= dom_id payment, class:'flex flex-row inline' %>">
+    <td
     class="
       whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
     "
   >
-    <%= payment.rent_session.resident.name %>
-  </td>
-  <td
+      <%= payment.resident.name %>
+    </td>
+    <td
     class="
       whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
     "
   >
-    <% if payment.date %>
-      <%= payment.date.strftime("%B %d, %Y") %>
-    <% end %>
-  </td>
-  <td
+      <% if payment.date %>
+        <%= payment.date.strftime("%B %d, %Y") %>
+      <% end %>
+    </td>
+    <td
     class="
       whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0
     "
   >
-    <%= format_currency(payment.amount) %>
+      <%= format_currency(payment.amount) %>
+    </td>
   </td>
-</td>
 </div>
+<td class="">
+  <div class='flex gap-2 text-lg text-blue-500 items-center'>
+    <%= link_to payment_receipt_path(payment) ,class: '' do %>
+      <i class="fa-solid fa-receipt"></i>
+    <% end %>
+    <% if can? :edit,payment %>
+      <%= link_to edit_resident_payment_path(resident, payment),class: '' do %>
+        <i class="fa-solid fa-pen-to-square"></i>
+      <% end %>
+    <% end %>
+    <% if can? :destroy, payment %>
+      <%= button_to [resident,payment],method: :delete ,class: '' do %>
+        <i class="fa-solid fa-trash text-red-500"></i>
+      <% end %>
+    <% end %>
+  </div>
+</td>
+</tr>

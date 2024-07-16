@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "blocks/show", type: :view do
-  before(:each) do
+RSpec.describe 'blocks/show' do
+  before do
     assign(:block, Block.create!(
-      name: "Name",
-      apartment: nil,
-      user: nil
-    ))
+                     name: 'Name',
+                     apartment: nil,
+                     user: nil
+                   ))
   end
 
-  it "renders attributes in <p>" do
+  it 'renders attributes in <p>' do
     render
     expect(rendered).to match(/Name/)
     expect(rendered).to match(//)

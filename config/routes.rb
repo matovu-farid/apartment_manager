@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources(:rent_sessions)
   resources(:blocks)
@@ -6,6 +8,10 @@ Rails.application.routes.draw do
     get("setup_payment", to: "residents#setup_payment", as: :setup_resident_payment)
     post("add_payment", to: "residents#add_payment", as: :add_resident_payment)
     resources(:payments)
+  end
+
+  resources(:payments) do
+    get("receipt", to: "payments#receipt", as: :receipt)
   end
 
   get("home/index")

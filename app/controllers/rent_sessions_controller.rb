@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RentSessionsController < ApplicationController
   include Payable
   before_action :authenticate_user!
@@ -7,15 +9,15 @@ class RentSessionsController < ApplicationController
   # GET /rent_sessions or /rent_sessions.json
   def index
     @rent_sessions = RentSession.filter_by_admin(current_user)
-    if @rent_sessions.empty?
-      redirect_to(new_rent_session_path)
-    end
+    return unless @rent_sessions.empty?
+
+    redirect_to(new_rent_session_path)
   end
 
   def renew_rent
     @rent_sessions = RentSession.filter_by_admin(current_user)
-    prev_month_start = (Date.today.beginning_of_month - 1.month).beginning_of_month
-    prev_month_end = prev_month_start.end_of_month
+    prev_month_start = (Time.zone.today.beginning_of_month - 1.month).beginning_of_month
+    prev_month_start.end_of_month
     prev_month_sessions = @rent_sessions.where(paymentDueDate: prev_month_start..prev_month_start.end_of_month)
     prev_month_sessions.each do |rent_session|
       new_rent_session = rent_session.dup
@@ -27,8 +29,7 @@ class RentSessionsController < ApplicationController
   end
 
   # GET /rent_sessions/1 or /rent_sessions/1.json
-  def show
-  end
+  def show; end
 
   # GET /rent_sessions/new
   def new
@@ -38,14 +39,13 @@ class RentSessionsController < ApplicationController
       return
     end
 
-    if Apartment.filter_by_admin(current_user).empty?
-      redirect_to(new_apartment_path)
-    end
+    return unless Apartment.filter_by_admin(current_user).empty?
+
+    redirect_to(new_apartment_path)
   end
 
   # GET /rent_sessions/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /rent_sessions or /rent_sessions.json
   def create
@@ -53,7 +53,7 @@ class RentSessionsController < ApplicationController
 
     respond_to do |format|
       if @rent_session.save
-        format.html { redirect_to(rent_session_url(@rent_session), notice: "Rent session was successfully created.") }
+        format.html { redirect_to(rent_session_url(@rent_session), notice: 'Rent session was successfully created.') }
         format.json { render(:show, status: :created, location: @rent_session) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -66,7 +66,7 @@ class RentSessionsController < ApplicationController
   def update
     respond_to do |format|
       if @rent_session.update(rent_session_params)
-        format.html { redirect_to(rent_session_url(@rent_session), notice: "Rent session was successfully updated.") }
+        format.html { redirect_to(rent_session_url(@rent_session), notice: 'Rent session was successfully updated.') }
         format.json { render(:show, status: :ok, location: @rent_session) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -80,12 +80,13 @@ class RentSessionsController < ApplicationController
     @rent_session.destroy
 
     respond_to do |format|
-      format.html { redirect_to(rent_sessions_url, notice: "Rent session was successfully destroyed.") }
+      format.html { redirect_to(rent_sessions_url, notice: 'Rent session was successfully destroyed.') }
       format.json { head(:no_content) }
     end
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_rent_session
     @rent_session = RentSession.find(params[:id])

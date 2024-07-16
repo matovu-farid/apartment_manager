@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RentSessionsHelper
   def totalPayments(rent_session)
     rent_session.payments.sum(:amount)
@@ -14,5 +16,4 @@ module RentSessionsHelper
   def fullyPaid?(rent_session)
     rentLeft(rent_session) <= 0
   end
-
 end

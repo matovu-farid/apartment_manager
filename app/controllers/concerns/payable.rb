@@ -1,10 +1,12 @@
-module Payable 
+# frozen_string_literal: true
+
+module Payable
   extend ActiveSupport::Concern
 
   included do
     require 'date'
     def payment_due_date_from_start_date(start_date)
-      current_day = Date.today
+      current_day = Time.zone.today
       projected_date = nil
       begin
         projected_date =  Date.new(current_day.year, current_day.month, start_date.day)
@@ -31,8 +33,6 @@ module Payable
       end
     end
   end
-
-
 
   class_methods do
   end

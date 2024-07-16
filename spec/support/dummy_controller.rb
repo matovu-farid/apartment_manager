@@ -1,5 +1,6 @@
+# frozen_string_literal: true
+
 # spec/support/dummy_controller.rb
-class DummyController < ActionController::Base
+class DummyController < ApplicationController
   include Payable
 end
-

@@ -2,3 +2,7 @@
 # .rubocop.yml
 AllCops:
   NewCops: enable
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails

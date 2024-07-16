@@ -1,5 +1,6 @@
-class ApartmentsController < ApplicationController
+# frozen_string_literal: true
 
+class ApartmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_apartment, only: %i[show edit update destroy]
   load_and_authorize_resource
@@ -14,31 +15,29 @@ class ApartmentsController < ApplicationController
   end
 
   # GET /apartments/1 or /apartments/1.json
-  def show
-  end
+  def show; end
 
   # GET /apartments/new
   def new
     @apartment = Apartment.new
-    if Block.filter_by_admin(current_user).empty?
-      redirect_to(new_block_path)
-    end
+    return unless Block.filter_by_admin(current_user).empty?
+
+    redirect_to(new_block_path)
   end
 
   # GET /apartments/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /apartments or /apartments.json
   def create
     # replace non numberic
-    apartment_params[:price].gsub!(/[^0-9]/, "")
+    apartment_params[:price].gsub!(/[^0-9]/, '')
 
     @apartment = Apartment.new(apartment_params)
 
     respond_to do |format|
       if @apartment.save
-        format.html { redirect_to(apartment_url(@apartment), notice: "Apartment was successfully created.") }
+        format.html { redirect_to(apartment_url(@apartment), notice: 'Apartment was successfully created.') }
         format.json { render(:show, status: :created, location: @apartment) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -49,9 +48,7 @@ class ApartmentsController < ApplicationController
 
   # PATCH/PUT /apartments/1 or /apartments/1.json
   def update
-    if apartment_params[:price].present?
-      apartment_params[:price].gsub!(/[^0-9]/, "")
-    end
+    apartment_params[:price].gsub!(/[^0-9]/, '') if apartment_params[:price].present?
 
     respond_to do |format|
       if @apartment.update(apartment_params)
@@ -69,12 +66,13 @@ class ApartmentsController < ApplicationController
     @apartment.destroy
 
     respond_to do |format|
-      format.html { redirect_to(apartments_url, notice: "Apartment was successfully destroyed.") }
+      format.html { redirect_to(apartments_url, notice: 'Apartment was successfully destroyed.') }
       format.json { head(:no_content) }
     end
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_apartment
     @apartment = Apartment.find(params[:id])

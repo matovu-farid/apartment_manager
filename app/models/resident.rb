@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Resident < ApplicationRecord
   validates :name, presence: true
   validates :physicalId, presence: true
@@ -11,22 +13,22 @@ class Resident < ApplicationRecord
 
   scope(
     :filter_by_admin,
-    -> (user) {
-      includes(apartment: {block: {block_admins: :user}})
-        .where({users: {id: user.id}})
+    lambda { |user|
+      includes(apartment: { block: { block_admins: :user } })
+        .where({ users: { id: user.id } })
     }
   )
   scope(
     :filter_by_viewer,
-    -> (user) {
-      includes(apartment: {block: {block_viewers: :user}})
-        .where({users: {id: user.id}})
+    lambda { |user|
+      includes(apartment: { block: { block_viewers: :user } })
+        .where({ users: { id: user.id } })
     }
   )
 
   def occupy
     apartment.isOccupied = true
-    rent_session = RentSession.new(paymentDueDate: startdate, resident: self, apartment: apartment)
+    rent_session = RentSession.new(paymentDueDate: startdate, resident: self, apartment:)
     begin
       Resident.transaction do
         save!
@@ -34,9 +36,9 @@ class Resident < ApplicationRecord
         apartment.save!
       end
 
-      return true
-    rescue Resident::RecordInvalid => e
-      return false
+      true
+    rescue Resident::RecordInvalid
+      false
     end
   end
 
@@ -48,12 +50,12 @@ class Resident < ApplicationRecord
     rent_session = rent_sessions.with_in_current_month.first
     if rent_session.nil?
 
-      paymentDueDate = Date.today.change(day: startdate.day)
-      paymentDueDate = paymentDueDate + 1.month if paymentDueDate < Date.today
+      paymentDueDate = Time.zone.today.change(day: startdate.day)
+      paymentDueDate += 1.month if paymentDueDate < Time.zone.today
       rent_session = RentSession.create(
-        paymentDueDate: paymentDueDate,
+        paymentDueDate:,
         resident: self,
-        apartment: apartment
+        apartment:
       )
     end
 
@@ -64,17 +66,13 @@ class Resident < ApplicationRecord
     current_rent_session.payment_total
   end
 
-  def payment_total
-    rent_sessions.payment_total
-  end
+  delegate :payment_total, to: :rent_sessions
 
   def current_month_due
     apartment.price
   end
 
-  def total_due
-    rent_sessions.total_due
-  end
+  delegate :total_due, to: :rent_sessions
 
   def rent_balance
     total_due - payment_total
