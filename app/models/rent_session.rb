@@ -14,23 +14,27 @@ class RentSession < ApplicationRecord
   scope(
     :filter_by_admin,
     lambda { |user|
-      joins(resident: { apartment: { block: { block_admins: :user } } })
-        .includes(resident: { apartment: { block: { block_admins: :user } } })
-        .where({ users: { id: user.id } })
+      joins(resident: {apartment: {block: {block_admins: :user}}})
+        .includes(resident: {apartment: {block: {block_admins: :user}}})
+        .where({users: {id: user.id}})
     }
   )
   scope(
     :filter_by_viewer,
     lambda { |user|
-      joins(resident: { apartment: { block: { block_viewers: :user } } })
-        .includes(resident: { apartment: { block: { block_viewers: :user } } })
-        .where({ users: { id: user.id } })
+      joins(resident: {apartment: {block: {block_viewers: :user}}})
+        .includes(resident: {apartment: {block: {block_viewers: :user}}})
+        .where({users: {id: user.id}})
     }
   )
   scope(
     :payment_total,
     -> { joins(:payments).sum(:amount) }
   )
+
+  def payment_total
+    payments.sum(:amount)
+  end
 
   scope(
     :total_due,

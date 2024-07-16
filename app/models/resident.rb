@@ -14,15 +14,15 @@ class Resident < ApplicationRecord
   scope(
     :filter_by_admin,
     lambda { |user|
-      includes(apartment: { block: { block_admins: :user } })
-        .where({ users: { id: user.id } })
+      includes(apartment: {block: {block_admins: :user}})
+        .where({users: {id: user.id}})
     }
   )
   scope(
     :filter_by_viewer,
     lambda { |user|
-      includes(apartment: { block: { block_viewers: :user } })
-        .where({ users: { id: user.id } })
+      includes(apartment: {block: {block_viewers: :user}})
+        .where({users: {id: user.id}})
     }
   )
 
@@ -49,7 +49,6 @@ class Resident < ApplicationRecord
   def current_rent_session
     rent_session = rent_sessions.with_in_current_month.first
     if rent_session.nil?
-
       paymentDueDate = Time.zone.today.change(day: startdate.day)
       paymentDueDate += 1.month if paymentDueDate < Time.zone.today
       rent_session = RentSession.create(
@@ -68,21 +67,17 @@ class Resident < ApplicationRecord
 
   delegate :payment_total, to: :rent_sessions
 
-  def current_month_due
-    apartment.price
-  end
-
   delegate :total_due, to: :rent_sessions
 
   def rent_balance
     total_due - payment_total
   end
 
-  def has_paid_total_due?
+  def paid_total_due?
     payment_total >= total_due
   end
 
-  def has_paid_current_month?
-    current_month_payment >= current_month_due
+  def paid_current_month?
+    current_month_payment >= rent
   end
 end
