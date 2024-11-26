@@ -32,3 +32,7 @@ a {
 button {
   cursor: pointer;
 }
+.navbar .nav-link.active {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 0.25rem;
+} 
