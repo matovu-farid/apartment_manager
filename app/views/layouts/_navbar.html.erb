@@ -13,7 +13,7 @@
                 <% links.each do |link| %>
                 <li class="nav-item">
                     <%= link_to link[:name], link[:path], 
-              class: "nav-link #{current_page?(link[:path]) ? 'active' : ''}" %>
+              class: "nav-link #{current_page?(link[:path]) ? ' bg-dark text-white rounded' : ''}" %>
                 </li>
                 <% end %>
             </ul>
