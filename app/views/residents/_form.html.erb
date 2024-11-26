@@ -1,44 +1,41 @@
 <%= form_with(model: resident) do |form| %>
-  <% if resident.errors.any? %>
-    <div
-      id="error_explanation"
-      class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3"
-    >
-      <h2><%= pluralize(resident.errors.count, "error") %>
+<% if resident.errors.any? %>
+<div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+    <h2><%= pluralize(resident.errors.count, "error") %>
         prohibited this resident from being saved:</h2>
-      <ul>
+    <ul>
         <% resident.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <li><%= error.full_message %></li>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <div class="py-3">
-    <%= form.label :name, class: "form-label" %>
+    </ul>
+</div>
+<% end %>
+<div class="py-3">
+    <%= form.label :name, "Full Name",class: "form-label" %>
     <%= form.text_field :name, class: "form-control" %>
-    <%= form.label :physicalId, class: "form-label" %>
+    <%= form.label :physicalId, "ID Number", class: "form-label" %>
     <%= form.text_field :physicalId, class: "form-control" %>
-    <%= form.label :phonenumber, class: "form-label" %>
+    <%= form.label :phonenumber, "Phone Number", class: "form-label" %>
     <%= form.text_field :phonenumber, class: "form-control" %>
     <div class="py-2  flex flex-col">
-      <%= form.label :apartment_id, class: "form-label" %>
-      <%= form.collection_select :apartment_id,
+        <%= form.label :apartment_id, class: "form-label" %>
+        <%= form.collection_select :apartment_id,
                              Apartment.accessible_by(current_ability).where(isOccupied: false),
                              :id,
                              :name,
                              class: "form-control" %>
     </div>
     <div class="py-2 flex flex-col">
-      <%= form.label  :startdate,"Payment due Date", class: "form-label" %>
-      <div>
-        <%= form.date_select :startdate,
+        <%= form.label  :startdate,"Start Date", class: "form-label" %>
+        <div>
+            <%= form.date_select :startdate,
                     class: "form-control datepicker",
                     required: true %>
-      </div>
+        </div>
     </div>
-  </div>
-  <div class="py-3">
+</div>
+<div class="py-3">
     <%= form.submit class:
                   "btn btn-outline-primary" %>
-  </div>
+</div>
 <% end %>

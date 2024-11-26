@@ -1,27 +1,24 @@
   <%= custom_form_with(model: apartment, class: "contents") do |form| %>
   <% if apartment.errors.any? %>
-    <div
-      id="error_explanation"
-      class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg ma"
-    >
+  <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg ma">
       <h2><%= pluralize(apartment.errors.count, "error") %>
-        prohibited this apartment from being saved:</h2>
+          prohibited this apartment from being saved:</h2>
       <ul>
-        <% apartment.errors.each do |error| %>
+          <% apartment.errors.each do |error| %>
           <li><%= error.full_message %></li>
-        <% end %>
+          <% end %>
       </ul>
-    </div>
+  </div>
   <% end %>
   <div class=" py-3">
-    <%= form.label :name, class: "form-label" %>
-    <%= form.text_field :name, class: "form-control " %>
-    <%= form.label :price, class: "form-label", html:{type: 'currency'} %>
-    <%= form.currency :price, step: 100, class: "form-control" %>
-    <%= form.label :floor, class: "form-label" %>
-    <%= form.text_field :floor, class: "form-control " %>
-    <%= form.label :block_id, class: "block" %>
-    <%= form.collection_select :block_id,
+      <%= form.label :name, "Apartment Name", class: "form-label" %>
+      <%= form.text_field :name, class: "form-control " %>
+      <%= form.label :price,"Monthly Rent", class: "form-label", html:{type: 'currency'} %>
+      <%= form.currency :price, step: 100, class: "form-control" %>
+      <%= form.label :floor, class: "form-label" %>
+      <%= form.text_field :floor, class: "form-control " %>
+      <%= form.label :block_id, class: "block" %>
+      <%= form.collection_select :block_id,
                            Block.accessible_by(current_ability, :manage),
                            :id,
                            :name,
@@ -29,6 +26,6 @@
                              "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
   <div class="inline">
-    <%= form.submit class: "btn btn-outline-primary" %>
+      <%= form.submit class: "btn btn-outline-primary" %>
   </div>
-<% end %>
+  <% end %>

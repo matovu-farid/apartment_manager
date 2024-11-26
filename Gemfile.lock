@@ -133,12 +133,16 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
+    ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-darwin)
     ffi (1.17.0-x86_64-linux-gnu)
     font-awesome-sass (6.5.2)
       sassc (~> 2.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-protobuf (4.27.1-arm64-darwin)
+      bigdecimal
+      rake (>= 13)
     google-protobuf (4.27.1-x86_64-darwin)
       bigdecimal
       rake (>= 13)
@@ -200,6 +204,8 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.3)
+    nokogiri (1.16.5-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.16.5-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.16.5-x86_64-linux)
@@ -301,6 +307,8 @@ GEM
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     ruby-progressbar (1.13.0)
+    sass-embedded (1.77.5-arm64-darwin)
+      google-protobuf (>= 3.25, < 5.0)
     sass-embedded (1.77.5-x86_64-darwin)
       google-protobuf (>= 3.25, < 5.0)
     sass-embedded (1.77.5-x86_64-linux-gnu)
@@ -354,6 +362,8 @@ GEM
     table-for (3.7.0)
       rails (>= 3.0.0)
       with_template (~> 0.2.0)
+    tailwindcss-rails (2.6.1-arm64-darwin)
+      railties (>= 7.0.0)
     tailwindcss-rails (2.6.1-x86_64-darwin)
       railties (>= 7.0.0)
     tailwindcss-rails (2.6.1-x86_64-linux)
@@ -397,6 +407,7 @@ GEM
     zeitwerk (2.6.15)
 
 PLATFORMS
+  arm64-darwin-24
   x86_64-darwin-22
   x86_64-linux
 
