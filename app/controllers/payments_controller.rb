@@ -50,18 +50,10 @@ class PaymentsController < ApplicationController
     @block = @resident.apartment.block
     @apartment = @resident.apartment
     @user = current_user
-    # stringVersion = render_to_string(action: "receipt")
-    # pdf = render_to_string(pdf: "some_file_name", template: "payments/receipt", encoding: "UTF-8")
-    #
-    # puts("-" * 100)
-    # puts(pdf)
-    # puts("-" * 100)
-    # pdf = WickedPdf.new.pdf_from_string('<h1>Hello There!</h1>')
+
     respond_to do |format|
       format.html { render("payments/receipt", status: :ok) }
-      #   # Excluding ".pdf" extension.
-      #   render(pdf: "file_name")
-      # end
+
     end
   end
 

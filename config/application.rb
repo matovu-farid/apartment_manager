@@ -15,7 +15,6 @@ require "action_mailbox/engine"
 require "action_text/engine"
 require "action_view/railtie"
 require "action_cable/engine"
-require "wicked_pdf"
 
 # require "rails/test_unit/railtie"
 
@@ -28,7 +27,6 @@ module ApartmentManager
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
-    config.middleware.use(WickedPdf::Middleware, {}, only: %r{.*/receipt.*})
 
     # Configuration for the application, engines, and railties goes here.
     #
