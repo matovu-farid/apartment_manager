@@ -9,7 +9,7 @@ class ExpendituresController < ApplicationController
   def index
     if Block.filter_by_admin(current_user).empty?
       redirect_to(new_block_path)
-    elsif  @expenditures .empty? && !params[:start_date].present?
+    elsif  @expenditures.empty? && !params[:start_date].present?
       redirect_to(new_expenditure_path)
     end
 
