@@ -3,7 +3,7 @@
     <%[
       expenditure.name,
       expenditure.date.strftime("%B %d, %Y"),
-      expenditure.amount,
+      format_currency(expenditure.amount),
       expenditure.category,
       expenditure.reference,
       expenditure.description,
