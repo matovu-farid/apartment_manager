@@ -1,27 +1,29 @@
 class Expenditure < ApplicationRecord
+  include Adminable
   validates :date, presence: true
   validates :name, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
   validates :category, presence: true
 
-  has_and_belongs_to_many :blocks
-  has_many :admins, through: :blocks
-  has_many :viewers, through: :blocks
-
-  # Scopes for authorization
-  scope :filter_by_admin, ->(user) {
-    joins(blocks: { block_admins: :user })
-      .includes(blocks: { block_admins: :user })
-      .where(users: { id: user.id })
-      .distinct
-  }
-
-  scope :filter_by_viewer, ->(user) {
-    joins(blocks: { block_viewers: :user })
-      .includes(blocks: { block_viewers: :user })
-      .where(users: { id: user.id })
-      .distinct
-  }
+  belongs_to :block
+  has_many :admins, through: :block
+  has_many :viewers, through: :block
+  scope(
+    :filter_by_admin,
+    lambda { |user|
+      joins(block: { block_admins: :user }).includes(block: { block_admins: :user }).where(
+        { users: { id: user.id } }
+      )
+    }
+  )
+  scope(
+    :filter_by_viewer,
+    lambda { |user|
+      joins(block: { block_viewers: :user }).includes(block: { block_viewers: :user }).where(
+        { users: { id: user.id } }
+      )
+    }
+  )
 
   # Class method to get unique categories
   def self.categories

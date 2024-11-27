@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_26_162825) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_27_015849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -64,13 +64,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_26_162825) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "blocks_expenditures", id: false, force: :cascade do |t|
-    t.bigint "block_id", null: false
-    t.bigint "expenditure_id", null: false
-    t.index ["block_id", "expenditure_id"], name: "index_blocks_expenditures_on_block_id_and_expenditure_id"
-    t.index ["expenditure_id", "block_id"], name: "index_blocks_expenditures_on_expenditure_id_and_block_id"
-  end
-
   create_table "expenditures", force: :cascade do |t|
     t.date "date"
     t.string "name"
@@ -80,6 +73,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_26_162825) do
     t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "block_id", null: false
+    t.index ["block_id"], name: "index_expenditures_on_block_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -129,6 +124,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_26_162825) do
   add_foreign_key "block_keys", "blocks"
   add_foreign_key "block_viewers", "blocks"
   add_foreign_key "block_viewers", "users"
+  add_foreign_key "expenditures", "blocks"
   add_foreign_key "payments", "rent_sessions"
   add_foreign_key "rent_sessions", "apartments"
   add_foreign_key "rent_sessions", "residents"

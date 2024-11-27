@@ -27,14 +27,9 @@
     <div class='flex flex-col'>
         <%= form.label :category, class: "form-label" %>
         <%=
+    form.select :category, @categories, { prompt: 'Select Category' }, id: 'categories-select', data: { controller: 'ts_select' } %>
 
-    form.collection_select(
-        :category,
-        @categories, :id, :name,
-        { prompt: 'Select Category' },
-        id: 'categories-select',
-        data: { controller: 'ts_select' }
-        ) %>
+
 
 
     </div>
@@ -48,6 +43,13 @@
 
     <%= form.label :description, class: "form-label" %>
     <%= form.text_area :description, rows: 4, class: "form-control" %>
+    <%= form.label :block_id, class: "block" %>
+    <%= form.collection_select :block_id,
+                           Block.accessible_by(current_ability, :manage),
+                           :id,
+                           :name,
+                           class:
+                             "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
 </div>
 
 <div class="inline">

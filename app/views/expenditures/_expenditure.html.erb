@@ -1,32 +1,15 @@
-<div id="<%= dom_id expenditure %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Date:</strong>
-    <%= expenditure.date %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= expenditure.name %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Reference:</strong>
-    <%= expenditure.reference %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= expenditure.description %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Amount:</strong>
-    <%= expenditure.amount %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Category:</strong>
-    <%= expenditure.category %>
-  </p>
-
+<div id="<%= dom_id expenditure, class:'flex flex-row inline' %>">
+    <% td_class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0" %>
+    <%[
+      expenditure.name,
+      expenditure.date.strftime("%B %d, %Y"),
+      expenditure.amount,
+      expenditure.category,
+      expenditure.reference,
+      expenditure.description,
+    ].each do |value|%>
+        <td class="<%=td_class%>">
+            <%= value %>
+        </td>
+    <% end %>
 </div>

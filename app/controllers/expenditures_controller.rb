@@ -104,6 +104,6 @@ class ExpendituresController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def expenditure_params
-    params.require(:expenditure).permit(:date, :name, :reference, :description, :amount, :category, block_ids: [])
+    params.require(:expenditure).permit(:date, :name, :reference, :description, :amount, :category, :block_id)
   end
 end
