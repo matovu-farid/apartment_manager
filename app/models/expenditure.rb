@@ -24,6 +24,9 @@ class Expenditure < ApplicationRecord
       )
     }
   )
+  scope :filter_by_date, ->(start_date, end_date) {
+    where(date: start_date.beginning_of_day..end_date.end_of_day)
+  }
 
   # Class method to get unique categories
   def self.categories

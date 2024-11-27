@@ -1,6 +1,33 @@
 <div class="mt-8 flow-root">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          
+            <%= form_with url: expenditures_path, method: :get, class: "mb-4" do |form| %>
+                <div class="py-3 flex gap-4">
+                    <div class="flex flex-col">
+                        <%= form.label :start_date, "Start Date", class: "form-label" %>
+                        <div>
+                            <%= form.date_select :start_date, default: @start_date, class: "form-control datepicker", required: true %>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <%= form.label :end_date, "End Date", class: "form-label" %>
+                        <div>
+                            <%= form.date_select :end_date,default: @end_date, class: "form-control datepicker", required: true %>
+                        </div>
+                    </div>
+
+                    <div class="flex align-items-end">
+                        <%= submit_tag "Search", class: "btn btn-outline-primary" %>
+                        
+                        <% if params[:start_date].present? || params[:end_date].present? %>
+                            <%= link_to "Clear", expenditures_path, class: "btn btn-outline-secondary ml-2" %>
+                        <% end %>
+                    </div>
+                </div>
+            <% end %>
+
             <% if expenditures.any? %>
             <table class="min-w-full table table-auto divide-y divide-gray-300">
                 <thead>
