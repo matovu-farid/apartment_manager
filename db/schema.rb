@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_02_013100) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_26_162825) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -60,6 +60,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_02_013100) do
 
   create_table "blocks", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "blocks_expenditures", id: false, force: :cascade do |t|
+    t.bigint "block_id", null: false
+    t.bigint "expenditure_id", null: false
+    t.index ["block_id", "expenditure_id"], name: "index_blocks_expenditures_on_block_id_and_expenditure_id"
+    t.index ["expenditure_id", "block_id"], name: "index_blocks_expenditures_on_expenditure_id_and_block_id"
+  end
+
+  create_table "expenditures", force: :cascade do |t|
+    t.date "date"
+    t.string "name"
+    t.string "reference"
+    t.text "description"
+    t.integer "amount"
+    t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

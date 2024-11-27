@@ -93,3 +93,5 @@ gem "select2-rails"
 gem "table-for", "~> 3.7"
 
 gem "tailwindcss-rails", "~> 2.6"
+
+gem "tom-select-rails", "~> 2.3"

@@ -1,10 +1,10 @@
-import { Application } from "@hotwired/stimulus"
+import { Application } from "@hotwired/stimulus";
 
-const application = Application.start()
-console.log('Stimulus ⚡️ Rails')
+const application = Application.start();
+console.log("Stimulus ⚡️ Rails");
 
 // Configure Stimulus development experience
-application.debug = false
-window.Stimulus = application
+application.debug = false;
+window.Stimulus = application;
 
-export { application }
+export { application };

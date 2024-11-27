@@ -15,15 +15,16 @@
  *
 */
 @import "bootstrap";
-@import 'select2';
-@import 'select2-bootstrap';
+@import "select2";
+@import "select2-bootstrap";
 @import "font-awesome";
+@import "tom-select-rails/scss/tom-select";
 // Import all CSS files in the current directory and subdirectories
 // @import 'styles/*';
 
 .pointer {
   cursor: pointer;
-} 
+}
 
 a {
   cursor: pointer;
@@ -35,4 +36,4 @@ button {
 .navbar .nav-link.active {
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 0.25rem;
-} 
+}

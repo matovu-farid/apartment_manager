@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :expenditures
   resources(:rent_sessions)
   resources(:blocks)
   resources(:apartments)

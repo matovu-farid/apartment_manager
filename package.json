@@ -29,6 +29,7 @@
     "clsx": "^2.1.1",
     "sweetalert": "^2.1.2",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "tom-select": "^2.4.1"
   }
 }

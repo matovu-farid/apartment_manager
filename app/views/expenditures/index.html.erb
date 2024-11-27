@@ -1,0 +1,48 @@
+<div class="w-full">
+    <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <% end %>
+
+    <% content_for :title, "Expenditures" %>
+
+    <div class="flex justify-between items-center">
+        <h1 class="font-bold text-4xl">Expenditures</h1>
+        <div>
+            <%= link_to "Back to Home", home_index_path, class: "btn btn-outline-secondary" %>
+            <%= link_to "New expenditure", new_expenditure_path, class: "btn btn-outline-primary" %>
+        </div>
+    </div>
+
+    <div id="expenditures" class="min-w-full">
+        <div class="overflow-x-auto">
+            <table class="table-auto w-full text-left whitespace-no-wrap">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="px-4 py-3">Date</th>
+                        <th class="px-4 py-3">Name</th>
+                        <th class="px-4 py-3">Category</th>
+                        <th class="px-4 py-3">Amount</th>
+                        <th class="px-4 py-3">Reference</th>
+                        <th class="px-4 py-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @expenditures.each do |expenditure| %>
+                    <tr class="border-b">
+                        <td class="px-4 py-3"><%= expenditure.date %></td>
+                        <td class="px-4 py-3"><%= expenditure.name %></td>
+                        <td class="px-4 py-3"><%= expenditure.category %></td>
+                        <td class="px-4 py-3">$<%= expenditure.amount %></td>
+                        <td class="px-4 py-3"><%= expenditure.reference %></td>
+                        <td class="px-4 py-3">
+                            <%= link_to 'View', expenditure, class: "text-blue-600 hover:text-blue-900 mr-2" %>
+                            <%= link_to 'Edit', edit_expenditure_path(expenditure), class: "text-blue-600 hover:text-blue-900 mr-2" %>
+                            <%= link_to 'Delete', expenditure, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "text-red-600 hover:text-red-900" %>
+                        </td>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

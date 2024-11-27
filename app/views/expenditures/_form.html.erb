@@ -1,0 +1,56 @@
+<%= custom_form_with(model: expenditure, class: "contents") do |form| %>
+<% if expenditure.errors.any? %>
+<div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg ma">
+    <h2><%= pluralize(expenditure.errors.count, "error") %> prohibited this expenditure from being saved:</h2>
+    <ul>
+        <% expenditure.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+        <% end %>
+    </ul>
+</div>
+<% end %>
+
+<div class="py-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+    <div class="py-2 flex flex-col">
+        <%= form.label :date, class: "form-label" %>
+        <div>
+            <%= form.date_select :date,
+                    class: "form-control datepicker",
+                    required: true %>
+        </div>
+    </div>
+
+
+
+    <div class='flex flex-col'>
+        <%= form.label :category, class: "form-label" %>
+        <%=
+
+    form.collection_select(
+        :category,
+        @categories, :id, :name,
+        { prompt: 'Select Category' },
+        id: 'categories-select',
+        data: { controller: 'ts_select' }
+        ) %>
+
+
+    </div>
+
+
+    <%= form.label :amount, class: "form-label" %>
+    <%= form.currency :amount, step: 0.01, class: "form-control" %>
+
+    <%= form.label :reference, class: "form-label" %>
+    <%= form.text_field :reference, class: "form-control" %>
+
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, rows: 4, class: "form-control" %>
+</div>
+
+<div class="inline">
+    <%= form.submit class: "btn btn-outline-primary" %>
+</div>
+<% end %>

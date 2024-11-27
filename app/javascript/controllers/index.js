@@ -2,19 +2,16 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application"
+import { application } from "./application";
 
+import PaymentController from "./payment_controller";
+application.register("payment", PaymentController);
 
+import CurrencyController from "./currency_controller";
+application.register("currency", CurrencyController);
 
-import PaymentController from "./payment_controller"
-application.register("payment", PaymentController)
+import TsSelectController from "./ts_select_controller";
+application.register("ts_select", TsSelectController);
 
-import CurrencyController from "./currency_controller"
-application.register("currency", CurrencyController)
-
-import KeyController from "./key_controller"
-application.register("key", KeyController)
-
-
-
-
+import KeyController from "./key_controller";
+application.register("key", KeyController);

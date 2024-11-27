@@ -13,11 +13,14 @@ class Ability
     can(:manage, Payment, admins: { id: user.id })
     can(:manage, Resident, admins: { id: user.id })
     can(:manage, RentSession, admins: { id: user.id })
+    can(:manage, Expenditure, admins: { id: user.id })
+
     can(:read, Block, viewers: { id: user.id })
     can(:read, Apartment, viewers: { id: user.id })
     can(:read, Payment, viewers: { id: user.id })
     can(:read, Resident, viewers: { id: user.id })
     can(:read, RentSession, viewers: { id: user.id })
+    can(:read, Expenditure, viewers: { id: user.id })
   end
 
   # The first argument to `can` is the action you are giving the user
