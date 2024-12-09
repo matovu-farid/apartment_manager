@@ -20,7 +20,7 @@
     <div class="py-2  flex flex-col">
         <%= form.label :apartment_id, class: "form-label" %>
         <%= form.collection_select :apartment_id,
-                             Apartment.accessible_by(current_ability).where(isOccupied: false),
+                             Apartment.accessible_by(current_ability).is_unoccupied,
                              :id,
                              :name,
                              class: "form-control" %>

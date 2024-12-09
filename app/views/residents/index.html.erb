@@ -10,9 +10,12 @@
   <% content_for :title, "Residents" %>
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Residents</h1>
-    <%= link_to "New resident",
-    new_resident_path,
-    class: "btn btn-outline-primary" %>
+    <div class="flex gap-2 items-center">
+      <%= link_to "New resident",
+      new_resident_path,
+      class: "btn btn-outline-primary" %>
+      <%= link_to "Archived residents", archives_path, class: "btn btn-outline-primary" %>
+    </div>
   </div>
   <%= render "resident_table", residents: @residents, show: true %>
 </div>

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Resident < ApplicationRecord
+  include Discard::Model
   validates :name, presence: true
   validates :physicalId, presence: true
   validates :phonenumber, presence: true
@@ -10,7 +11,6 @@ class Resident < ApplicationRecord
   has_many :rent_sessions, dependent: :destroy
   has_many :payments, through: :rent_sessions
   accepts_nested_attributes_for :rent_sessions
-
   scope(
     :filter_by_admin,
     lambda { |user|
@@ -26,21 +26,6 @@ class Resident < ApplicationRecord
     }
   )
 
-  def occupy
-    apartment.isOccupied = true
-    rent_session = RentSession.new(paymentDueDate: startdate, resident: self, apartment:)
-    begin
-      Resident.transaction do
-        save!
-        rent_session.save!
-        apartment.save!
-      end
-
-      true
-    rescue Resident::RecordInvalid
-      false
-    end
-  end
 
   def rent
     apartment.price
@@ -67,14 +52,14 @@ class Resident < ApplicationRecord
 
   delegate :payment_total, to: :rent_sessions
 
-  delegate :total_due, to: :rent_sessions
+  delegate :collectable_rent, to: :rent_sessions
 
   def rent_balance
-    total_due - payment_total
+    collectable_rent - payment_total
   end
 
   def paid_total_due?
-    payment_total >= total_due
+    payment_total >= collectable_rent
   end
 
   def paid_current_month?

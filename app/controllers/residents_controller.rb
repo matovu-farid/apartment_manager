@@ -8,7 +8,7 @@ class ResidentsController < ApplicationController
   load_and_authorize_resource
   # GET /residents or /residents.json
   def index
-    @residents = Resident.accessible_by(current_ability)
+    @residents = Resident.kept.accessible_by(current_ability)
     return unless @residents.empty?
 
     redirect_to(new_resident_path)
@@ -20,7 +20,7 @@ class ResidentsController < ApplicationController
   # GET /residents/new
   def new
     @resident = Resident.new
-    return unless Apartment.accessible_by(current_ability).where(isOccupied: false).empty?
+    return unless Apartment.accessible_by(current_ability).is_occupied.empty?
 
     redirect_to(new_apartment_path)
   end
@@ -29,18 +29,31 @@ class ResidentsController < ApplicationController
   def edit; end
 
   # POST /residents or /residents.json
-  def create
-    @resident = Resident.new(resident_params)
-    respond_to do |format|
-      if @resident.occupy
-        format.html { redirect_to(resident_url(@resident), notice: 'Resident was successfully created.') }
-        format.json { render(:show, status: :created, location: @resident) }
-      else
-        format.html { render(:new, status: :unprocessable_entity) }
-        format.json { render(json: @resident.errors, status: :unprocessable_entity) }
-      end
-    end
+def create
+  @resident = Resident.new(resident_params)
+
+  # Use a transaction to ensure both records are saved together
+  ActiveRecord::Base.transaction do
+    @resident.save!
+    RentSession.create!(
+      paymentDueDate: @resident.startdate, 
+      resident: @resident, 
+      apartment: @resident.apartment
+    )
   end
+
+  respond_to do |format|
+    format.html { redirect_to resident_url(@resident), notice: 'Resident was successfully created.' }
+    format.json { render :show, status: :created, location: @resident }
+  end
+
+rescue ActiveRecord::RecordInvalid => e
+  respond_to do |format|
+    format.html { render :new, status: :unprocessable_entity }
+    format.json { render json: e.record.errors, status: :unprocessable_entity }
+  end
+end
+
 
   def setup_payment
     @resident = Resident.find(params[:resident_id])
@@ -79,20 +92,49 @@ class ResidentsController < ApplicationController
     end
   end
 
+  def archives
+    # Recover archived residents from ResidentArchive and update their apartment to the aparment from the ResidentArchive
+    @archived_residents = []
+
+    ResidentArchive.all.each do |resident_archive|
+      resident = resident_archive.resident
+      resident.apartment = resident_archive.apartment
+      @archived_residents << resident
+    end
+   
+  end
+
   # DELETE /residents/1 or /residents/1.json
   def destroy
-    @resident.destroy
+    ActiveRecord::Base.transaction do
+      @resident.discard!
+
+      ResidentArchive.create!(
+        resident: @resident, 
+        apartment: @resident.apartment
+      )
+
+      discarded_apartment = Apartment.find_by!(name: 'discarded')
+      @resident.update!(apartment: discarded_apartment)
+    end
 
     respond_to do |format|
-      format.html { redirect_to(residents_url, notice: 'Resident was successfully destroyed.') }
-      format.json { head(:no_content) }
+      format.html { redirect_to residents_url, notice: 'Resident was successfully archived.' }
+      format.json { head :no_content }
+    end
+
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
+    respond_to do |format|
+      format.html { redirect_to residents_url, alert: "Error archiving resident: #{e.message}" }
+      format.json { render json: { error: e.message }, status: :unprocessable_entity }
     end
   end
+
 
   private
 
   def create_rent_session(resident)
-    rent_sessions = RentSession.filter_by_admin(current_user).with_in_current_month
+    rent_sessions = RentSession.kept.filter_by_admin(current_user).with_in_current_month
     paymentDueDate = Time.zone.today.change(day: resident.startdate.day)
     paymentDueDate += 1.month if paymentDueDate < Time.zone.today
     if rent_sessions.empty?

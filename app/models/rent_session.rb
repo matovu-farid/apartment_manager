@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class RentSession < ApplicationRecord
+  include Discard::Model
   belongs_to :resident
   belongs_to :apartment
   has_many(:payments, dependent: :destroy) do
@@ -32,13 +33,15 @@ class RentSession < ApplicationRecord
     -> { joins(:payments).sum(:amount) }
   )
 
+  scope :kept, -> { undiscarded.joins(:resident).merge(Resident.kept) }
+
   def payment_total
     payments.sum(:amount)
   end
 
   scope(
-    :total_due,
-    -> { joins(:apartment).sum(:price) }
+    :collectable_rent,
+    -> { undiscarded.joins(:apartment).sum(:price) }
   )
   current_month_start = Time.zone.today.beginning_of_month.beginning_of_month
   prev_month_start = current_month_start - 1.month

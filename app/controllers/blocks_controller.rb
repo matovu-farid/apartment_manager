@@ -37,6 +37,7 @@ class BlocksController < ApplicationController
         @block.save!
         @block_admin.save!
         @block_key.save!
+        Apartment.create(price: 0, floor: '5th', block: @block, name: 'discaded', hidden: true)
         format.html { redirect_to(block_url(@block), notice: 'Block was successfully created.') }
         format.json { render(:show, status: :created, location: @block) }
       end

@@ -1,12 +1,13 @@
 <div id="<%= dom_id resident, class:'flex flex-row inline' %>">
     <%[
       resident.name,
-      resident.physicalId,
+      resident.apartment.name,
       resident.phonenumber,
       resident.startdate.strftime("%B %d, %Y"),
-      format_currency(resident.total_due),
+      format_currency(resident.apartment.price),
+      format_currency(resident.collectable_rent),
       format_currency(resident.payment_total),
-      format_currency(resident.total_due - resident.payment_total)].each do |value|%>
+      format_currency(resident.collectable_rent - resident.payment_total)].each do |value|%>
     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
         <%= value %>
     </td>

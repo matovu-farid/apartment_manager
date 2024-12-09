@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_27_015849) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_09_113158) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
@@ -22,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_27_015849) do
     t.datetime "updated_at", null: false
     t.bigint "block_id", null: false
     t.string "name"
-    t.boolean "isOccupied", default: false
+    t.boolean "hidden", default: false
     t.index ["block_id"], name: "index_apartments_on_block_id"
     t.index ["name"], name: "index_apartments_on_name"
   end
@@ -75,6 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_27_015849) do
     t.datetime "updated_at", null: false
     t.bigint "block_id", null: false
     t.index ["block_id"], name: "index_expenditures_on_block_id"
+    t.index ["category"], name: "index_expenditures_on_category"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -92,8 +94,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_27_015849) do
     t.bigint "apartment_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
     t.index ["apartment_id"], name: "index_rent_sessions_on_apartment_id"
+    t.index ["discarded_at"], name: "index_rent_sessions_on_discarded_at"
     t.index ["resident_id"], name: "index_rent_sessions_on_resident_id"
+  end
+
+  create_table "resident_archives", force: :cascade do |t|
+    t.bigint "resident_id", null: false
+    t.bigint "apartment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["apartment_id"], name: "index_resident_archives_on_apartment_id"
+    t.index ["resident_id"], name: "index_resident_archives_on_resident_id"
   end
 
   create_table "residents", force: :cascade do |t|
@@ -104,7 +117,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_27_015849) do
     t.datetime "updated_at", null: false
     t.bigint "apartment_id", null: false
     t.datetime "startdate"
+    t.datetime "discarded_at"
     t.index ["apartment_id"], name: "index_residents_on_apartment_id", unique: true
+    t.index ["discarded_at"], name: "index_residents_on_discarded_at"
     t.index ["name"], name: "index_residents_on_name"
   end
 
@@ -128,5 +143,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_27_015849) do
   add_foreign_key "payments", "rent_sessions"
   add_foreign_key "rent_sessions", "apartments"
   add_foreign_key "rent_sessions", "residents"
+  add_foreign_key "resident_archives", "apartments"
+  add_foreign_key "resident_archives", "residents"
   add_foreign_key "residents", "apartments", on_delete: :cascade
 end

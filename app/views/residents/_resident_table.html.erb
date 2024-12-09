@@ -2,7 +2,7 @@
 <table id="residents" class="min-w-full table table-auto min-w-full divide-y divide-gray-300">
     <thead>
         <tr>
-            <% ["Name","PhysicalId","Phonenumber","Start Date","collectable rent","total payments","Balance Due"].each do |column|  %>
+            <% ["Name","Apartment","Phonenumber","Start Date","Rent","collectable rent","total payments","Balance Due"].each do |column|  %>
             <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">
                 <%= column %>
             </th>
@@ -41,13 +41,15 @@
         <tr>
         <div  class="flex flex-row inline">
     <%
-    total_due = Resident.all.reduce(0) {|total, resident| total + resident.total_due}
-    total_payment = Resident.all.reduce(0) {|total, resident| total + resident.payment_total}
+    total_rent = residents.map(&:apartment).sum(&:price)
+    total_due = residents.map(&:collectable_rent).sum
+    total_payment =  residents.map(&:payment_total).sum
     [
       "TOTAL",
       "",
       "",
       "",
+      format_currency(total_rent),
       format_currency( total_due),
       format_currency(total_payment),
       format_currency(total_due - total_payment)].each do |value| %>

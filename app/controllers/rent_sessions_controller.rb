@@ -8,14 +8,14 @@ class RentSessionsController < ApplicationController
 
   # GET /rent_sessions or /rent_sessions.json
   def index
-    @rent_sessions = RentSession.filter_by_admin(current_user)
+    @rent_sessions = RentSession.kept.filter_by_admin(current_user)
     return unless @rent_sessions.empty?
 
     redirect_to(new_rent_session_path)
   end
 
   def renew_rent
-    @rent_sessions = RentSession.filter_by_admin(current_user)
+    @rent_sessions = RentSession.kept.filter_by_admin(current_user)
     prev_month_start = (Time.zone.today.beginning_of_month - 1.month).beginning_of_month
     prev_month_start.end_of_month
     prev_month_sessions = @rent_sessions.where(paymentDueDate: prev_month_start..prev_month_start.end_of_month)
@@ -34,7 +34,7 @@ class RentSessionsController < ApplicationController
   # GET /rent_sessions/new
   def new
     @rent_session = RentSession.new
-    if Resident.filter_by_admin(current_user).empty?
+    if Resident.kept.filter_by_admin(current_user).empty?
       redirect_to(new_resident_path)
       return
     end

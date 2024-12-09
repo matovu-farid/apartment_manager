@@ -1,0 +1,22 @@
+<div class="w-full p-3">
+  <% if notice.present? %>
+    <p
+      class="
+        py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block
+      "
+      id="notice"
+    ><%= notice %></p>
+  <% end %>
+  <% content_for :title, "Archived Residents" %>
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Archived Residents</h1>
+    <%= link_to "New resident",
+    new_resident_path,
+    class: "btn btn-outline-primary" %>
+  </div>
+  <% if @archived_residents.empty? %>
+    <p class="text-gray-500">No archived residents found</p>
+  <% else %>
+    <%= render "resident_table", residents: @archived_residents, show: true %>
+  <% end %>
+</div>
