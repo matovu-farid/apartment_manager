@@ -11,6 +11,8 @@ class Resident < ApplicationRecord
   has_many :rent_sessions, dependent: :destroy
   has_many :payments, through: :rent_sessions
   accepts_nested_attributes_for :rent_sessions
+  attribute :is_not_archived, :boolean, default: true
+
   scope(
     :filter_by_admin,
     lambda { |user|
@@ -25,6 +27,7 @@ class Resident < ApplicationRecord
         .where({users: {id: user.id}})
     }
   )
+
 
 
   def rent

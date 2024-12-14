@@ -27,7 +27,7 @@ class Apartment < ApplicationRecord
   )
 
   scope(
-    :filter_by_hidden,
+    :visible,
     lambda {
       where(hidden: false)
     }

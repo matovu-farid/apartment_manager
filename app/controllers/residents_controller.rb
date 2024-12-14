@@ -98,6 +98,7 @@ end
 
     ResidentArchive.all.each do |resident_archive|
       resident = resident_archive.resident
+      resident.is_not_archived = false
       resident.apartment = resident_archive.apartment
       @archived_residents << resident
     end
@@ -114,7 +115,7 @@ end
         apartment: @resident.apartment
       )
 
-      discarded_apartment = Apartment.find_by!(name: 'discarded')
+      discarded_apartment = @resident.apartment.block.apartments.find_by!(name: 'discarded')
       @resident.update!(apartment: discarded_apartment)
     end
 

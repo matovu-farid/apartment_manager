@@ -6,7 +6,7 @@ class ApartmentsController < ApplicationController
   load_and_authorize_resource
   # GET /apartments or /apartments.json
   def index
-    @apartments = Apartment.accessible_by(current_ability).filter_by_hidden
+    @apartments = Apartment.accessible_by(current_ability).visible
     if Block.filter_by_admin(current_user).empty?
       redirect_to(new_block_path)
     elsif @apartments.empty?
