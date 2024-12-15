@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get("receipt", to: "payments#receipt", as: :receipt)
   end
 
+
   get("residentsarchives", to: "residents#archives", as: :archives)
 
   get("home/index")

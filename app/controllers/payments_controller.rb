@@ -8,10 +8,16 @@ class PaymentsController < ApplicationController
 
   # GET /payments or /payments.json
   def index
-    @payments = @resident.payments.accessible_by(current_ability)
+    if @resident.nil?
+      @payments = Payment.accessible_by(current_ability)
+      @rent_session = nil
+    else
+      @payments = @resident.payments.accessible_by(current_ability)
+      @rent_session = @resident.current_rent_session
+    end
 
-    @rent_session = @resident.current_rent_session
   end
+
 
   # GET /payments/1 or /payments/1.json
   def show
