@@ -26,7 +26,10 @@ class PaymentsController < ApplicationController
   # GET /payments/new
   def new
     @payment = Payment.new
-    @rent_session = @resident.current_rent_session
+    @residents = Resident.accessible_by(current_ability)
+    if @resident
+      @rent_session = @resident.current_rent_session
+    end
   end
 
   # GET /payments/1/edit
@@ -40,7 +43,11 @@ class PaymentsController < ApplicationController
     @payment = init_payment
     respond_to do |format|
       if @payment.save
-        format.html { redirect_to(resident_payments_path(@resident, notice: "Payment was successfully created.")) }
+        if @resident
+          format.html { redirect_to(resident_payments_path(@resident), notice: "Payment was successfully created.")}
+        else
+          format.html { redirect_to(payments_path, notice: "Payment was successfully created.")}
+        end
         format.json { render(:show, status: :created, location: @payment) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -104,11 +111,18 @@ class PaymentsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def payment_params
     params.require(:payment).permit(:date, :amount)
+
   end
 
   def init_payment
-    resident = Resident.find(params[:resident_id])
-    payment = Payment.new(payment_params)
+    if params[:resident_id]
+      resident = Resident.find(params[:resident_id])
+    else
+      resident = Resident.find(params[:payment][:resident_id])
+    end
+
+
+    payment = Payment.new(date: payment_params[:date], amount: payment_params[:amount])
     rent_session = resident.current_rent_session
     payment.rent_session = rent_session
     payment

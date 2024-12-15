@@ -11,19 +11,48 @@
         </ul>
       </div>
     <% end %>
-    <p>(Balance: <span data-payment-target='balance' data-balance=<%= resident.rent_balance  %>><%=format_currency resident.rent_balance %></span>)</p>
-      <div >
-        <%= form.label :amount, class: "form-label" %>
-        <%= form.number_field :amount, class: "form-control",  data: {  payment_target: "payment", action: 'input->payment#onEditPayment',max: resident.rent_balance }, step: 100 %>
-      </div>
-      <div class="flex flex-col gap-2">
-        <%= form.label :date, class: "form-label" %>
-        <div>
-          <%= form.date_select :date, class: "form-control", required: true %>
-        </div>
-      </div>
-      <div class='pt-3'>
-        <%= form.submit class: "btn btn-primary" %>
+    
+    <% if resident.nil? %>
+      <div class="mb-3">
+        <%= form.label :resident_id, "Select Resident", class: "form-label" %>
+        <%= form.collection_select :resident_id, 
+            @residents, 
+            :id, 
+            :name, 
+            { prompt: "Choose a resident" }, 
+            { class: "form-select", required: true } 
+        %>
       </div>
     <% end %>
-  </div>
+
+    <% if current_page?(:controller => 'payments', :action => 'new') %>
+      <% if resident %>
+        <p>(Balance: <span data-payment-target='balance' data-balance=<%= resident.rent_balance %>><%=format_currency resident.rent_balance %></span>)</p>
+      <% end %>
+    <% end %>
+
+    <div>
+      <%= form.label :amount, class: "form-label" %>
+      <%= form.number_field :amount, 
+          class: "form-control",  
+          data: {  
+            payment_target: "payment", 
+            action: 'input->payment#onEditPayment',
+            max: resident&.rent_balance 
+          }, 
+          step: 100 
+      %>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <%= form.label :date, class: "form-label" %>
+      <div>
+        <%= form.date_select :date, class: "form-control", required: true %>
+      </div>
+    </div>
+
+    <div class='pt-3'>
+      <%= form.submit class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
