@@ -3,8 +3,10 @@
     <div class='w-50'>
         <ul class="">
             <% blocks.each do |block| %>
-            <li>
-                <div class='fw-bold h3 flex gap-2'><%= block.name%>
+            <li class='flex gap-2'>
+
+                <%= render block %>
+                <div class='fw-bold h3 flex flex-col gap-2'>
                     <div class='flex gap-2 text-base items-center'>
                         <% if can? :edit,block %>
 
@@ -22,11 +24,9 @@
                         <% end %>
                     </div>
                 </div>
-                <%= render "apartments/apartment_table", apartments: block.apartments %>
-                <% if block.apartments.empty? %>
-                <p class='text-secondary fst-italic'>Apartments attached to this block will be added here</p>
-                <% end %>
+   
             </li>
+            
             <% end %>
         </ul>
     </div>
