@@ -32,4 +32,12 @@ class Expenditure < ApplicationRecord
   def self.categories
     distinct.pluck(:category).compact.sort
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["amount", "date", "description", "category", "created_at"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end

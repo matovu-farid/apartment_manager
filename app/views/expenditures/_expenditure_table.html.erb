@@ -1,76 +1,103 @@
-<div class="mt-8 flow-root">
-    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-          
-            <%= form_with url: expenditures_path, method: :get, class: "mb-4" do |form| %>
-                <div class="py-3 flex gap-4">
-                    <div class="flex flex-col">
-                        <%= form.label :start_date, "Start Date", class: "form-label" %>
-                        <div>
-                            <%= form.date_select :start_date, default: @start_date, class: "form-control datepicker", required: true %>
-                        </div>
-                    </div>
-                    
-                    <div class="flex flex-col">
-                        <%= form.label :end_date, "End Date", class: "form-label" %>
-                        <div>
-                            <%= form.date_select :end_date,default: @end_date, class: "form-control datepicker", required: true %>
-                        </div>
-                    </div>
+<div class="relative" data-controller="searchdialog">
+  <% if @q.present? || @expenditures.any? %>
+    <button 
+      data-action="click->searchdialog#open" 
+      class="btn btn-dark mb-4" 
+      type="button">
+      Search Table
+    </button>
+  <% end %>
+  
+  <dialog 
+    data-searchdialog-target="dialog" 
+    class="rounded-lg shadow-lg p-6 w-full max-w-2xl backdrop:bg-gray-500/50">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold">Search Expenditures</h3>
+      <button 
+        type="button" 
+        class="text-gray-500 hover:text-gray-700" 
+        data-action="searchdialog#close">
+        <i class="fa-solid fa-times"></i>
+      </button>
+    </div>
 
-                    <div class="flex align-items-end">
-                        <%= submit_tag "Search", class: "btn btn-outline-primary" %>
-                        
-                        <% if params[:start_date].present? || params[:end_date].present? %>
-                            <%= link_to "Clear", expenditures_path, class: "btn btn-outline-secondary ml-2" %>
-                        <% end %>
-                    </div>
-                </div>
+    <%= search_form_for @q, 
+        class: 'flex flex-col gap-4', 
+        data: { action: "submit->searchdialog#closeOnSubmit" } do |f| %>
+      <div class="flex flex-col gap-2">
+        <%= f.label :description_cont, "Description", class: 'form-label' %>
+        <%= f.search_field :description_cont, class: 'form-input' %>
+      </div>
+      <div class="flex flex-col gap-2">
+        <%= f.label :category_eq, "Category", class: 'form-label' %>
+        <%= f.select :category_eq, 
+            Expenditure.categories.map { |category| [category.titleize, category] },
+            { include_blank: true },
+            class: 'form-select' %>
+      </div>
+      <div class="flex flex-col gap-2">
+        <%= f.label :amount_eq, "Amount", class: 'form-label' %>
+        <%= f.number_field :amount_eq, class: 'form-input', step: '0.01' %>
+      </div>
+      <div class="flex flex-col gap-2">
+        <%= f.label :date_eq, "Date", class: 'form-label' %>
+        <%= f.date_field :date_eq, class: 'form-input' %>
+      </div>
+      <div class="flex justify-end gap-2 mt-4">
+        <button 
+          type="button" 
+          class="btn btn-secondary" 
+          data-action="searchdialog#close">
+          Cancel
+        </button>
+        <%= f.submit 'Search', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </dialog>
+
+  <% if @expenditures.any? %>
+    <table class="min-w-full table table-auto divide-y divide-gray-300">
+      <thead>
+        <% th_class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0" %>
+        <tr>
+          <% ["Name","Date","Amount","Category","Reference","Description",].each do |column| %>
+            <th scope="col" class="<%=th_class%>">
+              <%= column %>
+            </th>
+          <% end %>
+          <% if show ||= false %>
+            <th scope="col" class="<%=th_class%>">
+              Actions
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 bg-white">
+        <% @expenditures.each do |expenditure| %>
+          <tr>
+            <%= render expenditure %>
+            <% if show ||= false %>
+
+              <td class="relative flex gap-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                <div class=""> </div>
+                <%= link_to expenditure ,class: '' do %>
+                  <i class="fa-solid fa-bars"></i>
+                <% end %>
+                <% if can? :destroy, expenditure %>
+                  <%= button_to expenditure,method: :delete ,class: '' do %>
+                    <i class="fa-solid fa-trash text-red-500"></i>
+                  <% end %>
+                <% end %>
+
+              </td>
             <% end %>
+          </tr>
+        <% end %>
 
-            <% if expenditures.any? %>
-            <table class="min-w-full table table-auto divide-y divide-gray-300">
-                <thead>
-                    <% th_class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0" %>
-                    <tr>
-                        <% ["Name","Date","Amount","Category","Reference","Description",].each do |column| %>
-                            <th scope="col" class="<%=th_class%>">
-                                <%= column %>
-                            </th>
-                        <% end %>
-                        <% if show ||= false %>
-                            <th scope="col" class="<%=th_class%>">
-                                Actions
-                            </th>
-                        <% end %>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 bg-white">
-                    <% expenditures.each do |expenditure| %>
-                        <tr>
-                            <%= render expenditure %>
-                            <% if show ||= false %>
-
-                                <td class="relative flex gap-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                    <div class=""> </div>
-                                    <%= link_to expenditure ,class: '' do %>
-                                        <i class="fa-solid fa-bars"></i>
-                                    <% end %>
-                                    <% if can? :destroy, expenditure %>
-                                        <%= button_to expenditure,method: :delete ,class: '' do %>
-                                            <i class="fa-solid fa-trash text-red-500"></i>
-                                        <% end %>
-                                    <% end %>
-
-                                </td>
-                            <% end %>
-                        </tr>
-                    <% end %>
-
-                    <% td_class = "py-2 px-3 text-truncate" %>
-                    <div  class="d-flex flex-row">
+        <% td_class = "py-2 px-3 text-truncate" %>
+        <div  class="d-flex flex-row">
    <%
-                total_amount = expenditures.reduce(0) {|total, expenditure| total + expenditure.amount}
+                total_amount = @expenditures.reduce(0) {|total, expenditure| total + expenditure.amount}
                 [
                      "TOTAL",
                      "",
@@ -85,9 +112,17 @@
                     <%end%>
 </div>
              
-                </tbody>
-            </table>
-            <% end %>
-        </div>
-    </div>
+        </tbody>
+      </table>
+    <% else %>
+      <div class="text-center py-8 bg-gray-50 rounded-lg">
+        <p class="text-gray-500 text-lg">No expenditures found</p>
+        <% if @q.present? %>
+          <p class="text-gray-400 mt-2">No expenditures match your search criteria</p>
+        <% else %>
+          <p class="text-gray-400 mt-2">No expenditures have been recorded yet</p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>

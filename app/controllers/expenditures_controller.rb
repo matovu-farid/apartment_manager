@@ -7,35 +7,8 @@ class ExpendituresController < ApplicationController
 
   # GET /expenditures or /expenditures.json
   def index
-    if Block.filter_by_admin(current_user).empty?
-      redirect_to(new_block_path)
-    elsif  @expenditures.empty? && !params[:start_date].present?
-      redirect_to(new_expenditure_path)
-    end
-
-    @expenditures = Expenditure.accessible_by(current_ability)
-    if params["start_date(1i)"].present? && params["end_date(1i)"].present?
-
-      @start_date = Date.new(
-        params["start_date(1i)"].to_i,
-        params["start_date(2i)"].to_i,
-        params["start_date(3i)"].to_i
-      )
-      @end_date = Date.new(
-        params["end_date(1i)"].to_i,
-        params["end_date(2i)"].to_i,
-        params["end_date(3i)"].to_i
-      )
-     
-      @expenditures = @expenditures.filter_by_date(
-        @start_date,
-        @end_date
-      )
-    end
-    
-    @expenditures = @expenditures.order(date: :desc)
-    
-
+    @q = Expenditure.accessible_by(current_ability).ransack(params[:q])
+    @expenditures = @q.result(distinct: true)
   end
 
   # GET /expenditures/1 or /expenditures/1.json
