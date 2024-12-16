@@ -40,6 +40,7 @@ class Apartment < ApplicationRecord
     }
   )
 
+
   scope(
     :is_unoccupied,
     lambda {
@@ -47,12 +48,16 @@ class Apartment < ApplicationRecord
     }
   )
 
-  def is_occupied?
-    rent_sessions.any?
+  def is_occupied
+    resident.present? ? "Yes": "No"
   end
 
   has_one :resident, dependent: :destroy
   def self.ransackable_attributes(auth_object = nil)
-    ["name", "price", "floor", "block_id"]
+    ["name", "price", "status", "created_at"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["residents"]
   end
 end
