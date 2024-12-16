@@ -1,46 +1,102 @@
-<% if residents.any? %>
-<table id="residents" class="min-w-full table table-auto min-w-full divide-y divide-gray-300">
-    <thead>
+<div class="relative" data-controller="searchdialog">
+  <button 
+    data-action="click->searchdialog#open" 
+    class="btn btn-dark mb-4" 
+    type="button">
+    Search Table
+  </button>
+  
+  <dialog 
+    data-searchdialog-target="dialog" 
+    class="rounded-lg shadow-lg p-6 w-full max-w-2xl backdrop:bg-gray-500/50">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold">Search Residents</h3>
+      <button 
+        type="button" 
+        class="text-gray-500 hover:text-gray-700" 
+        data-action="searchdialog#close">
+        <i class="fa-solid fa-times"></i>
+      </button>
+    </div>
+
+    <%= search_form_for @q, 
+        class: 'flex flex-col gap-4', 
+        data: { action: "submit->searchdialog#closeOnSubmit" } do |f| %>
+      <div class="flex flex-col gap-2">
+        <%= f.label :name_cont, "Name", class: 'form-label' %>
+        <%= f.search_field :name_cont, class: 'form-input' %>
+      </div>
+      <div class="flex flex-col gap-2">
+        <%= f.label :apartment_name_cont, "Apartment", class: 'form-label' %>
+        <%= f.search_field :apartment_name_cont, class: 'form-input' %>
+      </div>
+      <div class="flex flex-col gap-2">
+        <%= f.label :phonenumber_cont, "Phone Number", class: 'form-label' %>
+        <%= f.search_field :phonenumber_cont, class: 'form-input' %>
+      </div>
+      <div class="flex flex-col gap-2">
+        <%= f.label :startdate_eq, "Start Date", class: 'form-label' %>
+        <%= f.date_field :startdate_eq, class: 'form-input' %>
+      </div>
+      <div class="flex flex-col gap-2">
+        <%= f.label :apartment_price_eq, "Rent Amount", class: 'form-label' %>
+        <%= f.number_field :apartment_price_eq, class: 'form-input', step: '0.01' %>
+      </div>
+      <div class="flex justify-end gap-2 mt-4">
+        <button 
+          type="button" 
+          class="btn btn-secondary" 
+          data-action="searchdialog#close">
+          Cancel
+        </button>
+        <%= f.submit 'Search', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </dialog>
+
+  <% if residents.any? %>
+    <table id="residents" class="min-w-full table table-auto min-w-full divide-y divide-gray-300">
+      <thead>
         <tr>
-            <% ["Name","Apartment","Phonenumber","Start Date","Rent","collectable rent","total payments","Balance Due"].each do |column|  %>
-            <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">
-                <%= column %>
-            </th>
-            <%end%>
+          <% ["Name","Apartment","Phonenumber","Start Date","Rent","collectable rent","total payments","Balance Due"].each do |column|  %>
+          <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">
+            <%=  column %>
+          </th>
+          <%end%>
 
 
-            <% if show ||= false %>
-            <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">
-                Actions
-            </th>
-            <% end %>
+          <% if show ||= false %>
+          <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">
+            Actions
+          </th>
+          <% end %>
         </tr>
-    </thead>
-    <tbody class="divide-y divide-gray-200 bg-white">
+      </thead>
+      <tbody class="divide-y divide-gray-200 bg-white">
         <% residents.each do |resident| %>
-            <tr>
-                <%= render resident %>
-                <%if show ||=false%>
-                    <td class="relative flex text-lg gap-2 whitespace-nowrap py-4 pl-3 pr-4 text-right font-medium sm:pr-0 text-lg">
-                        <% if resident.is_not_archived %>
-                            <%= link_to resident ,class: '' do %>
-                                <i class="fa-solid fa-bars"></i>
-                            <% end %>
-                        <% end %>
-                        <%= link_to resident_setup_resident_payment_path(resident),class: '' do %>
-                            <i class="fa-solid fa-money-bill text-blue-500"></i>
-                        <% end %>
-                        <% if resident.is_not_archived %>
-                            <% if can? :destroy, resident %>
-                                <%= button_to resident,method: :delete ,class: '' do %>
-                                    <i class="fa-solid fa-trash text-red-500"></i>
-                                <% end %>
-                            <% end %>
-                        <% end %>
-                    </td>
+          <tr>
+            <%= render resident %>
+            <%if show ||=false%>
+              <td class="relative flex text-lg gap-2 whitespace-nowrap py-4 pl-3 pr-4 text-right font-medium sm:pr-0 text-lg">
+                <% if resident.is_not_archived %>
+                  <%= link_to resident ,class: '' do %>
+                    <i class="fa-solid fa-bars"></i>
+                  <% end %>
                 <% end %>
+                <%= link_to resident_setup_resident_payment_path(resident),class: '' do %>
+                  <i class="fa-solid fa-money-bill text-blue-500"></i>
+                <% end %>
+                <% if resident.is_not_archived %>
+                  <% if can? :destroy, resident %>
+                    <%= button_to resident,method: :delete ,class: '' do %>
+                      <i class="fa-solid fa-trash text-red-500"></i>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </td>
+            <% end %>
         
-            </tr>
+          </tr>
         <% end %>
         <tr>
         <div  class="flex flex-row inline">
@@ -64,6 +120,16 @@
     
 </div>
         </tr>
-    </tbody>
-</table>
-<% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="text-center py-8 bg-gray-50 rounded-lg">
+      <p class="text-gray-500 text-lg">No residents found</p>
+      <% if @q.present? %>
+        <p class="text-gray-400 mt-2">No residents found with the search criteria</p>
+      <% else %>
+        <p class="text-gray-400 mt-2">Add residents to see them listed here</p>
+      <% end %>
+    </div>
+  <% end %>
+</div>

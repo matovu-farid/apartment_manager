@@ -1,6 +1,6 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import "@hotwired/turbo-rails"
-import "controllers"
+import "@hotwired/turbo-rails";
+import "controllers";
 
 //= require jquery3
 //= require popper
@@ -10,9 +10,9 @@ import "controllers"
 //= require bootstrap-datepicker/core
 //= require select2
 //= require fontawesome/all
-FontAwesome.config.mutateApproach = 'sync'
-$(document).on('turbolinks:load', function () {
-  $('.datepicker').datepicker();
+FontAwesome.config.mutateApproach = "sync";
+$(document).on("turbolinks:load", function () {
+  $(".datepicker").datepicker();
 });
 //var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
 //var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
@@ -23,7 +23,3 @@ $(document).on('turbolinks:load', function () {
 //  return new bootstrap.Tooltip(tooltipTriggerEl)
 //})
 //
-
-
-
-

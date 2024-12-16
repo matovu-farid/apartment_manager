@@ -42,7 +42,8 @@ class Resident < ApplicationRecord
       rent_session = RentSession.create(
         paymentDueDate:,
         resident: self,
-        apartment:
+        apartment:,
+        amount: apartment.rent
       )
     end
 
@@ -67,5 +68,11 @@ class Resident < ApplicationRecord
 
   def paid_current_month?
     current_month_payment >= rent
+  end
+  def self.ransackable_attributes(auth_object = nil)
+    ["apartment_id", "id", "name", "phonenumber", "physicalId", "startdate"]
+  end
+  def self.ransackable_associations(auth_object = nil)
+    ["admins", "apartment", "payments", "rent_sessions", "viewers"]
   end
 end

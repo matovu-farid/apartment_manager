@@ -52,4 +52,7 @@ class Apartment < ApplicationRecord
   end
 
   has_one :resident, dependent: :destroy
+  def self.ransackable_attributes(auth_object = nil)
+    ["name", "price", "floor", "block_id"]
+  end
 end

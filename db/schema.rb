@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_09_113158) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_15_172210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
@@ -95,6 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_09_113158) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
+    t.integer "amount", default: 0
     t.index ["apartment_id"], name: "index_rent_sessions_on_apartment_id"
     t.index ["discarded_at"], name: "index_rent_sessions_on_discarded_at"
     t.index ["resident_id"], name: "index_rent_sessions_on_resident_id"

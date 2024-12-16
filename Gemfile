@@ -8,6 +8,7 @@ ruby "3.2.0"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.8", ">= 7.0.8.1"
 gem 'discard', '~> 1.4'
+gem 'ransack', :github => 'activerecord-hackery/ransack', :branch => 'main'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
@@ -95,3 +96,5 @@ gem "table-for", "~> 3.7"
 gem "tailwindcss-rails", "~> 2.6"
 
 gem "tom-select-rails", "~> 2.3"
+
+gem "solid_queue", "~> 0.1.2"

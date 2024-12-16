@@ -1,0 +1,8 @@
+production:
+  a_periodic_job:
+    class: CreateRentsessionsJob
+    args: [42, { status: "custom_status" }]
+    schedule: every second
+  a_cleanup_task:
+    command: "DeletedStuff.clear_all"
+    schedule: every day at 9am

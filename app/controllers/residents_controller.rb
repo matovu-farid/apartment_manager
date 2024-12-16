@@ -8,10 +8,10 @@ class ResidentsController < ApplicationController
   load_and_authorize_resource
   # GET /residents or /residents.json
   def index
-    @residents = Resident.kept.accessible_by(current_ability)
-    return unless @residents.empty?
+    # @residents = Resident.kept.accessible_by(current_ability)
+    @q = Resident.kept.accessible_by(current_ability).ransack(params[:q])
+    @residents = @q.result(distinct: true).includes(:apartment)
 
-    redirect_to(new_resident_path)
   end
 
   # GET /residents/1 or /residents/1.json
@@ -38,7 +38,8 @@ def create
     RentSession.create!(
       paymentDueDate: @resident.startdate, 
       resident: @resident, 
-      apartment: @resident.apartment
+      apartment: @resident.apartment,
+      amount: @resident.apartment.rent
     )
   end
 
@@ -132,6 +133,7 @@ end
   end
 
 
+
   private
 
   def create_rent_session(resident)
@@ -142,7 +144,8 @@ end
       RentSession.create(
         paymentDueDate:,
         resident:,
-        apartment: resident.apartment
+        apartment: resident.apartment,
+        amount: resident.apartment.rent
       )
     else
       rent_sessions.first

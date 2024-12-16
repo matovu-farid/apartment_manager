@@ -15,3 +15,6 @@ application.register("ts_select", TsSelectController);
 
 import KeyController from "./key_controller";
 application.register("key", KeyController);
+
+import SearchDialogController from "./search_dialog_controller";
+application.register("searchdialog", SearchDialogController);
