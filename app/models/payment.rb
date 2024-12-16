@@ -24,4 +24,12 @@ class Payment < ApplicationRecord
         .where({users: {id: user.id}})
     }
   )
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["amount", "date", "created_at"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["resident", "rent_session"]
+  end
 end

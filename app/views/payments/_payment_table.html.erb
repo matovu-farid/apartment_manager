@@ -1,17 +1,72 @@
-<% if payments.any? %>
-  <table id="payments" class="min-w-full table table-auto min-w-full divide-y divide-gray-300">
-    <thead>
-      <tr>
-        <%['Resident', 'Payment date', 'Amount', 'Actions'].each do |name|%>
-          <th 
-          scope="col"
-          class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
-        ><%= name %></th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody class="divide-y divide-gray-200 bg-white">
-      <%= render partial: 'payment', collection: payments %>
-    </tbody>
-  </table>
-<% end %>
+<div class="relative" data-controller="searchdialog">
+  <button 
+    data-action="click->searchdialog#open" 
+    class="btn btn-dark mb-4" 
+    type="button">
+    Search Table
+  </button>
+  
+  <dialog 
+    data-searchdialog-target="dialog" 
+    class="rounded-lg shadow-lg p-6 w-full max-w-2xl backdrop:bg-gray-500/50">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold">Search Payments</h3>
+      <button 
+        type="button" 
+        class="text-gray-500 hover:text-gray-700" 
+        data-action="searchdialog#close">
+        <i class="fa-solid fa-times"></i>
+      </button>
+    </div>
+
+    <%= search_form_for @q, 
+        class: 'flex flex-col gap-4', 
+        data: { action: "submit->searchdialog#closeOnSubmit" } do |f| %>
+      <div class="flex flex-col gap-2">
+        <%= f.label :resident_name_cont, "Resident Name", class: 'form-label' %>
+        <%= f.search_field :resident_name_cont, class: 'form-input' %>
+      </div>
+      <div class="flex flex-col gap-2">
+        <%= f.label :amount_eq, "Amount", class: 'form-label' %>
+        <%= f.number_field :amount_eq, class: 'form-input', step: '0.01' %>
+      </div>
+      <div class="flex flex-col gap-2">
+        <%= f.label :date_eq, "Payment Date", class: 'form-label' %>
+        <%= f.date_field :date_eq, class: 'form-input' %>
+      </div>
+      <div class="flex justify-end gap-2 mt-4">
+        <button 
+          type="button" 
+          class="btn btn-secondary" 
+          data-action="searchdialog#close">
+          Cancel
+        </button>
+        <%= f.submit 'Search', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </dialog>
+
+  <% if payments.any? %>
+    <table id="payments" class="min-w-full table table-auto min-w-full divide-y divide-gray-300">
+      <thead>
+        <tr>
+          <%['Resident', 'Payment date', 'Amount', 'Actions'].each do |name|%>
+            <th 
+            scope="col"
+            class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
+          ><%= name %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 bg-white">
+        <%= render partial: 'payment', collection: payments %>
+      </tbody>
+    </table>
+  <% else %>
+    <% if @q.present? %>
+      <p class="text-secondary fst-italic fwt-bold">No payments found with the search criteria</p>
+    <% else %>
+      <p class="text-secondary fst-italic fwt-bold">No payments have been made yet.</p>
+    <% end %>
+  <% end %>
+</div>

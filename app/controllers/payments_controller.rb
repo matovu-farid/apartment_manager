@@ -9,13 +9,14 @@ class PaymentsController < ApplicationController
   # GET /payments or /payments.json
   def index
     if @resident.nil?
-      @payments = Payment.accessible_by(current_ability)
+      @q = Payment.accessible_by(current_ability).ransack(params[:q])
+      @payments = @q.result(distinct: true).includes(:resident)
       @rent_session = nil
     else
-      @payments = @resident.payments.accessible_by(current_ability)
+      @q = @resident.payments.accessible_by(current_ability).ransack(params[:q])
+      @payments = @q.result(distinct: true)
       @rent_session = @resident.current_rent_session
     end
-
   end
 
 

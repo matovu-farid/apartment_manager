@@ -11,11 +11,8 @@
       <%= link_to "New payment", new_payment_path, class: "btn btn-outline-primary" %>
     </div>
   <% end %>
-  <% if @payments.empty? %>
-    <p class="text-secondary fst-italic fwt-bold">No payments have been made yet.</p>
-  <% else %>
+
     <div id="payments">
       <%= render 'payment_table', rent_session: @rent_session, payments: @payments ,resident: @resident %>
     </div>
-  <% end %>
 </div>
