@@ -39,7 +39,7 @@ def create
       paymentDueDate: @resident.startdate, 
       resident: @resident, 
       apartment: @resident.apartment,
-      amount: @resident.apartment.rent
+      amount: @resident.apartment.price
     )
   end
 
@@ -117,7 +117,7 @@ end
       )
 
       discarded_apartment = @resident.apartment.block.apartments.find_by!(name: 'discarded')
-      @resident.update!(apartment: discarded_apartment)
+      @resident.update!(apartment: discarded_apartment) 
     end
 
     respond_to do |format|

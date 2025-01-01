@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_15_172210) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_01_204853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
@@ -119,7 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_15_172210) do
     t.bigint "apartment_id", null: false
     t.datetime "startdate"
     t.datetime "discarded_at"
-    t.index ["apartment_id"], name: "index_residents_on_apartment_id", unique: true
+    t.index ["apartment_id"], name: "index_residents_on_apartment_id"
     t.index ["discarded_at"], name: "index_residents_on_discarded_at"
     t.index ["name"], name: "index_residents_on_name"
   end
