@@ -55,6 +55,10 @@ rescue ActiveRecord::RecordInvalid => e
   end
 end
 
+def create_rent_sessions
+  Resident.all.each {|resident| resident.find_or_create_current_rent_session}
+  redirect_to(residents_path, notice: 'Rent sessions were successfully created.')
+end
 
   def setup_payment
     @resident = Resident.find(params[:resident_id])
@@ -145,7 +149,7 @@ end
         paymentDueDate:,
         resident:,
         apartment: resident.apartment,
-        amount: resident.apartment.rent
+        amount: resident.apartment.price
       )
     else
       rent_sessions.first

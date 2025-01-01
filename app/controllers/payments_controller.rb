@@ -15,7 +15,7 @@ class PaymentsController < ApplicationController
     else
       @q = @resident.payments.accessible_by(current_ability).ransack(params[:q])
       @payments = @q.result(distinct: true)
-      @rent_session = @resident.current_rent_session
+      @rent_session = @resident.find_or_create_current_rent_session
     end
   end
 
@@ -29,14 +29,14 @@ class PaymentsController < ApplicationController
     @payment = Payment.new
     @residents = Resident.accessible_by(current_ability)
     if @resident
-      @rent_session = @resident.current_rent_session
+      @rent_session = @resident.find_or_create_current_rent_session
     end
   end
 
   # GET /payments/1/edit
   def edit
     @resident = Resident.find(params[:resident_id])
-    @rent_session = @resident.current_rent_session
+    @rent_session = @resident.find_or_create_current_rent_session
   end
 
   # POST /payments or /payments.json
@@ -60,7 +60,7 @@ class PaymentsController < ApplicationController
   def receipt
     @payment = Payment.find(params[:payment_id])
     @resident = @payment.resident
-    @rent_session = @resident.current_rent_session
+    @rent_session = @resident.find_or_create_current_rent_session
     @block = @resident.apartment.block
     @apartment = @resident.apartment
     @user = current_user
@@ -124,7 +124,7 @@ class PaymentsController < ApplicationController
 
 
     payment = Payment.new(date: payment_params[:date], amount: payment_params[:amount])
-    rent_session = resident.current_rent_session
+    rent_session = resident.find_or_create_current_rent_session
     payment.rent_session = rent_session
     payment
   end

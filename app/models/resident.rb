@@ -34,7 +34,9 @@ class Resident < ApplicationRecord
     apartment.price
   end
 
-  def current_rent_session
+
+
+  def find_or_create_current_rent_session
     rent_session = rent_sessions.with_in_current_month.first
     if rent_session.nil?
       paymentDueDate = Time.zone.today.change(day: startdate.day)
@@ -43,7 +45,7 @@ class Resident < ApplicationRecord
         paymentDueDate:,
         resident: self,
         apartment:,
-        amount: apartment.rent
+        amount: apartment.price
       )
     end
 
@@ -51,7 +53,7 @@ class Resident < ApplicationRecord
   end
 
   def current_month_payment
-    current_rent_session.payment_total
+    find_or_create_current_rent_session.payment_total
   end
 
   delegate :payment_total, to: :rent_sessions

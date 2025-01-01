@@ -1,7 +1,7 @@
 <div class='d-flex justify-content-center'>
   <div class='w-25'>
     <h1 class='h3 fw-bold'>Editing payment for <%=@payment.resident.name%></h1>
-    <%= render "payments/form", payment: @payment, resident: @payment.resident, rent_session: @payment.resident.current_rent_session %>
+    <%= render "payments/form", payment: @payment, resident: @payment.resident, rent_session: @payment.resident.find_or_create_current_rent_session %>
     <br>
   </div>
 </div>

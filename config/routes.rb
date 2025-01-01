@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
 
   get("residentsarchives", to: "residents#archives", as: :archives)
-
+  get("create_rent_sessions", to: "residents#create_rent_sessions", as: :create_rent_sessions)
   get("home/index")
   post("block/pull", to: "blocks#pull", as: "block_pull")
   get("rent_session/renew", to: "rent_sessions#renew_rent", as: "renew_rent")
