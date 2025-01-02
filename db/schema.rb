@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_01_204853) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_02_105341) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
@@ -98,6 +98,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_01_204853) do
     t.integer "amount", default: 0
     t.index ["apartment_id"], name: "index_rent_sessions_on_apartment_id"
     t.index ["discarded_at"], name: "index_rent_sessions_on_discarded_at"
+    t.index ["paymentDueDate", "resident_id", "apartment_id"], name: "unique_rent_session_index", unique: true
     t.index ["resident_id"], name: "index_rent_sessions_on_resident_id"
   end
 
