@@ -26,11 +26,11 @@
                     <%= current_user.email %>
                 </span>
                 <span class="d-flex">
-                    <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-primary" %>
+                    <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-dark" %>
                 </span>
                 <% else %>
                 <span class="d-flex">
-                    <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-primary" %>
+                    <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-dark" %>
                 </span>
                 <% end %>
             </span>

@@ -1,12 +1,12 @@
 <div class="w-full h-[80vh]">
   <div  class="flex w-full justify-end">
 
-      <%= link_to "Back to blocks", blocks_path, class: "btn btn-outline-primary" %>
+      <%= link_to "Back to blocks", blocks_path, class: "btn btn-outline-dark" %>
       <% if can? :edit, @block %>
-        <%= link_to "Add Apartments", new_apartment_path, class: "btn btn-outline-primary" %>
+        <%= link_to "Add Apartments", new_apartment_path, class: "btn btn-outline-dark" %>
         <%= link_to "Edit this block",
           edit_block_path(@block),
-          class: "btn btn-outline-primary" %>
+          class: "btn btn-outline-dark" %>
         <div class="inline-block ml-2">
           <%= button_to "Delete block", @block, method: :delete, class: "btn btn-danger" %>
         </div>

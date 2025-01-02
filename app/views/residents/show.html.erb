@@ -6,7 +6,7 @@
     <%= render "resident_table", residents: [@resident] %>
     <%= link_to "Back to residents", residents_path, class: "btn btn-secondary" %>
     <% if can? :edit, @resident %>
-      <%= link_to "Edit this resident", edit_resident_path(@resident),    class: "btn btn-outline-primary" %>
+      <%= link_to "Edit this resident", edit_resident_path(@resident),    class: "btn btn-outline-dark" %>
     <% end %>
     <% if can? :destroy, @resident %>
       <div class="inline-block ml-2">
