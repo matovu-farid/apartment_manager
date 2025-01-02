@@ -25,11 +25,7 @@
       </div>
     <% end %>
 
-    <% if current_page?(:controller => 'payments', :action => 'new') %>
-      <% if resident %>
-        <p>(Balance: <span data-payment-target='balance' data-balance=<%= resident.rent_balance %>><%=format_currency resident.rent_balance %></span>)</p>
-      <% end %>
-    <% end %>
+  
 
     <div>
       <%= form.label :amount, class: "form-label" %>
@@ -38,7 +34,6 @@
           data: {  
             payment_target: "payment", 
             action: 'input->payment#onEditPayment',
-            max: resident&.rent_balance 
           }, 
           step: 100 
       %>
