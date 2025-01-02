@@ -1,5 +1,5 @@
 <div class="relative" data-controller="searchdialog">
-  <% if @q.present? || @expenditures.any? %>
+  <% if @q.present? || (@expenditures.present? && @expenditures.any?) %>
     <button 
       data-action="click->searchdialog#open" 
       class="btn btn-dark mb-4" 
@@ -21,6 +21,7 @@
       </button>
     </div>
 
+    <% if @q.present? %>
     <%= search_form_for @q, 
         class: 'flex flex-col gap-4', 
         data: { action: "submit->searchdialog#closeOnSubmit" } do |f| %>
@@ -53,44 +54,39 @@
         <%= f.submit 'Search', class: 'btn btn-primary' %>
       </div>
     <% end %>
+    <% end %>
   </dialog>
 
-  <% if @expenditures.any? %>
+  <% if @expenditures.present? && @expenditures.any? %>
     <table class="min-w-full table table-auto divide-y divide-gray-300">
       <thead>
         <% th_class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0" %>
         <tr>
-          <% ["Name","Date","Amount","Category","Reference","Description",].each do |column| %>
+          <% ["Name","Date","Amount","Category","Reference","Description", "Actions"].each do |column| %>
             <th scope="col" class="<%=th_class%>">
               <%= column %>
-            </th>
-          <% end %>
-          <% if show ||= false %>
-            <th scope="col" class="<%=th_class%>">
-              Actions
             </th>
           <% end %>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white">
         <% @expenditures.each do |expenditure| %>
-          <tr>
+          <tr class='py-4'>
             <%= render expenditure %>
-            <% if show ||= false %>
-
-              <td class="relative flex gap-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                <div class=""> </div>
-                <%= link_to expenditure ,class: '' do %>
-                  <i class="fa-solid fa-bars"></i>
+              <td class="relative flex gap-2 whitespace-nowrap  pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                <%= link_to edit_expenditure_path(expenditure), class: 'text-blue-600 hover:text-blue-800' do %>
+                  <i class="fa-solid fa-pen-to-square"></i>
                 <% end %>
+                
                 <% if can? :destroy, expenditure %>
-                  <%= button_to expenditure,method: :delete ,class: '' do %>
-                    <i class="fa-solid fa-trash text-red-500"></i>
+                  <%= button_to expenditure_path(expenditure), 
+                      method: :delete,
+                      class: 'text-danger hover:text-danger',
+                      data: { confirm: 'Are you sure?' } do %>
+                    <i class="fa-solid fa-trash"></i>
                   <% end %>
                 <% end %>
-
               </td>
-            <% end %>
           </tr>
         <% end %>
 
