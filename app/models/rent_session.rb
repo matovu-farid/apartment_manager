@@ -30,7 +30,7 @@ class RentSession < ApplicationRecord
   )
   scope(
     :payment_total,
-    -> { joins(:payments).sum(:amount) }
+    -> { joins(:payments).sum('payments.amount') }
   )
 
   scope :kept, -> { undiscarded.joins(:resident).merge(Resident.kept) }
