@@ -8,7 +8,7 @@ class ApartmentsController < ApplicationController
   def index
     @q = Apartment.visible.accessible_by(current_ability).ransack(params[:q])
     @apartments = @q.result(distinct: true)
-    if Block.filter_by_admin(current_user).empty?
+    if Block.filter_by_admin(current_user).empty? and Block.filter_by_viewer(current_user).empty? 
       redirect_to(new_block_path)
     elsif @apartments.empty?
       redirect_to(new_apartment_path)
