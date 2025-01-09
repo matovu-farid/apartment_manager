@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'errors/not_found'
+  get 'errors/internal_server_error'
   resources :expenditures
   resources(:rent_sessions)
   resources(:blocks)
@@ -26,7 +28,8 @@ Rails.application.routes.draw do
   authenticated(:user) do
     root(to: "apartments#index", as: :authenticated_root)
   end
-
+  match "/404", to: "errors#not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
   root(to: redirect("/users/sign_in"))
   # Defines the root path route ("/")
   # root "articles#index"

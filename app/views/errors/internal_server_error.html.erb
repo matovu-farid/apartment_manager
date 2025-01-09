@@ -1,0 +1,60 @@
+<!-- app/views/errors/internal_server_error.html.erb -->
+
+<div class="relative flex flex-col items-center justify-center min-h-screen 
+            bg-gradient-to-br from-red-600 via-red-700 to-red-900 
+            text-white overflow-hidden p-4">
+
+  <!-- Decorative wave or shape at the bottom -->
+  <div class="absolute bottom-0 left-0 w-full pointer-events-none opacity-25">
+    <svg
+      class="block w-full h-48"
+      preserveAspectRatio="none"
+      viewBox="0 0 1440 320"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill="currentColor"
+        d="M0,32L34.3,48C68.6,64,137,96,206,128C274.3,160,343,192,411,192C480,192,549,160,617,165.3C685.7,171,754,213,823,240C891.4,267,960,277,1029,256C1097.1,235,1166,181,1234,149.3C1302.9,117,1371,107,1406,101.3L1440,96L1440,320L1406,320C1371,320,1302,320,1234,320C1166,320,1097,320,1029,320C960,320,891,320,823,320C754,320,685,320,617,320C549,320,480,320,411,320C343,320,274,320,206,320C137,320,68,320,34,320L0,320Z"
+      />
+    </svg>
+  </div>
+
+  <!-- Error Icon with a subtle animation -->
+  <div class="mb-6 animate-pulse">
+    <svg
+      class="w-20 h-20 text-white"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M13 16h-1v-4h-1m2-4h.01M17.657 16.657l-4.95-4.95m0 0l-4.95 4.95m4.95-4.95 4.95-4.95"
+      />
+    </svg>
+  </div>
+
+  <!-- Error Code -->
+  <h1 class="text-7xl font-extrabold drop-shadow mb-2">500</h1>
+
+  <!-- Error Message -->
+  <p class="text-2xl font-medium drop-shadow">Internal Server Error</p>
+
+  <!-- Descriptive Text -->
+  <p class="mt-4 mb-8 text-center text-white/90 max-w-md leading-relaxed drop-shadow">
+    Oops! Something went wrong on our end. Please try again later or contact support if the issue persists.
+  </p>
+
+  <!-- Call to Action -->
+  <a
+    href="/"
+    class="inline-block px-8 py-3 bg-white text-red-600 font-semibold rounded-md shadow-md
+           hover:bg-gray-50 hover:shadow-lg transition-transform transform hover:-translate-y-0.5
+           duration-300"
+  >
+    Return Home
+  </a>
+</div>
