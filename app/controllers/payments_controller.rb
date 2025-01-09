@@ -11,11 +11,9 @@ class PaymentsController < ApplicationController
     if @resident.nil?
       @q = Payment.accessible_by(current_ability).ransack(params[:q])
       @payments = @q.result(distinct: true).includes(:resident)
-      @rent_session = nil
     else
       @q = @resident.payments.accessible_by(current_ability).ransack(params[:q])
       @payments = @q.result(distinct: true)
-      @rent_session = @resident.find_or_create_current_rent_session
     end
   end
 
@@ -28,15 +26,16 @@ class PaymentsController < ApplicationController
   def new
     @payment = Payment.new
     @residents = Resident.accessible_by(current_ability)
-    if @resident
-      @rent_session = @resident.find_or_create_current_rent_session
-    end
+    # if @resident
+    #   @rent_session = @resident.find_or_create_current_rent_session
+    # end
   end
 
   # GET /payments/1/edit
   def edit
     @resident = Resident.find(params[:resident_id])
-    @rent_session = @resident.find_or_create_current_rent_session
+    payment = Payment.find(params[:id])
+    @rent_session = @resident.find_or_create_current_rent_session_in_month(payment.date)
   end
 
   # POST /payments or /payments.json
@@ -121,10 +120,15 @@ class PaymentsController < ApplicationController
     else
       resident = Resident.find(params[:payment][:resident_id])
     end
+    year  = payment_params["date(1i)"].to_i
+    month = payment_params["date(2i)"].to_i
+    day   = payment_params["date(3i)"].to_i
+
+    date = Date.new(year, month, day)
+    payment = Payment.new(date:, amount: payment_params[:amount])
 
 
-    payment = Payment.new(date: payment_params[:date], amount: payment_params[:amount])
-    rent_session = resident.find_or_create_current_rent_session
+    rent_session = resident.find_or_create_current_rent_session_in_month(date)
     payment.rent_session = rent_session
     payment
   end

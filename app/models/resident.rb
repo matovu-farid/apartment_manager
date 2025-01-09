@@ -51,6 +51,20 @@ class Resident < ApplicationRecord
 
     rent_session
   end
+  def find_or_create_current_rent_session_in_month(date)
+    rent_session = rent_sessions.with_in_month(date).first
+    if rent_session.nil?
+      paymentDueDate = date.change(day: startdate.day)
+        rent_session = RentSession.create(
+        paymentDueDate:,
+        resident: self,
+        apartment:,
+        amount: apartment.price
+      )
+    end
+
+    rent_session
+  end
 
   def current_month_payment
     find_or_create_current_rent_session.payment_total

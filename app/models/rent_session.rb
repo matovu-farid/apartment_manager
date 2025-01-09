@@ -54,4 +54,8 @@ class RentSession < ApplicationRecord
     :with_in_prev_month,
     -> { where(paymentDueDate: prev_month_start..prev_month_start.end_of_month) }
   )
+  scope(
+    :with_in_month,
+    lambda { |date| where(paymentDueDate: date.beginning_of_month..date.end_of_month) }
+  )
 end
