@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Payment < ApplicationRecord
+  include Adminable
   belongs_to :rent_session
   has_one :resident, through: :rent_session
   has_one :apartment, through: :rent_session

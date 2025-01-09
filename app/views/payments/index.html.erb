@@ -2,14 +2,16 @@
   <p style="color: green"><%= notice %></p>
   <h1 class="font-bold">Payments </h1>
   
-  <% if @resident and Ability.new(current_user).can? :manage, @resident %>
+  <% if @resident and  can? :edit, @payments.first %>
     <div class='d-flex justify-content-end'>
       <%= link_to "New payment",new_resident_payment_path(@resident), class: "btn btn-outline-dark" %>
     </div>
   <% else %>
-    <div class='d-flex justify-content-end'>
-      <%= link_to "New payment", new_payment_path, class: "btn btn-outline-dark" %>
-    </div>
+    <% if can? :edit, @payments.first%>
+      <div class='d-flex justify-content-end'>
+        <%= link_to "New payment", new_payment_path, class: "btn btn-outline-dark" %>
+      </div>
+    <% end %>
   <% end %>
 
     <div id="payments">
