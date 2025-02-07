@@ -37,19 +37,23 @@ class Resident < ApplicationRecord
 
 
   def find_or_create_current_rent_session
-    rent_session = rent_sessions.with_in_current_month.first
-    if rent_session.nil?
-      paymentDueDate = Time.zone.today.change(day: startdate.day)
-      paymentDueDate += 1.month if paymentDueDate < Time.zone.today
-      rent_session = RentSession.create(
-        paymentDueDate:,
-        resident: self,
-        apartment:,
-        amount: apartment.price
-      )
-    end
+   
+      rent_session = rent_sessions.with_in_current_month.first
+      if rent_session.nil?
+    
+        paymentDueDate = Time.zone.today.change(day: [startdate.day, 28].min)
+        
+      
+        paymentDueDate.change(month: paymentDueDate.month + 1) if paymentDueDate < Time.zone.today
+        rent_session = RentSession.create(
+          paymentDueDate:,
+          resident: self,
+          apartment:,
+          amount: apartment.price
+        )
+      end
 
-    rent_session
+
   end
   def find_or_create_current_rent_session_in_month(date)
     rent_session = rent_sessions.with_in_month(date).first
